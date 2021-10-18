@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:25:46 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/15 14:32:35 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/18 12:26:30 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int main()
 {
-    while(1)
-    {
-        char *str;
-        char *line;
-        str = getenv("USER");
-        printf("%s\n", str);
-        line = readline(str);
-        //printf("%s\n", line);
-        //sleep(1);
-    }
-    return (0);
+	char *line;
+	clear();
+	while (1)
+	{
+		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
+		if (line != NULL)
+			add_history(line);
+
+	}
+	return (0);
 }

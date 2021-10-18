@@ -30,7 +30,7 @@ endef
 export HEADER
 
 header:
-	@echo "$$HEADER"
+	@echo "\x1b[35m$$HEADER\x1b[0m"
 
 subsystem : header
 	make -C ./libft
