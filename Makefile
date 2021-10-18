@@ -1,4 +1,4 @@
-NAME = minishell
+NAME = minishell.a
 
 CC = gcc
 
@@ -6,18 +6,47 @@ CFLAGS = -Wall -Werror -Wextra
 
 LIBS = -lreadline
 
-SRC = ./src/*.c
+SRC = ./src/minishell.c
 
 OBJ = $(SRC:.c=.o)
 
+LIBFT_PATH = ./libft/
+
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(LIBS) $(SRC) -o minishell
+info: header
 
-fclean:
-	rm -rf minishell
-	rm -rf $(OBJ)
+define HEADER
 
+        _                                            _ _ _       _                 _       _     _          _ _
+       | |                     ___                  | | (_)     ( )               (_)     (_)   | |        | | |
+   __ _| | ___   _ _ __ ____  ( _ )   __      _____ | | |_  ___ |/ ___   _ __ ___  _ _ __  _ ___| |__   ___| | |
+  / _` | |/ / | | | '__|_  /  / _ \/\ \ \ /\ / / _ \| | | |/ _ \  / __| | '_ ` _ \| | '_ \| / __| '_ \ / _ \ | |
+ | (_| |   <| |_| | |   / /  | (_>  <  \ V  V / (_) | | | | (_) | \__ \ | | | | | | | | | | \__ \ | | |  __/ | |
+  \__,_|_|\_\\\__,_|_|  /___|  \___/\/   \_/\_/ \___/|_|_|_|\___/  |___/ |_| |_| |_|_|_| |_|_|___/_| |_|\___|_|_|
+
+
+endef
+export HEADER
+
+header:
+	@echo "$$HEADER"
+
+subsystem : header
+	make -C ./libft
+	cp ./libft/libft.a libft.a
+
+$(NAME): subsystem
+	$(CC) $(CFLAGS) $(LIBS) $(SRC) libft.a -o minishell
+
+clean :
+	rm -f $(OBJ)
+	rm -f $(LIBFT_PATH)*.o
+
+fclean: clean
+	rm -f $(NAME)
+	rm -f $(LIBFT_PATH)libft.a
+	rm -f libft.a
+	rm -f minishell
 
 re: fclean all
