@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	clear();
@@ -21,7 +21,9 @@ int main()
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line != NULL)
 			add_history(line);
-
+		ft_check_builtin(line, envp);
 	}
+	(void)argc;
+	(void)argv;
 	return (0);
 }
