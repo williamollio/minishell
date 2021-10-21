@@ -62,5 +62,7 @@ int main(int argc, char **argv, char **envp)
 			add_history(line);
 		ft_readinput(line, envp);
 	}
+	(void)argc;
+	(void)argv;
 	return (0);
 }
