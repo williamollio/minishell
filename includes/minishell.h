@@ -24,4 +24,6 @@
 
 int main();
 
+void	ft_check_builtin(char *line, char **envp);
+
 #endif

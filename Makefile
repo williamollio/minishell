@@ -6,7 +6,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 LIBS = -lreadline
 
-SRC = ./src/minishell.c
+SRC = ./src/minishell.c ./src/builtin/builtin.c
 
 OBJ = $(SRC:.c=.o)
 
