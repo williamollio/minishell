@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:25:46 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/21 18:05:40 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/22 15:34:38 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
+		ft_parse_input(envp, line);
 		if (line != NULL)
 			add_history(line);
 		ft_readinput(line, envp);
