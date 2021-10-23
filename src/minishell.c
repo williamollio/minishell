@@ -6,7 +6,7 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:25:46 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/22 15:34:38 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/23 18:02:19 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void ft_readinput(char *line, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	char *line;
+	char 		*line;
+	t_env_list	*env_head;
 	clear();
 
 	(void)argc;
@@ -57,8 +58,9 @@ int main(int argc, char **argv, char **envp)
 
 	while (1)
 	{
+		ft_sir_alex_junior(envp, &env_head);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
-		ft_parse_input(envp, line);
+		// ft_parse_input(envp, line);
 		if (line != NULL)
 			add_history(line);
 		ft_readinput(line, envp);

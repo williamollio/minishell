@@ -6,7 +6,7 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/22 21:40:37 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/23 18:00:20 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 
-typedef struct s_parse
+typedef struct	s_env_list
 {
-	char	**system;
-	char	**builtin;
-}			t_parse;
-
+	char				*full;
+	char				*var;
+	char				*content;
+	struct s_env_list	*next;
+}			t_env_list;
 
 int main();
 
@@ -48,6 +49,7 @@ void	ft_sys_funct_chck(char *line);
 void	ft_error(char *str);
 
 //** PARSE **/
-void	ft_parse_input(char **envp, char *line);
+// void	ft_parse_input(char **envp, char *line);
+void	ft_sir_alex_junior(char **envp, t_env_list **env_head);
 
 #endif
