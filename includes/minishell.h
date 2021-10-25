@@ -6,7 +6,7 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/23 18:00:20 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/25 14:45:38 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	ft_error(char *str);
 
 //** PARSE **/
 // void	ft_parse_input(char **envp, char *line);
-void	ft_sir_alex_junior(char **envp, t_env_list **env_head);
+void	ft_get_env_list(char **envp, t_env_list **env_head);
+void	ft_export_node(t_env_list **env_head, char *str);
+void	ft_delete_node(t_env_list **env_head, char *str);
+void	ft_print_list(t_env_list *head);
+
 
 #endif

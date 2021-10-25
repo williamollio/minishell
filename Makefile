@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror -Wextra
 LIBS = -lreadline
 
 SRC = ./src/minishell.c ./src/builtins/ft_builtins.c ./src/error/ft_error.c ./src/sys_func/ft_sys_func.c \
-		./src/parse/ft_sir_alex_junior.c
+		./src/parse/ft_get_env_list.c
 
 OBJ = $(SRC:.c=.o)
 
