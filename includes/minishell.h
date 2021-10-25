@@ -6,7 +6,7 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 14:45:38 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/25 15:48:39 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ int main();
 void	ft_echo(char  *line);
 void	ft_cd(char  *line);
 void	ft_pwd(char  *line);
-void	ft_export(char  *line);
-void	ft_unset(char  *line);
-void	ft_env(char **envp);
+// void	ft_export(char  *line);
+// void	ft_unset(char  *line);
+// void	ft_env(char **envp);
 void	ft_exit(void);
+void	ft_export_node(t_env_list **env_head, char *str);
+void	ft_delete_node(t_env_list **env_head, char *str);
 
 /** SYSTEM FUNCTION **/
 void	ft_sys_funct_ex(char *line);
@@ -51,9 +53,10 @@ void	ft_error(char *str);
 //** PARSE **/
 // void	ft_parse_input(char **envp, char *line);
 void	ft_get_env_list(char **envp, t_env_list **env_head);
-void	ft_export_node(t_env_list **env_head, char *str);
-void	ft_delete_node(t_env_list **env_head, char *str);
-void	ft_print_list(t_env_list *head);
+char	*ft_get_content(char *full);
+char	*ft_get_var(char *full);
 
+//** HELPER **/
+void	ft_print_list(t_env_list *head);
 
 #endif
