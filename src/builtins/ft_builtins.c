@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 16:47:44 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/21 18:09:07 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/25 15:32:42 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_env(char **envp)
-{
-	int		pipes[2];
-	pid_t	childpid;
-	char	**cmd;
+// void	ft_env(char **envp)
+// {
+// 	int		pipes[2];
+// 	pid_t	childpid;
+// 	char	**cmd;
 
-	cmd = malloc(sizeof(char *) * 2);
-	cmd[0] = "env";
-	cmd[1] = NULL;
-	if (pipe(pipes) == -1)
-	{
-		perror("pipe");
-		exit(0);
-	}
-	childpid = fork();
-	if (childpid == -1)
-	{
-		perror("fork");
-		exit(0);
-	}
-	if (childpid == 0)
-		execve("/usr/bin/env", cmd, envp);
-	else
-	{
-		wait(NULL);
-		return ;
-	}
-}
+// 	cmd = malloc(sizeof(char *) * 2);
+// 	cmd[0] = "env";
+// 	cmd[1] = NULL;
+// 	if (pipe(pipes) == -1)
+// 	{
+// 		perror("pipe");
+// 		exit(0);
+// 	}
+// 	childpid = fork();
+// 	if (childpid == -1)
+// 	{
+// 		perror("fork");
+// 		exit(0);
+// 	}
+// 	if (childpid == 0)
+// 		execve("/usr/bin/env", cmd, envp);
+// 	else
+// 	{
+// 		wait(NULL);
+// 		return ;
+// 	}
+// }
 
 void	ft_echo(char *line)
 {
