@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_builtins.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/21 16:47:44 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 15:50:32 by akurz            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	ft_echo(char *line)
@@ -29,7 +17,7 @@ void	ft_delete_node(t_env_list **env_head, char *str)
 {
 	t_env_list	*temp;
 	t_env_list	*prev;
-	
+
 	temp = *env_head;
 	if (ft_strncmp((*env_head)->var, str, ft_strlen((*env_head)->var)) == 0)
 	{

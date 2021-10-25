@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 15:48:39 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/25 19:31:04 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
+#include "stdbool.h" // for boolean variable type
 
 typedef struct	s_env_list
 {
@@ -29,6 +30,19 @@ typedef struct	s_env_list
 	char				*content;
 	struct s_env_list	*next;
 }			t_env_list;
+
+typedef struct	s_parse
+{
+	char				*cmd;
+	char				*arg;
+	char				*str;
+	bool				pipe;
+	bool				out; // >
+	bool				in; // <
+	bool				left; // <<
+	bool				right; // >>
+	struct s_parse		*next;
+}			t_parse;
 
 int main();
 
@@ -50,13 +64,17 @@ void	ft_sys_funct_chck(char *line);
 /** ERROR MANAGEMENT **/
 void	ft_error(char *str);
 
-//** PARSE **/
-// void	ft_parse_input(char **envp, char *line);
+/** PARSE **/
+void	ft_parsing(char **envp, char *line, t_parse **parse); // general function
+char	**ft_line_path(char **envp, char **paths); // line where PATH is in env
+int		ft_is_builtin(char *s); // check if the command is built-in
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);
 
 //** HELPER **/
 void	ft_print_list(t_env_list *head);
+void	ft_print_list_parse(t_parse *head);
+void	ft_addback_parse(t_parse **head_ref, char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:25:46 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 15:31:03 by akurz            ###   ########.fr       */
+/*   Updated: 2021/10/25 19:59:51 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void ft_readinput(char *line, char **envp, t_env_list **env_head)
 		i++;
 	}
 	(void)envp;
-	ft_error(line);
+	//ft_error(line);
 	return ;
 }
 
@@ -62,6 +62,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char 		*line;
 	t_env_list	*env_head;
+	t_parse		*parse;
 	clear();
 
 	(void)argc;
@@ -71,10 +72,11 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
-		// ft_parse_input(envp, line);
+		ft_parsing(envp, line, &parse);
 		if (line != NULL)
 			add_history(line);
 		ft_readinput(line, envp, &env_head);
+		ft_print_list_parse(parse);
 	}
 	return (0);
 }
