@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/21 17:37:42 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/22 21:40:37 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
+
+typedef struct s_parse
+{
+	char	**system;
+	char	**builtin;
+}			t_parse;
+
 
 int main();
 
@@ -39,5 +46,8 @@ void	ft_sys_funct_chck(char *line);
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *str);
+
+//** PARSE **/
+void	ft_parse_input(char **envp, char *line);
 
 #endif
