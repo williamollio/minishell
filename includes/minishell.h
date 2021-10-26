@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/26 19:10:12 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/26 19:58:52 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ char	*ft_get_var(char *full);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
-void	ft_print_list_parse(t_parse *head);
-void	ft_addback_parse(t_parse **head_ref, char *str, int nbr);
-void	ft_free_list_parse(t_parse **head_a);
+void	ft_print_list_parse(t_parse *head); // print the list
+void	ft_addback_parse(t_parse **head_ref, char *str, int nbr); // create the list
+void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
+t_parse	*ft_get_last(t_parse **head); // return the last node of the list
+void	ft_print_node(t_parse *tmp); // print a node
 
 #endif

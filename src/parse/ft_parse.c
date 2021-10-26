@@ -88,9 +88,14 @@ void ft_parsing(char **envp, char *line, t_parse **parse)
 	while (arr[i])
 	{
 		if (ft_is_builtin(arr[i]))
+		{
 			ft_addback_parse(parse, arr[i], BUILT);
+
+		}
 		else if (check_commandpath(paths, arr[i]))
+		{
 			ft_addback_parse(parse, arr[i], SYS);
+		}
 		else
 		{
 			ft_operator(arr[i], parse);
