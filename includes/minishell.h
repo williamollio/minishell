@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 19:31:04 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/26 19:10:12 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 #include "stdbool.h" // for boolean variable type
+#include <signal.h>
+
+# define PIPE 1 // |
+# define OUT 2 // >
+# define IN 3 // <
+# define LEFT 4 // <<
+# define RIGHT 5 // >>
+# define BUILT 6
+# define SYS 7
 
 typedef struct	s_env_list
 {
@@ -36,15 +45,11 @@ typedef struct	s_parse
 	char				*cmd;
 	char				*arg;
 	char				*str;
-	bool				pipe;
-	bool				out; // >
-	bool				in; // <
-	bool				left; // <<
-	bool				right; // >>
+	char				*file;
+	int					op;
+	int					flag;
 	struct s_parse		*next;
 }			t_parse;
-
-int main();
 
 /** BUILDINS FUNCTION **/
 void	ft_echo(char  *line);
@@ -68,13 +73,17 @@ void	ft_error(char *str);
 void	ft_parsing(char **envp, char *line, t_parse **parse); // general function
 char	**ft_line_path(char **envp, char **paths); // line where PATH is in env
 int		ft_is_builtin(char *s); // check if the command is built-in
+int		ft_operator(char *str, t_parse **parse); //search for any operator in a string, and return the int corresponding
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);
 
-//** HELPER **/
+/** HELPER **/
 void	ft_print_list(t_env_list *head);
 void	ft_print_list_parse(t_parse *head);
-void	ft_addback_parse(t_parse **head_ref, char *str);
+void	ft_addback_parse(t_parse **head_ref, char *str, int nbr);
+void	ft_free_list_parse(t_parse **head_a);
+void	ft_init_parse(t_parse **head); // for each new node created
+t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 
 #endif

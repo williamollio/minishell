@@ -50,26 +50,6 @@ int	ft_is_builtin(char *s)
 		return (0);
 }
 
-void	ft_addback_parse(t_parse **head_ref, char *str)
-{
-	t_parse	*newNode;
-	t_parse	*last;
-
-	last = *head_ref;
-	newNode = malloc(sizeof(t_parse));
-	newNode->cmd = str;
-	newNode->next = NULL;
-	if (*head_ref == NULL)
-	{
-		*head_ref = newNode;
-		return ;
-	}
-	while (last->next != NULL)
-		last = last->next;
-	last->next = newNode;
-	return ;
-}
-
 int	check_commandpath(char **paths, char *cmd)
 {
 	int		i;
@@ -84,9 +64,15 @@ int	check_commandpath(char **paths, char *cmd)
 		slash = ft_strjoin(paths[i], "/");
 		ret = ft_strjoin(slash, cmd);
 		if (access(ret, F_OK) != -1)
+		{
+			ft_free1(slash);
+			ft_free1(ret);
 			return (1);
+		}
 		i++;
 	}
+	ft_free1(slash);
+	ft_free1(ret);
 	return (0);
 }
 
@@ -102,17 +88,15 @@ void ft_parsing(char **envp, char *line, t_parse **parse)
 	while (arr[i])
 	{
 		if (ft_is_builtin(arr[i]))
-		{
-			printf("built-in\n");
-			ft_addback_parse(parse, arr[i]);
-		}
+			ft_addback_parse(parse, arr[i], BUILT);
 		else if (check_commandpath(paths, arr[i]))
-		{
-			printf("system function\n");
-			ft_addback_parse(parse, arr[i]);
-		}
+			ft_addback_parse(parse, arr[i], SYS);
 		else
-			printf("neither built-in, nor system function\n");
+		{
+			ft_operator(arr[i], parse);
+		}
 		i++;
 	}
+	ft_free2(paths);
+	ft_get_list(*parse);
 }

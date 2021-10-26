@@ -1,15 +1,22 @@
+
 NAME = minishell.a
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+#CFLAGS = -Wall -Werror -Wextra
 
-LIBS = -lreadline
+#LIBS = -lreadline
 
 SRC = ./src/minishell.c ./src/builtins/ft_builtins.c ./src/error/ft_error.c ./src/sys_func/ft_sys_func.c \
-		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c
+		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse2.c
 
 OBJ = $(SRC:.c=.o)
+
+LDFLAGS="-L/Users/$(USER)/.brew/opt/readline/lib"
+
+CPPFLAGS="-I/Users/$(USER)/.brew/opt/readline/include"
+
+CFLAGS = -lreadline $(LDFLAGS) $(CPPFLAGS) -ltermcap -Wall -Wextra -Werror
 
 LIBFT_PATH = ./libft/
 
@@ -38,7 +45,7 @@ subsystem : header
 	cp ./libft/libft.a libft.a
 
 $(NAME): subsystem
-	$(CC) $(CFLAGS) $(LIBS) $(SRC) libft.a -o minishell
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(SRC) libft.a -o minishell
 
 clean :
 	rm -f $(OBJ)

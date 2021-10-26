@@ -1,22 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 19:25:46 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/25 19:59:51 by wollio           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
+
+void ft_sigint(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+}
+
+t_parse *ft_get_list(t_parse *parse_list)
+{
+	static t_parse *list;
+
+	if (parse_list)
+		list = parse_list;
+	return (list);
+}
 
 void ft_readinput(char *line, char **envp, t_env_list **env_head)
 {
 	int	i;
 	char **onlyForNow;
-
+	printf("cmd test : %s\n", ft_get_list(NULL)->cmd);
 	i = 0;
 	while (line[i])
 	{
@@ -71,12 +79,16 @@ int main(int argc, char **argv, char **envp)
 	ft_get_env_list(envp, &env_head);
 	while (1)
 	{
+		signal(SIGINT, &ft_sigint);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		ft_parsing(envp, line, &parse);
+		// printf("%d\n", (* parse).flag);
+		// printf("%d\n", (* parse).next->flag);
 		if (line != NULL)
 			add_history(line);
 		ft_readinput(line, envp, &env_head);
-		ft_print_list_parse(parse);
+		ft_print_list_parse(parse); // to delete
+		ft_free_list_parse(&parse);
 	}
 	return (0);
 }
