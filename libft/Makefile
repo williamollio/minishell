@@ -6,7 +6,7 @@
 #    By: wollio <wollio@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/17 10:29:33 by wollio            #+#    #+#              #
-#    Updated: 2021/10/18 12:20:45 by wollio           ###   ########.fr        #
+#    Updated: 2021/10/27 10:50:23 by wollio           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,15 @@ SRC =	ft_atoi.c \
 		ft_striteri.c \
 		ft_split.c \
 		ft_strtrim.c \
+		ft_lstadd_back.c \
+		ft_lstadd_front.c \
+		ft_lstclear.c \
+		ft_lstdelone.c \
+		ft_lstiter.c \
+		ft_lstlast.c \
+		ft_lstmap.c \
+		ft_lstnew.c \
+		ft_lstsize.c \
 		ft_atol.c \
 		ft_free1.c \
 		ft_free2.c

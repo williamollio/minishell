@@ -82,12 +82,10 @@ int main(int argc, char **argv, char **envp)
 		signal(SIGINT, &ft_sigint);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		ft_parsing(envp, line, &parse);
-		// printf("%d\n", (* parse).flag);
-		// printf("%d\n", (* parse).next->flag);
 		if (line != NULL)
 			add_history(line);
 		ft_readinput(line, envp, &env_head);
-		ft_print_list_parse(parse); // to delete
+		ft_print_list_parse(parse);
 		ft_free_list_parse(&parse);
 	}
 	return (0);

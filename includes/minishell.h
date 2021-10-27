@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/26 19:58:52 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/27 13:55:37 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 #include "stdbool.h" // for boolean variable type
-#include <signal.h>
+#include <signal.h> // for the signal function
 
 # define PIPE 1 // |
 # define OUT 2 // >
@@ -45,9 +45,10 @@ typedef struct	s_parse
 	char				*cmd;
 	char				*arg;
 	char				*str;
-	char				*file;
+	char				*file; // to delete
 	int					op;
 	int					flag;
+	struct s_parse		*prev;
 	struct s_parse		*next;
 }			t_parse;
 
@@ -73,7 +74,9 @@ void	ft_error(char *str);
 void	ft_parsing(char **envp, char *line, t_parse **parse); // general function
 char	**ft_line_path(char **envp, char **paths); // line where PATH is in env
 int		ft_is_builtin(char *s); // check if the command is built-in
-int		ft_operator(char *str, t_parse **parse); //search for any operator in a string, and return the int corresponding
+int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
+int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
+// void	ft_file(char *str, t_parse **parse, char **arr); // Initialize var file if needed
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);
@@ -81,6 +84,7 @@ char	*ft_get_var(char *full);
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
 void	ft_print_list_parse(t_parse *head); // print the list
+void	ft_print_list_parse2(t_parse **head); // print the list with the previous
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr); // create the list
 void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created

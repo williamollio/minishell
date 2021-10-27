@@ -98,7 +98,7 @@ void ft_parsing(char **envp, char *line, t_parse **parse)
 		}
 		else
 		{
-			ft_operator(arr[i], parse);
+			ft_operator(i, parse, arr);
 		}
 		i++;
 	}

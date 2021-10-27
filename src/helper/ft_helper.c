@@ -25,6 +25,22 @@ void	ft_print_list_parse(t_parse *head)
 		tmp = tmp->next;
 	}
 }
+// void	ft_print_list_parse2(t_parse **head)
+// {
+// 	t_parse	*last;
+
+// 	last = ft_get_last(head);
+// 	while (last != NULL)
+// 	{
+// 		printf("cmd : %s\n", last->cmd);
+// 		printf("flag : %d\n", last->flag);
+// 		printf("file : %s\n", last->file);
+// 		printf("arg : %s\n", last->arg);
+// 		printf("str : %s\n", last->str);
+// 		printf("op : %d\n", last->op);
+// 		last = last->prev;
+// 	}
+// }
 
 void	ft_free_list_parse(t_parse **head_a)
 {
@@ -61,10 +77,12 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
 	if (*head_ref == NULL)
 	{
 		*head_ref = newNode;
+		newNode->prev = NULL;
 		return ;
 	}
 	while (last->next != NULL)
 		last = last->next;
+	newNode->prev = last;
 	last->next = newNode;
 	return ;
 }
