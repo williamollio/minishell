@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wollio <williamollio@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/27 13:55:37 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/29 17:35:39 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,19 @@
 #include "../libft/libft.h"
 #include "stdbool.h" // for boolean variable type
 #include <signal.h> // for the signal function
+#include <errno.h> // for errno var
 
+/** OP VARIABLE **/
 # define PIPE 1 // |
 # define OUT 2 // >
 # define IN 3 // <
 # define LEFT 4 // <<
 # define RIGHT 5 // >>
+
+/** FLAG VARIABLE **/
 # define BUILT 6
 # define SYS 7
+# define FILE 8
 
 typedef struct	s_env_list
 {
@@ -45,7 +50,6 @@ typedef struct	s_parse
 	char				*cmd;
 	char				*arg;
 	char				*str;
-	char				*file; // to delete
 	int					op;
 	int					flag;
 	struct s_parse		*prev;
@@ -72,11 +76,15 @@ void	ft_error(char *str);
 
 /** PARSE **/
 void	ft_parsing(char **envp, char *line, t_parse **parse); // general function
-char	**ft_line_path(char **envp, char **paths); // line where PATH is in env
+int		check_commandpath(char **paths, char *cmd); // check if it's a system function
+char	**ft_line_path(char **envp); // line where PATH is in env
 int		ft_is_builtin(char *s); // check if the command is built-in
 int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
-// void	ft_file(char *str, t_parse **parse, char **arr); // Initialize var file if needed
+void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
+int		ft_arg(int i, t_parse **parse, char **arr); // search for arguments
+void	ft_first(char **paths, int i, t_parse **parse, char **arr); // read the first input
+void	ft_cmd(int i, t_parse **parse, char **arr); // look at the following variables when encountering a cmd
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);

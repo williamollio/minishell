@@ -30,7 +30,7 @@ void	ft_addback(t_env_list **head_ref, char *str)
 	t_env_list	*last;
 
 	last = *head_ref;
-	newNode = malloc(sizeof(t_env_list));
+	newNode = (t_env_list *) malloc(sizeof(t_env_list));
 	newNode->full = str;
 	newNode->var = ft_get_var(str);
 	newNode->content = ft_get_content(str);

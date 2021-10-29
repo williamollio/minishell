@@ -1,23 +1,22 @@
-
 NAME = minishell.a
 
 CC = gcc
 
-#CFLAGS = -Wall -Werror -Wextra
-
-#LIBS = -lreadline
-
 SRC = ./src/minishell.c ./src/builtins/ft_builtins.c ./src/error/ft_error.c ./src/sys_func/ft_sys_func.c \
 		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse2.c \
-		./src/helper/ft_helper2.c
+		./src/helper/ft_helper2.c ./src/parse/ft_parse3.c
 
 OBJ = $(SRC:.c=.o)
 
-LDFLAGS="-L/Users/$(USER)/.brew/opt/readline/lib"
+ifeq ($(USER), wiliamollio)
+		LDFLAGS="-L/usr/local/opt/readline/lib"
+		CPPFLAGS="-I/usr/local/opt/readline/include"
+else
+		LDFLAGS="-L/Users/$(USER)/.brew/opt/readline/lib"
+		CPPFLAGS="-I/Users/$(USER)/.brew/opt/readline/include"
+endif
 
-CPPFLAGS="-I/Users/$(USER)/.brew/opt/readline/include"
-
-CFLAGS = -lreadline $(LDFLAGS) $(CPPFLAGS) -ltermcap -Wall -Wextra -Werror
+CFLAGS = -lreadline $(LDFLAGS) $(CPPFLAGS) -Wall -Wextra -Werror
 
 LIBFT_PATH = ./libft/
 

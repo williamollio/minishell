@@ -10,11 +10,13 @@ static int	countrows(char **paths)
 	return (i);
 }
 
-char **ft_line_path(char **envp, char **paths)
+char **ft_line_path(char **envp)
 {
 	int		x;
 	char	*pathname;
+	char	**paths;
 
+	paths = NULL;
 	x = 0;
 	while (envp[x] != NULL)
 	{
@@ -79,29 +81,33 @@ int	check_commandpath(char **paths, char *cmd)
 void ft_parsing(char **envp, char *line, t_parse **parse)
 {
 	char	**arr;
-	char	**paths = NULL;
+	char	**paths;
 	int		i;
 
 	i = 0;
-	paths = ft_line_path(envp, paths);
+	paths = ft_line_path(envp);
 	arr = ft_split(line, ' ');
+	ft_first(paths, i, parse, arr);
 	while (arr[i])
 	{
 		if (ft_is_builtin(arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
-
+			ft_cmd(i, parse, arr);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], SYS);
+			ft_cmd(i, parse, arr);
 		}
 		else
 		{
+			ft_arg(i, parse, arr);
 			ft_operator(i, parse, arr);
 		}
 		i++;
 	}
+	//ft_free2(arr);
 	ft_free2(paths);
 	ft_get_list(*parse);
 }

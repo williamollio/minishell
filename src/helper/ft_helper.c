@@ -18,7 +18,6 @@ void	ft_print_list_parse(t_parse *head)
 	{
 		printf("cmd : %s\n", tmp->cmd);
 		printf("flag : %d\n", tmp->flag);
-		printf("file : %s\n", tmp->file);
 		printf("arg : %s\n", tmp->arg);
 		printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
@@ -56,9 +55,9 @@ void	ft_free_list_parse(t_parse **head_a)
 
 void	ft_init_parse(t_parse **head)
 {
+	(*head)->cmd = "";
 	(* head)->arg = "";
 	(* head)->str = "";
-	(* head)->file = "";
 	(* head)->op = 0;
 	(* head)->flag = 0;
 }
@@ -71,7 +70,10 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
 	last = *head_ref;
 	newNode = malloc(sizeof(t_parse));
 	ft_init_parse(&newNode);
-	newNode->cmd = str;
+	if (nbr == 8)
+		newNode->str = str;
+	else
+		newNode->cmd = str;
 	newNode->flag = nbr;
 	newNode->next = NULL;
 	if (*head_ref == NULL)

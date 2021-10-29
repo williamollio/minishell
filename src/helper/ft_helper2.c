@@ -11,12 +11,20 @@ t_parse	*ft_get_last(t_parse **head)
 	return (tmp);
 }
 
-void ft_print_node(t_parse *tmp)
+void	ft_print_node(t_parse *tmp)
 {
 	printf("cmd : %s\n", tmp->cmd);
 	printf("flag : %d\n", tmp->flag);
-	printf("file : %s\n", tmp->file);
 	printf("arg : %s\n", tmp->arg);
 	printf("str : %s\n", tmp->str);
 	printf("op : %d\n", tmp->op);
+}
+
+t_parse *ft_get_list(t_parse *parse_list)
+{
+	static t_parse *list;
+
+	if (parse_list)
+		list = parse_list;
+	return (list);
 }
