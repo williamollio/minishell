@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <williamollio@student.42.fr>        +#+  +:+       +#+        */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/10/29 17:35:39 by wollio           ###   ########.fr       */
+/*   Updated: 2021/10/30 18:23:50 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ typedef struct	s_parse
 	struct s_parse		*next;
 }			t_parse;
 
+/** INIT **/
+void	ft_silience(char **envp); // hide ^C when hiting control+C
+void	ft_init(int argc, char **envp, t_env_list **env_head); // initialize the shell
+
 /** BUILDINS FUNCTION **/
 void	ft_echo(char  *line);
 void	ft_cd(char  *line);
@@ -83,7 +87,7 @@ int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where opera
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
 void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
 int		ft_arg(int i, t_parse **parse, char **arr); // search for arguments
-void	ft_first(char **paths, int i, t_parse **parse, char **arr); // read the first input
+int		ft_first(char **paths, int i, t_parse **parse, char **arr); // read the first input
 void	ft_cmd(int i, t_parse **parse, char **arr); // look at the following variables when encountering a cmd
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);

@@ -58,22 +58,21 @@ void ft_readinput(char *line, char **envp, t_env_list **env_head)
 	return ;
 }
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **envp)
 {
 	char 		*line;
 	t_env_list	*env_head;
 	t_parse		*parse;
-	clear();
 
-	(void)argc;
-	(void)argv;
-	ft_get_env_list(envp, &env_head);
+	ft_init(argc, envp, &env_head);
 	while (1)
 	{
 		signal(SIGINT, &ft_sigint);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL) // handle ctrl + D
 			exit(EXIT_FAILURE);
+		// if (ft_strncmp(line, "^C", 2) == 0)
+		// 	line = "";
 		ft_parsing(envp, line, &parse);
 		add_history(line);
 		ft_readinput(line, envp, &env_head);

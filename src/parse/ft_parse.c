@@ -87,7 +87,8 @@ void ft_parsing(char **envp, char *line, t_parse **parse)
 	i = 0;
 	paths = ft_line_path(envp);
 	arr = ft_split(line, ' ');
-	ft_first(paths, i, parse, arr);
+	if (ft_first(paths, i, parse, arr))
+		return ;
 	while (arr[i])
 	{
 		if (ft_is_builtin(arr[i]))

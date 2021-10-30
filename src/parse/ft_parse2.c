@@ -48,19 +48,19 @@ int ft_arg(int i, t_parse **parse, char **arr)
 	return (1);
 }
 
-void ft_first(char **paths, int i, t_parse **parse, char **arr)
+int ft_first(char **paths, int i, t_parse **parse, char **arr)
 {
 	char *message;
 
-	message = "command not found : ";
+	message = ": command not found\n";
 	if (!ft_is_builtin(arr[0]) &&
 		!check_commandpath(paths, arr[0]) &&
 		!ft_operator(i, parse, arr))
 	{
 		ft_putstr_fd("minishell : ", 2);
-		ft_putstr_fd(message, 2);
 		ft_putstr_fd(arr[0], 2);
-		ft_putstr_fd("\n", 2);
-		exit(EXIT_FAILURE);
+		ft_putstr_fd(message, 2);
+		return (1);
 	}
+	return (0);
 }
