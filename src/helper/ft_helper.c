@@ -16,6 +16,7 @@ void	ft_print_list_parse(t_parse *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
+		printf("---------\n");
 		printf("cmd : %s\n", tmp->cmd);
 		printf("flag : %d\n", tmp->flag);
 		printf("arg : %s\n", tmp->arg);
@@ -24,22 +25,6 @@ void	ft_print_list_parse(t_parse *head)
 		tmp = tmp->next;
 	}
 }
-// void	ft_print_list_parse2(t_parse **head)
-// {
-// 	t_parse	*last;
-
-// 	last = ft_get_last(head);
-// 	while (last != NULL)
-// 	{
-// 		printf("cmd : %s\n", last->cmd);
-// 		printf("flag : %d\n", last->flag);
-// 		printf("file : %s\n", last->file);
-// 		printf("arg : %s\n", last->arg);
-// 		printf("str : %s\n", last->str);
-// 		printf("op : %d\n", last->op);
-// 		last = last->prev;
-// 	}
-// }
 
 void	ft_free_list_parse(t_parse **head_a)
 {
@@ -55,9 +40,9 @@ void	ft_free_list_parse(t_parse **head_a)
 
 void	ft_init_parse(t_parse **head)
 {
-	(*head)->cmd = "";
-	(* head)->arg = "";
-	(* head)->str = "";
+	(* head)->cmd = NULL;
+	(* head)->arg = NULL;
+	(* head)->str = NULL;
 	(* head)->op = 0;
 	(* head)->flag = 0;
 }

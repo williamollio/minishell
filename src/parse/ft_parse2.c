@@ -3,7 +3,7 @@
 void ft_file(int i, t_parse **parse, char **arr, int op)
 {
 	if (op >= 2 && op <= 5)
-		ft_addback_parse(parse, arr[i + 1], FILE);
+		ft_addback_parse(parse, arr[i+1], FILE);
 }
 
 int ft_operator_tool(int i, char **arr)
@@ -35,27 +35,14 @@ int ft_operator(int i, t_parse **parse, char **arr)
 	return (1);
 }
 
-int ft_arg(int i, t_parse **parse, char **arr)
-{
-	t_parse *last;
-
-	last = ft_get_last(parse);
-	if (last->cmd &&
-		arr[i][0] == '-')
-		last->arg = arr[i];
-	else
-		return (0);
-	return (1);
-}
-
 int ft_first(char **paths, int i, t_parse **parse, char **arr)
 {
-	char *message;
-
+	char	*message;
+	(void)parse;
 	message = ": command not found\n";
 	if (!ft_is_builtin(arr[0]) &&
 		!check_commandpath(paths, arr[0]) &&
-		!ft_operator(i, parse, arr))
+		!ft_operator_tool(i, arr))
 	{
 		ft_putstr_fd("minishell : ", 2);
 		ft_putstr_fd(arr[0], 2);

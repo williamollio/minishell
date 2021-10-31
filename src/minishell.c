@@ -9,8 +9,15 @@ void ft_sigint(int signal)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
+	else if (signal == SIGQUIT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		exit(EXIT_SUCCESS);
+	}
 	else if (signal == SIGSEGV)
-		exit(0);
+		exit(EXIT_FAILURE);
 }
 
 void ft_readinput(char *line, char **envp, t_env_list **env_head)
@@ -58,26 +65,27 @@ void ft_readinput(char *line, char **envp, t_env_list **env_head)
 	return ;
 }
 
-int main(int argc, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	char 		*line;
+	char		*line;
+	char		**arr;
 	t_env_list	*env_head;
 	t_parse		*parse;
 
-	ft_init(argc, envp, &env_head);
+	ft_init(argc, argv, envp, &env_head);
 	while (1)
 	{
 		signal(SIGINT, &ft_sigint);
+		signal(SIGQUIT, &ft_sigint);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
-		if (line == NULL) // handle ctrl + D
-			exit(EXIT_FAILURE);
-		// if (ft_strncmp(line, "^C", 2) == 0)
-		// 	line = "";
-		ft_parsing(envp, line, &parse);
+		if (line == NULL)
+			exit(EXIT_SUCCESS);
+		arr = ft_parsing(envp, line, &parse);
 		add_history(line);
-		ft_readinput(line, envp, &env_head);
+		//ft_readinput(line, envp, &env_head);
 		ft_print_list_parse(parse);
 		ft_free_list_parse(&parse);
+		ft_free2(arr);
 	}
 	return (0);
 }

@@ -29,14 +29,15 @@ void	ft_silience(char **envp)
 	}
 }
 
-void ft_init(int argc, char **envp, t_env_list **env_head)
+void ft_init(int argc, char **argv, char **envp, t_env_list **env_head)
 {
-	clear();
+	(void)argv;
 	if (argc != 1)
 	{
-		ft_putstr_fd("No arguments accepted\n", 2);
+		ft_putstr_fd("minishell : no arguments accepted\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	clear();
 	ft_silience(envp);
 	ft_get_env_list(envp, env_head);
 }
