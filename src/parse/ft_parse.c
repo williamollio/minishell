@@ -29,6 +29,7 @@ char **ft_line_path(char **envp)
 		}
 		x++;
 	}
+	ft_get_paths(paths);
 	return (paths);
 }
 
@@ -98,13 +99,18 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
+			printf("arr[i%d] : %s\n", i, arr[i]);
 			ft_addback_parse(parse, arr[i], SYS);
 			ft_cmd(&i, parse, arr);
 		}
 		else
 		{
 			ft_arg(&i, parse, arr);
-			ft_operator(i, parse, arr);
+			if (ft_operator(i, parse, arr))
+			{
+				printf("shit\n");
+				break;
+			}
 		}
 		i++;
 	}

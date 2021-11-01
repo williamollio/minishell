@@ -9,14 +9,7 @@ void ft_sigint(int signal)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	else if (signal == SIGQUIT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		exit(EXIT_SUCCESS);
-	}
-	else if (signal == SIGSEGV)
+	else if (signal == SIGSEGV) // ??
 		exit(EXIT_FAILURE);
 }
 
@@ -76,7 +69,7 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		signal(SIGINT, &ft_sigint);
-		signal(SIGQUIT, &ft_sigint);
+		signal(SIGQUIT, SIG_IGN); // ctrl + slash
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);

@@ -28,3 +28,12 @@ t_parse *ft_get_list(t_parse *parse_list)
 		list = parse_list;
 	return (list);
 }
+
+char **ft_get_paths(char **paths)
+{
+	static char **paths2;
+
+	if (paths)
+		paths2 = paths;
+	return (paths2);
+}
