@@ -27,7 +27,7 @@ int ft_operator(int i, t_parse **parse, char **arr)
 	int	op;
 
 	op = ft_operator_tool(i, arr);
-	if (ft_pipe(i, parse, arr, op))
+	if (ft_pipe_error(i, parse, arr, op))
 		return (1);
 	ft_file(i, parse, arr, op);
 	if ((* parse) != NULL && op != 0)

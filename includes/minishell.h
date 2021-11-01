@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/01 15:31:43 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/01 18:48:16 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #define clear() printf("\033[H\033[J")
 
 #include <stdlib.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -56,27 +57,59 @@ typedef struct	s_parse
 	struct s_parse		*next;
 }			t_parse;
 
+typedef struct s_exec
+{
+	int		pipes[2];
+	pid_t	pid;
+	int		temp_fd;
+	int		stout;
+	int		outfile;
+	int		infile;
+}			t_exec;
+
+typedef struct s_sys
+{
+	char	**paths;
+	char 	**split;
+	char	*pathname;
+	char	*cmdpath;
+	char 	*join_space;
+	char 	*join_arg;
+	int		rowsinpath;
+	int		x;
+}			t_sys;
+
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // initialize the shell
 
 /** BUILDINS FUNCTION **/
 void	ft_echo(char  *line);
-void	ft_cd(char  *line);
-void	ft_pwd(char  *line);
-// void	ft_export(char  *line);
-// void	ft_unset(char  *line);
-// void	ft_env(char **envp);
+void	ft_cd(t_env_list **env_head, char  *line);
+void	ft_pwd(void);
 void	ft_exit(void);
+void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
 
 /** SYSTEM FUNCTION **/
-void	ft_sys_funct_ex(char *line);
-void	ft_sys_funct_chck(char *line);
+// void	ft_make_test_list(t_parse **test_head); //for dummy
+// void	ft_addlist(t_parse **head_ref, char *s1, char *s2, int op, int flag, char *string); //for dummy
+// void	ft_print_list_test(t_parse *head); //for dummy
+
+void	ft_execution(t_parse *test, char **envp, t_env_list **env_head);
+void	ft_child_for_sys(t_parse *test, char **envp);
+void	ft_child_for_built(t_parse *test, t_env_list **env_head);
+void	ft_parent(t_exec *exec);
+void	ft_in_is_tempfd(t_exec *exec);
+int		ft_redirect_in(t_exec *exec, t_parse **test);
+void	ft_redirect_out(t_exec *exec, t_parse *test);
+void	ft_pipe(t_exec *exec);
+void	ft_fork(t_exec *exec);
 
 /** ERROR MANAGEMENT **/
-int		ft_pipe(int i, t_parse **parse, char **arr, int op); // check if there is an error when encountering a pipe
+void ft_error(char *line);
+int		ft_pipe_error(int i, t_parse **parse, char **arr, int op); // check if there is an error when encountering a pipe
 int		ft_first(char **paths, int i, t_parse **parse, char **arr); // check if there is an error when reading the first
 void	ft_msg_cmd(char *arr); // display message error when command not found
 void ft_msg_pars(char *arr); // display message error when encountering a parse error

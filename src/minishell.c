@@ -15,46 +15,38 @@ void ft_sigint(int signal)
 
 void ft_readinput(char *line, char **envp, t_env_list **env_head)
 {
-	int	i;
 	char **onlyForNow;
-	i = 0;
-	while (line[i])
+	char *improvised_parse; //weird edgecase with space
+
+	if (ft_strncmp(line, "echo", 4) == 0)
+		ft_echo(line);
+	else if (ft_strncmp(line, "export", 6) == 0)
 	{
-		if (ft_strncmp(&line[i], "echo", 4) == 0)
-		{
-			ft_echo(line);
-			return ;
-		}
-		else if (ft_strncmp(line, "export", 6) == 0)
-		{
-			onlyForNow = ft_split(line, ' ');
-			ft_export_node(env_head, onlyForNow[1]);
-			return ;
-		}
-		else if (ft_strncmp(line, "unset", 5) == 0)
-		{
-			onlyForNow = ft_split(line, ' ');
-			ft_delete_node(env_head, onlyForNow[1]);
-			return ;
-		}
-		else if (ft_strncmp(&line[i], "env", 3) == 0)
-		{
-			// ft_env(envp);
-			ft_print_list(*env_head);
-			return ;
-		}
-		else if (ft_strncmp(&line[i], "exit", 4) == 0)
-			ft_exit();
-		// else if (ft_strncmp(line, "cd", 2))
-		// 	ft_cd(line);
-		// else if (ft_strncmp(line, "pwd", 3))
-		// 	ft_pwd(line);
-		// else if (ft_sys_func_chck(line))
-		// 	ft_sys_func_ex(line);
-		i++;
+		onlyForNow = ft_split(line, ' ');
+		// ft_export_node(env_head, onlyForNow[1]); //normal
+		improvised_parse = ft_strjoin(onlyForNow[1], " ");
+		improvised_parse = ft_strjoin(improvised_parse, onlyForNow[2]);
+		ft_export_node(env_head, improvised_parse); //weird edgecase with space
 	}
+	else if (ft_strncmp(line, "unset", 5) == 0)
+	{
+		onlyForNow = ft_split(line, ' ');
+		// ft_delete_node(env_head, onlyForNow[1]); //normal
+		improvised_parse = ft_strjoin(onlyForNow[1], " ");
+		improvised_parse = ft_strjoin(improvised_parse, onlyForNow[2]);
+		ft_unset_node(env_head, improvised_parse); //edgecase with space
+	}
+	else if (ft_strncmp(line, "env", 3) == 0)
+		ft_print_list(*env_head);
+	else if (ft_strncmp(line, "exit", 4) == 0)
+		ft_exit();
+	else if (ft_strncmp(line, "pwd", 3) == 0)
+		ft_pwd();
+	else if (ft_strncmp(line, "cd", 2) == 0)
+		ft_cd(env_head, line);
+	else
+		ft_error(line);
 	(void)envp;
-	//ft_error(line);
 	return ;
 }
 
@@ -64,10 +56,16 @@ int main(int argc, char **argv, char **envp)
 	char		**arr;
 	t_env_list	*env_head;
 	t_parse		*parse;
+	int			fd_in_old = -1;
+	int			fd_out_old = -1;
 
+	fd_in_old = dup(0);
+	fd_out_old = dup(1);
 	ft_init(argc, argv, envp, &env_head);
 	while (1)
 	{
+		dup2(fd_in_old, 0); //needed, otherwise the outout from ft_sys_func gets written into readline --> infinite loop
+		dup2(fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
 		signal(SIGQUIT, SIG_IGN); // ctrl + slash
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
@@ -75,7 +73,7 @@ int main(int argc, char **argv, char **envp)
 			exit(EXIT_SUCCESS);
 		arr = ft_parsing(envp, line, &parse);
 		add_history(line);
-		//ft_readinput(line, envp, &env_head);
+		ft_execution(parse, envp, &env_head);
 		ft_print_list_parse(parse);
 		ft_free_list_parse(&parse);
 		ft_free2(arr);

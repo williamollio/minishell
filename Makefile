@@ -2,9 +2,12 @@ NAME = minishell.a
 
 CC = gcc
 
-SRC = ./src/minishell.c ./src/builtins/ft_builtins.c ./src/error/ft_error.c ./src/sys_func/ft_sys_func.c \
+SRC = ./src/minishell.c ./src/builtins/ft_builtins.c ./src/error/ft_error.c \
 		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse2.c \
-		./src/helper/ft_helper2.c ./src/parse/ft_parse3.c ./src/init/ft_init.c
+		./src/helper/ft_helper2.c ./src/parse/ft_parse3.c ./src/init/ft_init.c \
+		./src/builtins/ft_cd.c ./src/builtins/ft_export.c ./src/builtins/ft_pwd.c ./src/builtins/ft_unset.c \
+		./src/sys_func/ft_child_system.c ./src/sys_func/ft_child_builtin.c ./src/sys_func/ft_redirections.c \
+		./src/sys_func/ft_pipe_fork.c ./src/sys_func/ft_execution.c ./src/sys_func/temp_list.c \
 
 OBJ = $(SRC:.c=.o)
 

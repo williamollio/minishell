@@ -99,7 +99,7 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
-			printf("arr[i%d] : %s\n", i, arr[i]);
+			// printf("arr[i%d] : %s\n", i, arr[i]);
 			ft_addback_parse(parse, arr[i], SYS);
 			ft_cmd(&i, parse, arr);
 		}

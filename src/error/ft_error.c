@@ -18,7 +18,7 @@ int ft_first(char **paths, int i, t_parse **parse, char **arr)
 	return (0);
 }
 
-int ft_pipe(int i, t_parse **parse, char **arr, int op)
+int ft_pipe_error(int i, t_parse **parse, char **arr, int op)
 {
 	char	**paths;
 	(void)parse;
@@ -55,4 +55,9 @@ void ft_msg_pars(char *arr)
 	ft_putstr_fd(message, 2);
 	ft_putstr_fd(arr, 2);
 	ft_putstr_fd("'\n", 2);
+}
+
+void ft_error(char *line)
+{
+	printf("zsh: command not found : %s\n", line);
 }

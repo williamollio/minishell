@@ -40,9 +40,9 @@ void	ft_free_list_parse(t_parse **head_a)
 
 void	ft_init_parse(t_parse **head)
 {
-	(* head)->cmd = NULL;
-	(* head)->arg = NULL;
-	(* head)->str = NULL;
+	(* head)->cmd = "";
+	(* head)->arg = "";
+	(* head)->str = "";
 	(* head)->op = 0;
 	(* head)->flag = 0;
 }
