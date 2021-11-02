@@ -16,7 +16,6 @@ void ft_sigint(int signal)
 int main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	char		**arr;
 	t_env_list	*env_head;
 	t_parse		*parse;
 	int			fd_in_old = -1;
@@ -34,12 +33,11 @@ int main(int argc, char **argv, char **envp)
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
-		arr = ft_parsing(envp, line, &parse);
+		if (!ft_parsing(envp, line, &parse))
+			ft_execution(parse, envp, &env_head);
 		add_history(line);
-		ft_execution(parse, envp, &env_head);
-		//ft_print_list_parse(&parse);
+		ft_print_list_parse(&parse);
 		ft_free_list_parse(&parse);
-		ft_free2(arr);
 	}
 	return (0);
 }
