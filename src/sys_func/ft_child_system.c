@@ -32,16 +32,24 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 	exit(0);
 }
 
-// join str before split
+void	ft_create_split(t_sys *sys, t_parse *test)
+{
+	sys->join_space = ft_strjoin(test->cmd, " ");
+	sys->join_arg = ft_strjoin(sys->join_space, test->arg);
+	ft_free1(sys->join_space);
+	sys->join_space = ft_strjoin(sys->join_arg, " ");
+	ft_free1(sys->join_arg);
+	sys->join_str = ft_strjoin(sys->join_space, test->str);
+	ft_free1(sys->join_space);
+	sys->split = ft_split(sys->join_str, ' ');
+	ft_free1(sys->join_str);
+}
+
 void	ft_child_for_sys(t_parse *test, char **envp)
 {
 	t_sys	sys;
 
-	sys.join_space = ft_strjoin(test->cmd, " ");
-	sys.join_arg = ft_strjoin(sys.join_space, test->arg);
-	ft_free1(sys.join_space);
-	sys.split = ft_split(sys.join_arg, ' ');
-	ft_free1(sys.join_arg);
+	ft_create_split(&sys, test);
 	sys.rowsinpath = 0;
 	sys.x = 0;
 	while (envp[sys.x] != NULL)

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <sys/param.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
@@ -65,6 +66,7 @@ typedef struct s_sys
 	char	*cmdpath;
 	char 	*join_space;
 	char 	*join_arg;
+	char 	*join_str;
 	int		rowsinpath;
 	int		x;
 }			t_sys;
@@ -74,7 +76,7 @@ void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // initialize the shell
 
 /** BUILDINS FUNCTION **/
-void	ft_echo(char  *line);
+void	ft_echo(char  *str, char *arg);
 void	ft_cd(t_env_list **env_head, char  *line);
 void	ft_pwd(void);
 void	ft_exit(void);

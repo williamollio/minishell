@@ -96,7 +96,7 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
 			ft_cmd(&i, parse, arr);
-			ft_print_list_parse(parse);
+			// ft_print_list_parse(parse);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
