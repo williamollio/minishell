@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/02 09:04:17 by akurz            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -126,7 +116,7 @@ char	*ft_get_var(char *full);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
-void	ft_print_list_parse(t_parse *head); // print the list
+void	ft_print_list_parse(t_parse **head); // print the list
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr); // create the list
 void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created
