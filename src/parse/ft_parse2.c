@@ -26,14 +26,16 @@ int ft_operator(int i, t_parse **parse, char **arr)
 {
 	int	op;
 
+	if (arr[i] == NULL || arr[i+1] == NULL)
+		return(EXIT_SUCCESS);
 	op = ft_operator_tool(i, arr);
 	if (ft_pipe_error(i, parse, arr, op))
-		return (1);
+		return (EXIT_FAILURE);
 	ft_file(i, parse, arr, op);
 	if ((* parse) != NULL && op != 0)
 		ft_get_last(parse)->op = op;
 	else
-		return (0);
-	return (0);
+		return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 

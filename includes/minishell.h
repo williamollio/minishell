@@ -96,21 +96,21 @@ void	ft_pipe(t_exec *exec);
 void	ft_fork(t_exec *exec);
 
 /** ERROR MANAGEMENT **/
-void ft_error(char *line);
+void	ft_error(char *line);
 int		ft_pipe_error(int i, t_parse **parse, char **arr, int op); // check if there is an error when encountering a pipe
 int		ft_first(char **paths, int i, t_parse **parse, char **arr); // check if there is an error when reading the first
 void	ft_msg_cmd(char *arr); // display message error when command not found
-void ft_msg_pars(char *arr); // display message error when encountering a parse error
+void	ft_msg_pars(char *arr); // display message error when encountering a parse error
 
 /** PARSE **/
-char	**ft_parsing(char **envp, char *line, t_parse **parse); // general function
+int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
 int		check_commandpath(char **paths, char *cmd); // check if it's a system function
 char	**ft_line_path(char **envp); // line where PATH is in env
 int		ft_is_builtin(char *s); // check if the command is built-in
 int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
 void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
-int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
+void	ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
 void	ft_cmd(int *x, t_parse **parse, char **arr); // look at the following variables when encountering a cmd
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
@@ -125,6 +125,9 @@ void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
-char **ft_get_paths(char **paths); // get paths variable
+char	**ft_get_paths(char **paths); // get paths variable
 
 #endif
+
+/** TO DO **/
+/* free arr in parsing */
