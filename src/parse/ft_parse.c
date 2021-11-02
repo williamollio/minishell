@@ -79,7 +79,7 @@ int	check_commandpath(char **paths, char *cmd)
 	return (0);
 }
 
-char **ft_parsing(char **envp, char *line, t_parse **parse)
+int ft_parsing(char **envp, char *line, t_parse **parse)
 {
 	char	**arr;
 	char	**paths;
@@ -89,28 +89,33 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 	paths = ft_line_path(envp);
 	arr = ft_split(line, ' ');
 	if (ft_first(paths, i, parse, arr))
-		return (arr);
+		return (EXIT_FAILURE);
 	while (arr[i])
 	{
 		if (ft_is_builtin(arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
-			ft_cmd(&i, parse, arr);
+			//ft_cmd(&i, parse, arr);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], SYS);
-			ft_cmd(&i, parse, arr);
+			//ft_cmd(&i, parse, arr);
 		}
 		else
 		{
 			ft_arg(&i, parse, arr);
 			if (ft_operator(i, parse, arr))
-				break;
+			{
+				ft_free2(paths);
+				return (EXIT_FAILURE);
+			}
 		}
+		if (arr[i] == NULL)
+			break;
 		i++;
 	}
 	ft_free2(paths);
 	ft_get_list(*parse);
-	return (arr);
+	return (EXIT_SUCCESS);
 }
