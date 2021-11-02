@@ -6,15 +6,29 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 16:47:44 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/02 08:53:27 by akurz            ###   ########.fr       */
+/*   Updated: 2021/11/02 16:58:09 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(char *str)
+void	ft_echo(char *str, char *arg)
 {
-	printf("%s\n", str);
+	char	*join_space;
+	char	*join_str;
+	
+	if (ft_strncmp(arg, "-n", 2) == 0 && ft_strlen(arg) == 2)
+		printf("%s", str);
+	else if (arg[0] == '\0')
+		printf("%s\n", str);
+	else
+	{
+		join_space = ft_strjoin(arg, " ");
+		join_str = ft_strjoin(join_space, str);
+		free(join_space);
+		printf("%s\n", join_str);
+		free(join_str);
+	}
 }
 
 void	ft_exit(void)

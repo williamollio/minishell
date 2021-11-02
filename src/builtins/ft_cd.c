@@ -26,7 +26,11 @@ char	*ft_extract_content(t_env_list *env_head, char *var)
 	int		x;
 
 	while (ft_strncmp(env_head->var, var, ft_strlen(env_head->var)) != 0)
+	{
 		env_head = env_head->next;
+		if (env_head == NULL)
+			return (NULL);
+	}
 	x = 0;
 	while (env_head->full[x] != '=')
 	x++;
@@ -34,44 +38,73 @@ char	*ft_extract_content(t_env_list *env_head, char *var)
 	return (content);
 }
 
-// pwd should maybe not change when cd fails
+
+void	ft_reset_paths(t_env_list **env_head, char *current, char *old)
+{
+	ft_change_env_var(env_head, "PWD", current);
+	ft_change_env_var(env_head, "OLDPWD", old);
+}
+
+// make sure that william parses - as string and not as arg for cd
 void	ft_cd(t_env_list **env_head, char *path)
 {
 	char	*old;
-
-	printf("path = %s\n", path);
+	char	*current;
+	char	*home;
+	
 	old = ft_extract_content(*env_head, "OLDPWD");
+	current = ft_extract_content(*env_head, "PWD");
+	home = ft_extract_content(*env_head, "HOME");
 	if (path[0] == '\0' || ((ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1)) // fuer den fall cd ohne path oder cd --
 	{
-		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
-		if (chdir(ft_extract_content(*env_head, "HOME")) == -1)
+		if (home == NULL)
+			return ;
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, MAXPATHLEN));
+		if (chdir(home) == -1)
+		{
 			perror("");
-		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
-		return ;
+			ft_reset_paths(env_head, current, old);
+		}
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 	}
 	else if (ft_strncmp(path, "-", 1) == 0 && ft_strlen(path) == 1)
 	{
-		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
-		printf("%s\n", old);
+		if (old == NULL)
+			return ;
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, MAXPATHLEN));
 		if (chdir(old) == -1)
+		{
 			perror("");
-		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
-		return ;
+			ft_reset_paths(env_head, current, old);
+		}
+		else
+			printf("%s\n", old);
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 	}
 	else if (ft_strncmp(path, "~-", 2) == 0 && ft_strlen(path) == 2)
 	{
-		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
+		if (old == NULL)
+			return ;
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, MAXPATHLEN));
 		if (chdir(old) == -1)
+		{
 			perror("");
-		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
-		return ;
+			ft_reset_paths(env_head, current, old);
+		}
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 	}
 	else
 	{
-		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, MAXPATHLEN));
 		if (chdir(path) == -1)
+		{
 			perror(path);
-		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
-		return ;
+			ft_reset_paths(env_head, current, old);
+		}
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 	}
+	// ft_free1(old);
+	// ft_free1(current); //double free somewhere
+	// ft_free1(home);
+	return ;
 }
