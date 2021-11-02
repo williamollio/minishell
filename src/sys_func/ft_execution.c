@@ -28,6 +28,8 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 	t_exec	exec;
 
 	ft_init_exec(&exec);
+	if (!test)
+		return ;
 	if (ft_redirect_in(&exec, &test) == 1)
 		return ;
 	while (test != NULL)
@@ -38,7 +40,7 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 		ft_pipe(&exec);
 		ft_in_is_tempfd(&exec);
 		ft_redirect_out(&exec, test);
-		if (test->flag == BUILT)
+		if (test->flag == BUILT) //change to  build
 		{
 			ft_child_for_built(test, env_head);
 			ft_parent(&exec);
