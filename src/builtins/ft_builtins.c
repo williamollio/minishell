@@ -6,18 +6,15 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 16:47:44 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/01 17:33:28 by akurz            ###   ########.fr       */
+/*   Updated: 2021/11/02 08:53:27 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(char *line)
+void	ft_echo(char *str)
 {
-	char	*print;
-
-	print = ft_substr(line, 5, ft_strlen(line) - 5);
-	printf("%s\n", print);
+	printf("%s\n", str);
 }
 
 void	ft_exit(void)

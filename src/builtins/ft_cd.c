@@ -20,31 +20,51 @@ void	ft_change_env_var(t_env_list **env_head, char *change, char *new)
 	free(equal_temp);
 }
 
-// pwd should maybe not change when cd fails
-void	ft_cd(t_env_list **env_head, char *str)
+char	*ft_extract_content(t_env_list *env_head, char *var)
 {
-	char	*path;
-	
-	path = ft_substr(str, 3, ft_strlen(str) - 3);
+	char	*content;
+	int		x;
+
+	while (ft_strncmp(env_head->var, var, ft_strlen(env_head->var)) != 0)
+		env_head = env_head->next;
+	x = 0;
+	while (env_head->full[x] != '=')
+	x++;
+	content = ft_substr(env_head->full, x + 1, ft_strlen(env_head->full) - x);
+	return (content);
+}
+
+// pwd should maybe not change when cd fails
+void	ft_cd(t_env_list **env_head, char *path)
+{
+	char	*old;
+
 	printf("path = %s\n", path);
-	//usually str is already pased in if i calll it in childe for builtin beacuse of parsing
-	if (path[0] == '\0' || (ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1)) // fuer den fall cd ohne path oder cd --
+	old = ft_extract_content(*env_head, "OLDPWD");
+	if (path[0] == '\0' || ((ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1)) // fuer den fall cd ohne path oder cd --
 	{
 		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
-		if (chdir(getenv("HOME")) == -1)
+		if (chdir(ft_extract_content(*env_head, "HOME")) == -1)
 			perror("");
 		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
 		return ;
 	}
-	else if (ft_strncmp(path, "-", 1) && ft_strlen(path) == 1)
+	else if (ft_strncmp(path, "-", 1) == 0 && ft_strlen(path) == 1)
 	{
-		// if (lastcd == NULL)
-		// 	return ;
-		// else
-		// {
-		// 	if (chdir(*lastcd) == -1)
-		// 		perror(*cd);
-		// } 
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
+		printf("%s\n", old);
+		if (chdir(old) == -1)
+			perror("");
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
+		return ;
+	}
+	else if (ft_strncmp(path, "~-", 2) == 0 && ft_strlen(path) == 2)
+	{
+		ft_change_env_var(env_head, "OLDPWD", getcwd(NULL, FILENAME_MAX));
+		if (chdir(old) == -1)
+			perror("");
+		ft_change_env_var(env_head, "PWD", getcwd(NULL, FILENAME_MAX));
+		return ;
 	}
 	else
 	{

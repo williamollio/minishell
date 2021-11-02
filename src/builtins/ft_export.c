@@ -76,6 +76,8 @@ void	ft_export_node(t_env_list **env_head, char *str)
 		ft_free2(nodes);
 		return ;
 	}
+	// ft_print_list(*env_head);
 	ft_add_export(env_head, str);
+	// ft_print_list(*env_head);
 	return ;
 }

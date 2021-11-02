@@ -6,7 +6,7 @@
 /*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:22:31 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/01 18:48:16 by akurz            ###   ########.fr       */
+/*   Updated: 2021/11/02 09:04:17 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,6 @@ void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
 
 /** SYSTEM FUNCTION **/
-// void	ft_make_test_list(t_parse **test_head); //for dummy
-// void	ft_addlist(t_parse **head_ref, char *s1, char *s2, int op, int flag, char *string); //for dummy
-// void	ft_print_list_test(t_parse *head); //for dummy
-
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head);
 void	ft_child_for_sys(t_parse *test, char **envp);
 void	ft_child_for_built(t_parse *test, t_env_list **env_head);
