@@ -96,7 +96,6 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
 			ft_cmd(&i, parse, arr);
-			ft_print_list_parse(parse);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
@@ -107,10 +106,7 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		{
 			ft_arg(&i, parse, arr);
 			if (ft_operator(i, parse, arr))
-			{
-				printf("shit\n");
 				break;
-			}
 		}
 		i++;
 	}

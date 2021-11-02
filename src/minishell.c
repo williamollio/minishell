@@ -37,9 +37,9 @@ int main(int argc, char **argv, char **envp)
 		arr = ft_parsing(envp, line, &parse);
 		add_history(line);
 		ft_execution(parse, envp, &env_head);
-		//ft_print_list_parse(&parse);
+		ft_print_list_parse(&parse);
 		ft_free_list_parse(&parse);
-		ft_free2(arr);
+		//ft_free2(arr);
 	}
 	return (0);
 }
