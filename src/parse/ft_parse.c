@@ -35,17 +35,17 @@ char **ft_line_path(char **envp)
 
 int	ft_is_builtin(char *s)
 {
-	if (ft_strncmp(s, "echo ", 5) == 0)
+	if (ft_strncmp(s, "echo", 4) == 0 && ft_strlen(s) == 4)
 		return (1);
-	else if (ft_strncmp(s, "pwd ", 4) == 0)
+	else if (ft_strncmp(s, "pwd", 3) == 0 && ft_strlen(s) == 3)
 		return (1);
-	else if (ft_strncmp(s, "cd ", 3) == 0)
+	else if (ft_strncmp(s, "cd", 2) == 0 && ft_strlen(s) == 2)
 		return (1);
 	else if (ft_strncmp(s, "export", 6) == 0 && ft_strlen(s) == 6)
 		return (1);
 	else if (ft_strncmp(s, "unset", 5) == 0 && ft_strlen(s) == 5)
 		return (1);
-	else if (ft_strncmp(s, "env ", 4) == 0)
+	else if (ft_strncmp(s, "env", 3) == 0 && ft_strlen(s) == 3)
 		return (1);
 	else if (ft_strncmp(s, "exit", 4) == 0 && ft_strlen(s) == 4)
 		return (1);
@@ -96,10 +96,10 @@ char **ft_parsing(char **envp, char *line, t_parse **parse)
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
 			ft_cmd(&i, parse, arr);
+			ft_print_list_parse(parse);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
-			// printf("arr[i%d] : %s\n", i, arr[i]);
 			ft_addback_parse(parse, arr[i], SYS);
 			ft_cmd(&i, parse, arr);
 		}
