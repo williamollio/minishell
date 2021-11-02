@@ -96,15 +96,13 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
 			i++;
-			ft_arg(&i, parse, arr);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], SYS);
 			i++;
-			ft_arg(&i, parse, arr);
 		}
-		if (ft_operator(i, parse, arr))
+		if (ft_arg(&i, parse, arr) || ft_operator(i, parse, arr))
 		{
 			ft_free2(paths);
 			return (EXIT_FAILURE);

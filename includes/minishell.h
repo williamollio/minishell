@@ -110,7 +110,7 @@ int		ft_is_builtin(char *s); // check if the command is built-in
 int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
 void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
-void	ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
+int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);

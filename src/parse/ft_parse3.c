@@ -16,7 +16,7 @@ void ft_append(int i, char **arr, char **str)
 		*str = temp;
 	}
 }
-void ft_arg(int *x, t_parse **parse, char **arr)
+int ft_arg(int *x, t_parse **parse, char **arr)
 {
 	t_parse	*last;
 	int		i;
@@ -25,7 +25,7 @@ void ft_arg(int *x, t_parse **parse, char **arr)
 	if (*parse != NULL)
 		last = ft_get_last(parse);
 	else
-		return ;
+		return (EXIT_SUCCESS);
 	if (last->cmd && ft_strncmp(last->str, "", 1) == 0)
 	{
 		while (arr[*x] != '\0' && arr[*x][0] == '-' && !ft_operator_tool(*x, arr))
@@ -39,5 +39,5 @@ void ft_arg(int *x, t_parse **parse, char **arr)
 			*x += 1;
 		}
 	}
-	return ;
+	return (EXIT_SUCCESS);
 }
