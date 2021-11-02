@@ -92,25 +92,22 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 		return (EXIT_FAILURE);
 	while (arr[i])
 	{
-		//printf("arr[i%d] %s\n",i, arr[i]);
-		//if (*parse != NULL)
-			//printf("last->str : %s\n", ft_get_last(parse)->str);
 		if (ft_is_builtin(arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
+			i++;
+			ft_arg(&i, parse, arr);
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], SYS);
-		}
-		else
-		{
+			i++;
 			ft_arg(&i, parse, arr);
-			if (ft_operator(i, parse, arr))
-			{
-				ft_free2(paths);
-				return (EXIT_FAILURE);
-			}
+		}
+		if (ft_operator(i, parse, arr))
+		{
+			ft_free2(paths);
+			return (EXIT_FAILURE);
 		}
 		if (arr[i] == NULL)
 			break;

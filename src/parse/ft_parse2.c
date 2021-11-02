@@ -37,8 +37,6 @@ int ft_operator(int i, t_parse **parse, char **arr)
 	if (ft_pipe_error(i, parse, arr, op))
 		return (EXIT_FAILURE);
 	ft_file(i, parse, arr, op);
-	printf("arr[i%d] %s\n",i, arr[i]);
-	printf("last->str : %s\n", ft_get_last(parse)->str);
 	return (EXIT_SUCCESS);
 }
 
