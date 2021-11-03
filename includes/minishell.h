@@ -85,16 +85,16 @@ void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
 
-/** SYSTEM FUNCTION **/
-void	ft_execution(t_parse *test, char **envp, t_env_list **env_head);
-void	ft_child_for_sys(t_parse *test, char **envp);
-void	ft_child_for_built(t_parse *test, t_env_list **env_head);
-void	ft_parent(t_exec *exec);
-void	ft_in_is_tempfd(t_exec *exec);
-int		ft_redirect_in(t_exec *exec, t_parse **test);
-void	ft_redirect_out(t_exec *exec, t_parse *test);
-void	ft_pipe(t_exec *exec);
-void	ft_fork(t_exec *exec);
+/** EXECUTION **/
+void	ft_execution(t_parse *test, char **envp, t_env_list **env_head); // main of pipex part
+void	ft_child_for_sys(t_parse *test, char **envp); // execute system commands
+void	ft_child_for_built(t_parse *test, t_env_list **env_head); // execute builtin commands
+void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
+void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input
+int		ft_redirect_in(t_exec *exec, t_parse **test); // takes input either from infile or stdin
+void	ft_redirect_out(t_exec *exec, t_parse *test); // redirect output either to file, stdout or pipe
+void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
+void	ft_fork(t_exec *exec); // fork a process
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);
@@ -113,9 +113,9 @@ int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where opera
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
 void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
 int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
-void	ft_get_env_list(char **envp, t_env_list **env_head);
-char	*ft_get_content(char *full);
-char	*ft_get_var(char *full);
+void	ft_get_env_list(char **envp, t_env_list **env_head); // turns env variable into a list
+char	*ft_get_content(char *full); // returns content from env string
+char	*ft_get_var(char *full); // returns var from env string
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
@@ -127,8 +127,17 @@ t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
 char	**ft_get_paths(char **paths); // get paths variable
+char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
 
 #endif
 
 /** TO DO **/
 /* free arr in parsing */
+
+
+
+/** -------------------------------- alex -------------------------------- **/
+/* when minishell starts, OLDPWD shouldnt exist */
+/* add heredoc (<<) */
+/* init struct vars */
+/* execute builtins in child when theres morethen 1 cmd */

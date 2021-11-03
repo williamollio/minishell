@@ -20,25 +20,6 @@ void	ft_change_env_var(t_env_list **env_head, char *change, char *new)
 	free(equal_temp);
 }
 
-char	*ft_extract_content(t_env_list *env_head, char *var)
-{
-	char	*content;
-	int		x;
-
-	while (ft_strncmp(env_head->var, var, ft_strlen(env_head->var)) != 0)
-	{
-		env_head = env_head->next;
-		if (env_head == NULL)
-			return (NULL);
-	}
-	x = 0;
-	while (env_head->full[x] != '=')
-	x++;
-	content = ft_substr(env_head->full, x + 1, ft_strlen(env_head->full) - x);
-	return (content);
-}
-
-
 void	ft_reset_paths(t_env_list **env_head, char *current, char *old)
 {
 	ft_change_env_var(env_head, "PWD", current);

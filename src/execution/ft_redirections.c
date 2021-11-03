@@ -32,8 +32,6 @@ int	ft_redirect_in(t_exec *exec, t_parse **test)
 	return (0);
 }
 
-// problem: outfile is currentyl in the same node as command 
-// for outfile the file to open might be different depending how william parses input
 void	ft_redirect_out(t_exec *exec, t_parse *test)
 {
 	if (test->op == 0) //if its the last command and no outfile exists
