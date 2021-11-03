@@ -1,21 +1,6 @@
 #include "../../includes/minishell.h"
 
-// int ft_str(int i, t_parse **parse, char **arr)
-// {
-// 	t_parse *last;
-
-// 	if (*parse != NULL)
-// 		last = ft_get_last(parse);
-// 	else
-// 		return (0);
-// 	if (arr[i + 1] != NULL && !ft_operator_tool((i + 1), arr))
-// 		last->str = arr[i + 1];
-// 	else
-// 		return (0);
-// 	return (1);
-// }
-
-void ft_append(int i, char **arr, char **str)
+static void ft_append(int i, char **arr, char **str)
 {
 	char	*temp;
 
@@ -31,7 +16,30 @@ void ft_append(int i, char **arr, char **str)
 		*str = temp;
 	}
 }
-void ft_arg(int *x, t_parse **parse, char **arr)
+int ft_arg_built_in(t_parse **parse)
+{
+	t_parse	*tmp;
+
+	tmp = *parse;
+	while (tmp != NULL)
+	{
+		if (tmp->flag == 6 && ft_strncmp(tmp->arg, "", 1) != 0)
+		{
+			if ((ft_strncmp(tmp->cmd, "echo", 4) == 0 && ft_strlen(tmp->cmd) == 4) &&
+				(ft_strncmp(tmp->arg, "-n", 2) == 0 && ft_strlen(tmp->arg) == 2))
+				break;
+			else
+			{
+				ft_msg_arg(tmp->arg);
+				return (EXIT_FAILURE);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int ft_arg(int *x, t_parse **parse, char **arr)
 {
 	t_parse	*last;
 	int		i;
@@ -40,8 +48,8 @@ void ft_arg(int *x, t_parse **parse, char **arr)
 	if (*parse != NULL)
 		last = ft_get_last(parse);
 	else
-		return ;
-	if (last->cmd)
+		return (EXIT_SUCCESS);
+	if (last->cmd && ft_strncmp(last->str, "", 1) == 0)
 	{
 		while (arr[*x] != '\0' && arr[*x][0] == '-' && !ft_operator_tool(*x, arr))
 		{
@@ -54,25 +62,7 @@ void ft_arg(int *x, t_parse **parse, char **arr)
 			*x += 1;
 		}
 	}
-	return ;
+	if (ft_arg_built_in(parse))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
-
-// void ft_cmd(int *x, t_parse **parse, char **arr)
-// {
-// 	int	i;
-// 	int	i1;
-
-// 	i = *x;
-// 	i1 = i + 1;
-// 	if (arr[i] != NULL && arr[i1] != NULL)
-// 	{
-// 		while (!ft_operator_tool(i1, arr) &&
-// 			arr[i1][0] != '-')
-// 		{
-// 			ft_get_last(parse)->str = arr[i1];
-// 			*x += 1;
-// 		}
-// 	}
-// 	else
-// 		return ;
-// }

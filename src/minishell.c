@@ -34,9 +34,11 @@ int main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
 		if (!ft_parsing(envp, line, &parse))
+		{
+			ft_print_list_parse(&parse);
 			ft_execution(parse, envp, &env_head);
+		}
 		add_history(line);
-		ft_print_list_parse(&parse);
 		ft_free_list_parse(&parse);
 	}
 	return (0);

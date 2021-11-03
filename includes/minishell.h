@@ -101,6 +101,7 @@ int		ft_pipe_error(int i, t_parse **parse, char **arr, int op); // check if ther
 int		ft_first(char **paths, int i, t_parse **parse, char **arr); // check if there is an error when reading the first
 void	ft_msg_cmd(char *arr); // display message error when command not found
 void	ft_msg_pars(char *arr); // display message error when encountering a parse error
+void	ft_msg_arg(char *arr); // display message error when encountering an option with a built-in
 
 /** PARSE **/
 int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
@@ -110,8 +111,7 @@ int		ft_is_builtin(char *s); // check if the command is built-in
 int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
 void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
-void	ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
-void	ft_cmd(int *x, t_parse **parse, char **arr); // look at the following variables when encountering a cmd
+int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
 void	ft_get_env_list(char **envp, t_env_list **env_head);
 char	*ft_get_content(char *full);
 char	*ft_get_var(char *full);

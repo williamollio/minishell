@@ -95,21 +95,17 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 		if (ft_is_builtin(arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], BUILT);
-			//ft_cmd(&i, parse, arr);
+			i++;
 		}
 		else if (check_commandpath(paths, arr[i]))
 		{
 			ft_addback_parse(parse, arr[i], SYS);
-			//ft_cmd(&i, parse, arr);
+			i++;
 		}
-		else
+		if (ft_arg(&i, parse, arr) || ft_operator(i, parse, arr))
 		{
-			ft_arg(&i, parse, arr);
-			if (ft_operator(i, parse, arr))
-			{
-				ft_free2(paths);
-				return (EXIT_FAILURE);
-			}
+			ft_free2(paths);
+			return (EXIT_FAILURE);
 		}
 		if (arr[i] == NULL)
 			break;

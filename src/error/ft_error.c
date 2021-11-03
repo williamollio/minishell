@@ -45,6 +45,16 @@ void ft_msg_cmd(char *arr)
 	ft_putstr_fd(message, 2);
 }
 
+void ft_msg_arg(char *arr)
+{
+	char	*message;
+
+	message = ": option not allowed with built-in\n";
+	ft_putstr_fd("minishell : ", 2);
+	ft_putstr_fd(arr, 2);
+	ft_putstr_fd(message, 2);
+}
+
 void ft_msg_pars(char *arr)
 {
 
