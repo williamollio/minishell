@@ -2,7 +2,6 @@
 
 void	ft_child_for_built(t_parse *test, t_env_list **env_head)
 {
-	// add -n flag
 	if (ft_strncmp(test->cmd, "echo", 4) == 0)
 		ft_echo(test->str, test->arg);
 	else if (ft_strncmp(test->cmd, "export", 6) == 0)
@@ -17,10 +16,5 @@ void	ft_child_for_built(t_parse *test, t_env_list **env_head)
 		ft_pwd();
 	else if (ft_strncmp(test->cmd, "cd", 2) == 0)
 		ft_cd(env_head, test->str);
-	// else
-	// {
-	// 	ft_error(test->cmd);
-	// 	return (1);
-	// }
 	return ;
 }

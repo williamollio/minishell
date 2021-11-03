@@ -56,6 +56,7 @@ typedef struct s_exec
 	int		stout;
 	int		outfile;
 	int		infile;
+	int		cmdcount;
 }			t_exec;
 
 typedef struct s_sys
