@@ -20,6 +20,7 @@ void	ft_init_exec(t_exec *exec)
 	exec->stout = dup(STDOUT_FILENO);
 	exec->outfile = -1;
 	exec->infile = -1;
+	exec->cmdcount = 0;
 }
 
 //path to opening infile might be different, depending how william parses input
@@ -40,7 +41,7 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 		ft_pipe(&exec);
 		ft_in_is_tempfd(&exec);
 		ft_redirect_out(&exec, test);
-		if (test->flag == BUILT) //change to  build
+		if (test->flag == BUILT)
 		{
 			ft_child_for_built(test, env_head);
 			ft_parent(&exec);
