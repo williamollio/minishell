@@ -7,9 +7,9 @@
 #define clear() printf("\033[H\033[J")
 
 #include <stdlib.h>
-#include <fcntl.h>
+#include <fcntl.h> // for open and all open flags
 #include <stdio.h>
-#include <sys/param.h>
+#include <sys/param.h> // for MAXPATHLEN macro
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
@@ -95,6 +95,8 @@ int		ft_redirect_in(t_exec *exec, t_parse **test); // takes input either from in
 void	ft_redirect_out(t_exec *exec, t_parse *test); // redirect output either to file, stdout or pipe
 void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
 void	ft_fork(t_exec *exec); // fork a process
+int		ft_countrows(char **paths); // counts rows in a 2d array
+void	ft_heredoc(t_exec *exec, t_parse *test); //opens heredoc, that waits fors limiter
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);
@@ -128,16 +130,19 @@ t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
 char	**ft_get_paths(char **paths); // get paths variable
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
+void	ft_system_executer(char *str, char **envp); // execute any bash command by passing the cmd string as str and env as envp
 
 #endif
 
 /** TO DO **/
 /* free arr in parsing */
+/* in ft_exit all shit has to be freed and cleared */
 
 
 
 /** -------------------------------- alex -------------------------------- **/
 /* when minishell starts, OLDPWD shouldnt exist */
 /* add heredoc (<<) */
+/* currently we exit often when errors occur (maybe not good) */
 /* init struct vars */
 /* execute builtins in child when theres morethen 1 cmd */
