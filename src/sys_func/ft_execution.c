@@ -33,7 +33,7 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 		return ;
 	if (ft_redirect_in(&exec, &test) == 1)
 		return ;
-	while (test != NULL)
+	while (test != NULL && test->flag != FILE)
 	{
 		// if (keine pipe vor oder nach nem command, exec built in main)
 		// else (muss auch fuer builtins forken um das command im child zu executen)

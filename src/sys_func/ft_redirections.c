@@ -49,7 +49,7 @@ void	ft_redirect_out(t_exec *exec, t_parse *test)
 	}
 	else if(test->op == OUT)//if its the last command and outfile exists
 	{
-		exec->outfile = open(test->str, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		exec->outfile = open(test->next->str, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		dup2(exec->outfile, 1);
 		close(exec->outfile);
 		close(exec->stout);
@@ -57,7 +57,7 @@ void	ft_redirect_out(t_exec *exec, t_parse *test)
 	}
 	else if(test->op == RIGHT)//if its the last command and outfile exists
 	{
-		exec->outfile = open(test->str, O_RDWR | O_CREAT | O_APPEND, 0777);
+		exec->outfile = open(test->next->str, O_RDWR | O_CREAT | O_APPEND, 0777);
 		dup2(exec->outfile, 1);
 		close(exec->outfile);
 		close(exec->stout);
