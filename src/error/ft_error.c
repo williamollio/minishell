@@ -3,6 +3,9 @@
 int ft_first(char **paths, int i, t_parse **parse, char **arr)
 {
 	(void)parse;
+
+	//if (ft_strncmp(arr[0], "\n", 1) == 0)
+	//	return (EXIT_FAILURE);
 	if (ft_operator_tool(i, arr) == 1)
 	{
 		ft_msg_pars(arr[0]);
