@@ -101,6 +101,7 @@ int		ft_pipe_error(int i, t_parse **parse, char **arr, int op); // check if ther
 int		ft_first(char **paths, int i, t_parse **parse, char **arr); // check if there is an error when reading the first
 void	ft_msg_cmd(char *arr); // display message error when command not found
 void	ft_msg_pars(char *arr); // display message error when encountering a parse error
+void	ft_msg_arg(char *arr); // display message error when encountering an option with a built-in
 
 /** PARSE **/
 int		ft_parsing(char **envp, char *line, t_parse **parse); // general function

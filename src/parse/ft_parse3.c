@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void ft_append(int i, char **arr, char **str)
+static void ft_append(int i, char **arr, char **str)
 {
 	char	*temp;
 
@@ -16,6 +16,29 @@ void ft_append(int i, char **arr, char **str)
 		*str = temp;
 	}
 }
+int ft_arg_built_in(t_parse **parse)
+{
+	t_parse	*tmp;
+
+	tmp = *parse;
+	while (tmp != NULL)
+	{
+		if (tmp->flag == 6 && ft_strncmp(tmp->arg, "", 1) != 0)
+		{
+			if ((ft_strncmp(tmp->cmd, "echo", 4) == 0 && ft_strlen(tmp->cmd) == 4) &&
+				(ft_strncmp(tmp->arg, "-n", 2) == 0 && ft_strlen(tmp->arg) == 2))
+				break;
+			else
+			{
+				ft_msg_arg(tmp->arg);
+				return (EXIT_FAILURE);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int ft_arg(int *x, t_parse **parse, char **arr)
 {
 	t_parse	*last;
@@ -39,5 +62,7 @@ int ft_arg(int *x, t_parse **parse, char **arr)
 			*x += 1;
 		}
 	}
+	if (ft_arg_built_in(parse))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
