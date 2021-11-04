@@ -27,6 +27,11 @@ int	ft_redirect_in(t_exec *exec, t_parse **test)
 		close(exec->infile);
 		*test = (*test)->next;
 	}
+	else if ((*test)->op == LEFT)
+	{
+		ft_heredoc(exec, *test);
+		*test = (*test)->next;
+	}
 	else
 		exec->temp_fd = dup(STDIN_FILENO);
 	return (0);

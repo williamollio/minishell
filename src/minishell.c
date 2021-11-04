@@ -29,11 +29,11 @@ int main(int argc, char **argv, char **envp)
 		dup2(fd_in_old, 0);
 		dup2(fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
-		signal(SIGQUIT, SIG_IGN); // ctrl + slash
+		signal(SIGQUIT, SIG_IGN);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
-		if (!ft_parsing(envp, line, &parse))
+		if ((ft_strncmp(ft_strtrim(line, " "), "\n", 1) && ft_strlen(ft_strtrim(line, " "))) && !ft_parsing(envp, line, &parse))
 		{
 			ft_print_list_parse(&parse);
 			ft_execution(parse, envp, &env_head);
