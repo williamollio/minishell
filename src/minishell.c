@@ -9,8 +9,8 @@ void ft_sigint(int signal)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	else if (signal == SIGSEGV) // ??
-		exit(EXIT_FAILURE);
+	// else if (signal == SIGSEGV) // ??
+	// 	exit(EXIT_FAILURE);
 }
 
 int main(int argc, char **argv, char **envp)
