@@ -118,7 +118,9 @@ char	*ft_get_var(char *full); // returns var from env string
 
 /* NEW PARSING */
 char	**ft_line_path(char **envp); // line where PATH is in env
+int		countrows(char **paths); // count rows in paths
 int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
+
 
 void	ft_space(char *line, int *x); // skip spaces
 int		ft_caller_builtin(t_parse **parse, char *line, int *x); // call the function ft_is_buildin and creates a node if necessary
@@ -138,8 +140,10 @@ void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
-char	**ft_get_paths(char **paths); // get paths variable
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
+
+/* NEW HELPER */
+//t_path	*ft_get_paths(t_path *path); // static function to get the t_path struct
 
 #endif
 

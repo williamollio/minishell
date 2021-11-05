@@ -88,7 +88,7 @@ int ft_caller_builtin(t_parse **parse, char *line, int *x)
 	return (EXIT_FAILURE);
 }
 
-static int	countrows(char **paths)
+int	countrows(char **paths)
 {
 	int	i;
 
@@ -122,11 +122,12 @@ char *ft_clean_sys_fct(char *line, int *x, int *y)
 {
 	char	*cmd;
 
-	if (*x != 0 && (line[*x - 1] != ' ' && ft_op(line, *x - 1) == 0))
+	if ((line[*x] == ' ' || ft_op(line, *x) != 0) ||
+		(*x != 0 && (line[*x - 1] != ' ' && ft_op(line, *x - 1) == 0)))
 		return (NULL);
 	while (line[(*x) + (*y)] && ft_op(line, (*x) + (*y)) == 0
 			&& line[(*x) + (*y)] != ' ')
-		*y +=1;
+			*y +=1;
 	if (line[(*x) + (*y)] == ' ' || ft_op(line, (*x) + (*y)) != 0 || line[(*x) + (*y)] == '\0')
 	{
 		cmd = ft_substr(line, *x, *y);
@@ -141,31 +142,28 @@ int ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x)
 	int		i;
 	char	*ret;
 	char	*slash;
-	int		rows;
 	char	*cmd;
 	int		y;
+	int		rows;
 
-	(void)parse;
 	y = 0;
-	//printf("*x %d\n", *x);
-	//printf("line[*x] %c\n", line[*x]);
-	rows = countrows(paths);
 	cmd = ft_clean_sys_fct(line, x, &y);
 	i = 0;
+	rows = countrows(paths);
 	while (i <= rows)
 	{
 		slash = ft_strjoin(paths[i], "/");
 		ret = ft_strjoin(slash, cmd);
+		ft_free1(slash);
 		if (access(ret, F_OK) != -1)
 		{
-			ft_free1(slash);
-			ft_free1(ret);
 			*x += y;
+			ft_free1(ret);
+			ft_addback_parse(parse, cmd, SYS);
 			return (EXIT_SUCCESS);
 		}
+		ft_free1(ret);
 		i++;
 	}
-	ft_free1(slash);
-	ft_free1(ret);
 	return (EXIT_FAILURE);
 }
