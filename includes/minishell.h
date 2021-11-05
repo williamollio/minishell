@@ -1,5 +1,3 @@
-
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -13,9 +11,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
-#include "stdbool.h" // for boolean variable type
-#include <signal.h> // for the signal function
-#include <errno.h> // for errno var
+#include "stdbool.h"
+#include <signal.h>
+#include <errno.h>
 
 /** OP VARIABLE **/
 # define PIPE 1 // |
@@ -109,7 +107,6 @@ void	ft_msg_arg(char *arr); // display message error when encountering an option
 /** PARSE **/
 int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
 int		check_commandpath(char **paths, char *cmd); // check if it's a system function
-char	**ft_line_path(char **envp); // line where PATH is in env
 //int		ft_is_builtin(char *s); // check if the command is built-in
 int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
 int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
@@ -120,14 +117,17 @@ char	*ft_get_content(char *full); // returns content from env string
 char	*ft_get_var(char *full); // returns var from env string
 
 /* NEW PARSING */
+char	**ft_line_path(char **envp); // line where PATH is in env
+int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
+
 void	ft_space(char *line, int *x); // skip spaces
 int		ft_caller_builtin(t_parse **parse, char *line, int *x); // call the function ft_is_buildin and creates a node if necessary
 int		ft_is_builtin(char *line, int x, int *y); // check if the command is built-in
-int		ft_strncmp2(const char *str1, const char *str2, int num, int *i); // takes a pointer as in index
+int		ft_strncmp2(const char *str1, const char *str2, int x, int *i); // takes a pointer as in index
 
 int		ft_op(const char *line, int i); // look for operators
 int		ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x); // call the function checkcommand
-char		*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
+char	*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);

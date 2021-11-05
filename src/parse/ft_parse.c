@@ -34,11 +34,13 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 	// 	return (EXIT_FAILURE);
 	while (line[i])
 	{
+		printf("before i : %d\n", i);
 		ft_space(line, &i);
-		if (!ft_caller_builtin(parse, line, &i))
+		if (!ft_caller_builtin(parse, line, &i)) //pwdpwd
 			printf("builtin found\n");
-		else if (!ft_caller_sys_fct(parse, paths, line, &i))
-			printf("sys function found\n");
+		// else if (!ft_caller_sys_fct(parse, paths, line, &i))
+		// 	printf("sys function found\n");
+		printf("after i : %d\n", i);
 		i++;
 		//ft_print_list_parse(parse);
 		// else if (check_commandpath(paths, arr[i]))

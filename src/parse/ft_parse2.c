@@ -26,11 +26,14 @@
 
 /* NEW */
 
-int	ft_strncmp2(const char *str1, const char *str2, int num, int *i)
+int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
 {
-	if (*i != 0 && (str1[*i - 1] != ' ' && ft_op(str1, *i - 1) == 0))
+	int	length;
+
+	length = ft_strlen(str2);
+	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) != 0))
 		return (EXIT_FAILURE);
-	while ((str1[*i] || str2[*i]) && *i < num)
+	while ((str1[*i] || str2[*i]) && *i < length)
 	{
 		if (str1[*i] != str2[*i])
 			return (EXIT_FAILURE);
@@ -50,19 +53,19 @@ void ft_space(char *line, int *x)
 
 int	ft_is_builtin(char *line, int x, int *y)
 {
-	if (ft_strncmp2(&line[x], "echo", 4, y) == 0)
+	if (ft_strncmp2(&line[x], "echo", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "pwd", 3, y) == 0)
+	else if (ft_strncmp2(&line[x], "pwd", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "cd", 2, y) == 0)
+	else if (ft_strncmp2(&line[x], "cd", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "export", 6, y) == 0)
+	else if (ft_strncmp2(&line[x], "export", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "unset", 5, y) == 0)
+	else if (ft_strncmp2(&line[x], "unset", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "env", 3, y) == 0)
+	else if (ft_strncmp2(&line[x], "env", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "exit", 4, y) == 0)
+	else if (ft_strncmp2(&line[x], "exit", x, y) == 0)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
@@ -143,8 +146,8 @@ int ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x)
 
 	(void)parse;
 	y = 0;
-	printf("*x %d\n", *x);
-	printf("line[*x] %s\n", line[*x]); // |ls
+	//printf("*x %d\n", *x);
+	//printf("line[*x] %c\n", line[*x]);
 	rows = countrows(paths);
 	cmd = ft_clean_sys_fct(line, x, &y);
 	i = 0;
@@ -156,12 +159,12 @@ int ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x)
 		{
 			ft_free1(slash);
 			ft_free1(ret);
-			//*x += y;
+			*x += y;
 			return (EXIT_SUCCESS);
 		}
 		i++;
 	}
-	// ft_free1(slash);
-	// ft_free1(ret);
+	ft_free1(slash);
+	ft_free1(ret);
 	return (EXIT_FAILURE);
 }
