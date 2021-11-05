@@ -31,15 +31,16 @@ int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
 	int	length;
 
 	length = ft_strlen(str2);
-	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) != 0))
+
+	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) == 0))
 		return (EXIT_FAILURE);
-	while ((str1[*i] || str2[*i]) && *i < length)
+	while ((str1[x + *i] || str2[x + *i]) && *i < length)
 	{
-		if (str1[*i] != str2[*i])
+		if (str1[x + *i] != str2[*i])
 			return (EXIT_FAILURE);
 		*i +=1;
 	}
-	if (str1[*i] == ' ' || ft_op(str1, *i) != 0 || str1[*i] == '\0')
+	if (str1[x + *i] == ' ' || ft_op(str1, x + *i) != 0 || str1[x + *i] == '\0')
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
@@ -53,19 +54,19 @@ void ft_space(char *line, int *x)
 
 int	ft_is_builtin(char *line, int x, int *y)
 {
-	if (ft_strncmp2(&line[x], "echo", x, y) == 0)
+	if (ft_strncmp2(line, "echo", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "pwd", x, y) == 0)
+	else if (ft_strncmp2(line, "pwd", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "cd", x, y) == 0)
+	else if (ft_strncmp2(line, "cd", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "export", x, y) == 0)
+	else if (ft_strncmp2(line, "export", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "unset", x, y) == 0)
+	else if (ft_strncmp2(line, "unset", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "env", x, y) == 0)
+	else if (ft_strncmp2(line, "env", x, y) == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp2(&line[x], "exit", x, y) == 0)
+	else if (ft_strncmp2(line, "exit", x, y) == 0)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
