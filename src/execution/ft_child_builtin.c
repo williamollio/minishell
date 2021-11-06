@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	ft_child_for_built(t_parse *test, t_env_list **env_head)
+void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status)
 {
 	if (ft_strncmp(test->cmd, "echo", 4) == 0)
 		ft_echo(test->str, test->arg);
@@ -16,5 +16,8 @@ void	ft_child_for_built(t_parse *test, t_env_list **env_head)
 		ft_pwd();
 	else if (ft_strncmp(test->cmd, "cd", 2) == 0)
 		ft_cd(env_head, test->str);
-	return ;
+	if (status == EX)
+		exit(0);
+	else if (status == RET)
+		return ;
 }
