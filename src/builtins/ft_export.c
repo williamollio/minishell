@@ -58,12 +58,31 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	}
 }
 
+void	ft_sort_env(t_env_list *env_head)
+{
+	t_env_list	*sorted;
+
+	while (env_head != NULL)
+	{
+		ft_addorder(&sorted, env_head->full);
+		env_head = env_head->next;
+	}
+	ft_print_list(sorted);
+	ft_free_list(&sorted);
+	return ;
+}
+
 // checks if there is multiple things to export
 void	ft_export_node(t_env_list **env_head, char *str)
 {
 	char	**nodes;
 	int		i;
 	
+	if (str[0] == '\0')
+	{
+		ft_sort_env(*env_head);
+		return ;
+	}
 	if (ft_strchr(str, ' '))
 	{
 		nodes = ft_split(str, ' ');

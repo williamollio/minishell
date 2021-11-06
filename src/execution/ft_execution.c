@@ -23,7 +23,7 @@ void	ft_init_exec(t_exec *exec)
 	exec->cmdcount = 0;
 }
 
-//path to opening infile might be different, depending how william parses input
+// path to opening infile might be different, depending how william parses input
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 {
 	t_exec	exec;
