@@ -29,6 +29,10 @@
 # define SYS 7
 # define FILE 8
 
+/** FLAG for child_builtin **/
+# define EX 9
+# define RET 10
+
 typedef struct	s_env_list
 {
 	char				*full;
@@ -88,7 +92,7 @@ void	ft_delete_node(t_env_list **env_head, char *str);
 /** EXECUTION **/
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head); // main of pipex part
 void	ft_child_for_sys(t_parse *test, char **envp); // execute system commands
-void	ft_child_for_built(t_parse *test, t_env_list **env_head); // execute builtin commands
+void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status); // execute builtin commands
 void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
 void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input
 int		ft_redirect_in(t_exec *exec, t_parse **test); // takes input either from infile or stdin
