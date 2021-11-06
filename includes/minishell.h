@@ -131,6 +131,10 @@ void	ft_print_node(t_parse *tmp); // print a node
 char	**ft_get_paths(char **paths); // get paths variable
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
 void	ft_system_executer(char *str, char **envp); // execute any bash command by passing the cmd string as str and env as envp
+void	ft_addorder(t_env_list **head, char *str); // add elements in alphabetical order to list
+void	ft_addfront(t_env_list **head, char *str); // add element to front of list 
+void	ft_addback_sorted(t_env_list **head, char *str); // variation of addback for sorting the list
+void	ft_free_list(t_env_list **head_a);
 
 #endif
 
