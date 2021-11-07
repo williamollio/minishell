@@ -29,29 +29,16 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 
 	i = 0;
 	paths = ft_line_path(envp);
-	// if (ft_first(paths, i, parse, line))
-	// 	return (EXIT_FAILURE);
 	while (line[i])
 	{
-		//ft_space(line, &i);
+		ft_space_bef(parse, line, &i);
 		if (!ft_caller_builtin(parse, line, &i))
 			printf("builtin found\n");
 		else if (!ft_caller_sys_fct(parse, paths, line, &i))
 			printf("sys function found\n");
-		i++;
-		//ft_print_list_parse(parse);
-		// else if (check_commandpath(paths, arr[i]))
-		// {
-		// 	ft_addback_parse(parse, arr[i], SYS);
-		// 	i++;
-		// }
-		// if (ft_arg(&i, parse, arr) || ft_operator(i, parse, arr))
-		// {
-		// 	ft_free2(paths);
-		// 	return (EXIT_FAILURE);
-		// }
-		// if (arr[i] == NULL)
-		// 	break;
+		//printf("line[i] %c\n", line[i]);
+		ft_space_after(parse, line, &i);
+		//i++;
 	}
 	ft_free2(paths);
 	ft_get_list(*parse);

@@ -1,37 +1,10 @@
 #include "../../includes/minishell.h"
 
-// void ft_file(int i, t_parse **parse, char **arr, int op)
-// {
-// 	if (op >= 2 && op <= 5)
-// 	{
-// 		ft_addback_parse(parse, arr[i + 1], FILE);
-// 		ft_get_last(parse)->op = op;
-// 	}
-// }
-
-// int ft_operator(int i, t_parse **parse, char **arr)
-// {
-// 	int	op;
-
-// 	if (arr[i] == NULL || arr[i + 1] == NULL)
-// 		return(EXIT_SUCCESS);
-// 	op = ft_operator_tool(i, arr);
-// 	if ((* parse) != NULL && op != 0)
-// 		ft_get_last(parse)->op = op;
-// 	if (ft_pipe_error(i, parse, arr, op))
-// 		return (EXIT_FAILURE);
-// 	ft_file(i, parse, arr, op);
-// 	return (EXIT_SUCCESS);
-// }
-
-/* NEW */
-
 int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
 {
 	int	length;
 
 	length = ft_strlen(str2);
-
 	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) == 0))
 		return (EXIT_FAILURE);
 	while ((str1[x + *i] || str2[x + *i]) && *i < length)
@@ -46,9 +19,103 @@ int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
 		return (EXIT_FAILURE);
 }
 
-void ft_space(char *line, int *x)
+int ft_operator_tool(char *str, int *x)
 {
-	while (line[*x] == ' ')
+	if (str[*x] == '|')
+	{
+		*x += 1;
+		return (1);
+	}
+	else if (ft_strnstr(&str[*x], "<<", 2) != NULL)
+		return (4);
+	else if (ft_strnstr(&str[*x], ">>", 2) != NULL)
+		return (5);
+	else if (str[*x] == '>')
+	{
+		*x += 1;
+		return (2);
+	}
+	else if (str[*x] == '<')
+	{
+		*x += 1;
+		return (3);
+	}
+	else
+		return (0);
+}
+
+void ft_file(t_parse **parse, char *line, int *x, int op)
+{
+	int		y;
+	int		t;
+	char	*str;
+
+	y = 0;
+	t = *x;
+	while (line[y] && line[y] != ' ')
+	{
+		*x += 1;
+		y++;
+	}
+	str = ft_substr(line, 0, y);
+	ft_addback_parse(parse, str, FILE);
+	ft_get_last(parse)->op = op;
+}
+void ft_operator_bef(t_parse **parse, char *line, int *x)
+{
+	int	op;
+
+	op = 0;
+	op = ft_operator_tool(line, x);
+	if (op)
+	{
+		if (op >= 2 && op <= 5)
+		{
+			if (op == 4 || op == 5)
+				*x += 2;
+			while (line[*x] && line[*x] == ' ')
+				*x+=1;
+			ft_file(parse, &line[*x], x, op);
+		}
+	}
+}
+
+void ft_operator_after(t_parse **parse, char *line, int *x)
+{
+	int	op;
+
+	op = 0;
+	op = ft_operator_tool(line, x);
+	if (op)
+	{
+		if (op >= 2 && op <= 5)
+		{
+			if (op == 4 || op == 5)
+				*x += 2;
+			while (line[*x] && line[*x] == ' ')
+				*x+=1;
+			ft_file(parse, &line[*x], x, op);
+		}
+		else
+			ft_get_last(parse)->op = op;
+	}
+}
+
+void ft_space_after(t_parse **parse, char *line, int *x)
+{
+	while (line[*x] && line[*x] == ' ')
+		*x+=1;
+	ft_operator_after(parse, line, x);
+	while (line[*x] && line[*x] == ' ')
+		*x+=1;
+}
+
+void ft_space_bef(t_parse **parse, char *line, int *x)
+{
+	while (line[*x] && line[*x] == ' ')
+		*x+=1;
+	ft_operator_bef(parse, line, x);
+	while (line[*x] && line[*x] == ' ')
 		*x+=1;
 }
 
