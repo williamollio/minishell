@@ -104,35 +104,30 @@ void	ft_msg_cmd(char *arr); // display message error when command not found
 void	ft_msg_pars(char *arr); // display message error when encountering a parse error
 void	ft_msg_arg(char *arr); // display message error when encountering an option with a built-in
 
-/** PARSE **/
-
-int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
-
 /* PARSING */
 void	ft_get_env_list(char **envp, t_env_list **env_head); // turns env variable into a list
 char	*ft_get_content(char *full); // returns content from env string
 char	*ft_get_var(char *full); // returns var from env string
-
 char	**ft_line_path(char **envp); // line where PATH is in env
 int		countrows(char **paths); // count rows in paths
 int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
-
-
-void	ft_space_bef(t_parse **parse, char *line, int *x); // skip spaces
-void	ft_space_after(t_parse **parse, char *line, int *x); // skip spaces
-
+void	ft_bef(t_parse **parse, char *line, int *x); // skip spaces
+void	ft_after(t_parse **parse, char *line, int *x); // skip spaces
 int		ft_caller_builtin(t_parse **parse, char *line, int *x); // call the function ft_is_buildin and creates a node if necessary
 int		ft_is_builtin(char *line, int x, int *y); // check if the command is built-in
 int		ft_strncmp2(const char *str1, const char *str2, int x, int *i); // takes a pointer as in index
-
 int		ft_op(const char *line, int i); // look for operators
 int		ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x); // call the function checkcommand
 char	*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
-
 int		ft_operator_tool(char *str, int *x); // looks for operator
 void	ft_operator_bef(t_parse **parse, char *line, int *x); //handle cases where operator appears before functions cmd
 void	ft_operator_after(t_parse **parse, char *line, int *x); //handle cases where operator appears after functions cmd
 void	ft_file(t_parse **parse, char *line, int *x, int op); // Initialize str file if needed
+void	ft_arg(t_parse **parse, char *line, int *x); // initialize arg variables
+void	ft_arg_tool(t_parse *last, char *line, int *x); // tool of the ft_arg
+void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage error cases in ft_arg
+void	ft_append(char **last_arg, char **arg) ; // append strings in the variables
+void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
@@ -146,7 +141,7 @@ void	ft_print_node(t_parse *tmp); // print a node
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
 
 /* NEW HELPER */
-//t_path	*ft_get_paths(t_path *path); // static function to get the t_path struct
+char	**ft_get_paths(char **paths); // static function to get paths variable
 
 #endif
 

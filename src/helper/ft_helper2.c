@@ -29,14 +29,14 @@ t_parse *ft_get_list(t_parse *parse_list)
 	return (list);
 }
 
-// t_path ft_get_paths(t_path path)
-// {
-// 	static t_path path2;
+char **ft_get_paths(char **paths)
+{
+	static char **paths2;
 
-// 	if (path ==  NULL)
-// 		path2 = path;
-// 	return (path2);
-// }
+	if (paths != NULL)
+		paths2 = paths;
+	return (paths2);
+}
 
 char	*ft_extract_content(t_env_list *env_head, char *var)
 {

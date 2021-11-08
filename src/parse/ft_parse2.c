@@ -1,24 +1,5 @@
 #include "../../includes/minishell.h"
 
-int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
-{
-	int	length;
-
-	length = ft_strlen(str2);
-	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) == 0))
-		return (EXIT_FAILURE);
-	while ((str1[x + *i] || str2[x + *i]) && *i < length)
-	{
-		if (str1[x + *i] != str2[*i])
-			return (EXIT_FAILURE);
-		*i +=1;
-	}
-	if (str1[x + *i] == ' ' || ft_op(str1, x + *i) != 0 || str1[x + *i] == '\0')
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
-}
-
 int ft_operator_tool(char *str, int *x)
 {
 	if (str[*x] == '|')
@@ -101,22 +82,43 @@ void ft_operator_after(t_parse **parse, char *line, int *x)
 	}
 }
 
-void ft_space_after(t_parse **parse, char *line, int *x)
+void ft_after(t_parse **parse, char *line, int *x)
 {
 	while (line[*x] && line[*x] == ' ')
 		*x+=1;
 	ft_operator_after(parse, line, x);
 	while (line[*x] && line[*x] == ' ')
 		*x+=1;
+	ft_arg(parse, line, x);
+	ft_str(parse, line, x);
 }
 
-void ft_space_bef(t_parse **parse, char *line, int *x)
+void ft_bef(t_parse **parse, char *line, int *x)
 {
 	while (line[*x] && line[*x] == ' ')
 		*x+=1;
 	ft_operator_bef(parse, line, x);
 	while (line[*x] && line[*x] == ' ')
 		*x+=1;
+}
+
+int	ft_strncmp2(const char *str1, const char *str2, int x, int *i)
+{
+	int	length;
+
+	length = ft_strlen(str2);
+	if (x != 0 && (str1[x - 1] != ' ' && ft_op(str1, x - 1) == 0))
+		return (EXIT_FAILURE);
+	while ((str1[x + *i] || str2[x + *i]) && *i < length)
+	{
+		if (str1[x + *i] != str2[*i])
+			return (EXIT_FAILURE);
+		*i +=1;
+	}
+	if (str1[x + *i] == ' ' || ft_op(str1, x + *i) != 0 || str1[x + *i] == '\0')
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
 }
 
 int	ft_is_builtin(char *line, int x, int *y)
