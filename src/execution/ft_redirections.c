@@ -39,31 +39,29 @@ int	ft_redirect_in(t_exec *exec, t_parse **test)
 
 void	ft_redirect_out(t_exec *exec, t_parse *test)
 {
-	if (test->op == 0) //if its the last command and no outfile exists
+	if (test->op == 0) // if its the last command and no outfile exists
 	{
 		dup2(exec->stout, STDOUT_FILENO);
 		close(exec->stout);
 		close(exec->pipes[1]);
 	}
-	else if (test->op == PIPE)//if its not the last command
+	else if (test->op == PIPE) // if its not the last command
 	{
 		dup2(exec->pipes[1], STDOUT_FILENO);
 		close(exec->pipes[1]);
 	}
-	else if(test->op == OUT)//if its the last command and outfile exists
+	else if(test->op == OUT) // if its the last command and outfile exists
 	{
 		exec->outfile = open(test->next->str, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		dup2(exec->outfile, 1);
 		close(exec->outfile);
-		close(exec->stout);
 		close(exec->pipes[1]);
 	}
-	else if(test->op == RIGHT)//if its the last command and outfile exists
+	else if(test->op == RIGHT) // if its the last command and outfile exists
 	{
 		exec->outfile = open(test->next->str, O_RDWR | O_CREAT | O_APPEND, 0777);
 		dup2(exec->outfile, 1);
 		close(exec->outfile);
-		close(exec->stout);
 		close(exec->pipes[1]);
 	}
 }
