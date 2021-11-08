@@ -60,17 +60,30 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 	}
 }
 
-void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
+void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i segfault if i have no commands, beause while loop statement has changed
 {
 	t_exec	exec;
 
 	ft_init_exec(&exec);
 	if (!test)
 		return ;
+	while (1) // only use last infile when there are multiple
+	{
+		if (test->next == NULL)
+			break ;
+		if (test->next->flag != FILE || test->flag != FILE)
+			break ;
+		test = test->next;
+	}
 	if (ft_redirect_in(&exec, &test) == 1)
 		return ;
 	exec.cmdcount = ft_count_cmds(test);
-	while (test != NULL && test->flag != FILE)
+	// the while loop conditions is bad. If there are multiple outfiles, i need to quit the whileloop,
+	// between the next to last and last node. I also need to open all outfiles but only write to the last one.
+	// its also possible that there are more commands coming after an outfile.
+	// Need to communicate this with william
+	// two file descriptors are left open for some reason.
+	while (test != NULL && test->flag != FILE) // (test != NULL && test->flag != FILE)
 	{
 		ft_pipe(&exec);
 		ft_in_is_tempfd(&exec);
@@ -82,6 +95,8 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head)
 		}
 		else if (test->flag == SYS || test->flag == BUILT)
 			ft_exec_multiple(test, envp, env_head, &exec);
+		else
+			ft_parent(&exec);
 		test = test->next;
 	}
 	ft_close_all(&exec);
