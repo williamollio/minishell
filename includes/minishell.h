@@ -88,10 +88,11 @@ void	ft_exit(void);
 void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
+void	ft_env(t_env_list *env_head);
 
 /** EXECUTION **/
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head); // main of pipex part
-void	ft_child_for_sys(t_parse *test, char **envp); // execute system commands
+void	ft_child_for_sys(t_parse *test, char **envp, t_env_list **env_head); // execute system commands
 void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status); // execute builtin commands
 void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
 void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input

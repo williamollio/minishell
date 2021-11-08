@@ -28,7 +28,9 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 		}
 		i++;
 	}
-	ft_putstr_fd("command not found\n", 2);
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": No such file or directory\n", 2); // because if the path is not valid i return this message, william checks if the cmd exists first
 	exit(0);
 }
 
@@ -45,32 +47,34 @@ void	ft_create_split(t_sys *sys, t_parse *test)
 	ft_free1(sys->join_str);
 }
 
-void	ft_child_for_sys(t_parse *test, char **envp)
+void	ft_child_for_sys(t_parse *test, char **envp, t_env_list **env_head)
 {
 	t_sys	sys;
 
 	ft_create_split(&sys, test);
 	sys.rowsinpath = 0;
-	sys.x = 0;
-	while (envp[sys.x] != NULL)
+	sys.pathname = ft_extract_content(*env_head, "PATH");
+	if (sys.pathname != NULL)
 	{
-		if (envp[sys.x][0] == 'P' && envp[sys.x][1] == 'A'
-		&& envp[sys.x][2] == 'T' && envp[sys.x][3] == 'H')
+		sys.paths = ft_split(sys.pathname, ':');
+		ft_free1(sys.pathname);
+		sys.rowsinpath = ft_countrows(sys.paths);
+		sys.cmdpath = ft_check_commandpath(sys.rowsinpath, sys.paths, test->cmd);
+		ft_free2(sys.paths);
+		if (execve(sys.cmdpath, sys.split, envp) == -1)
 		{
-			sys.pathname = ft_substr(envp[sys.x], 5, ft_strlen(envp[sys.x]) - 5);
-			sys.paths = ft_split(sys.pathname, ':');
-			ft_free1(sys.pathname);
-			sys.rowsinpath = ft_countrows(sys.paths);
-			sys.cmdpath = ft_check_commandpath(sys.rowsinpath, sys.paths, test->cmd);
-			ft_free2(sys.paths);
-			if (execve(sys.cmdpath, sys.split, envp) == -1)
-			{
-				ft_free2(sys.split);
-				ft_free1(sys.cmdpath);
-				perror("execve failed\n");
-				exit(0);
-			}
+			ft_free2(sys.split);
+			ft_free1(sys.cmdpath);
+			perror("execve failed\n");
+			exit(0);
 		}
-		sys.x++;
+	}
+	else
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(test->cmd, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		ft_free2(sys.split);
+		exit(0);
 	}
 }

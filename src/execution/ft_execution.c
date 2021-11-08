@@ -44,7 +44,7 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
-		ft_child_for_sys(test, envp);
+		ft_child_for_sys(test, envp, env_head);
 	}
 	if (test->flag == BUILT && exec->pid == 0)
 	{
