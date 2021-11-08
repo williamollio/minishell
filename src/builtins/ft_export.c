@@ -19,19 +19,19 @@ int	ft_export_edgecase(char *str)
 }
 
 // in here i write a new var to env and override the content if var already exists
-// cant change first element and cant change _ atm
 void	ft_add_export(t_env_list **env_head, char *str)
 {
 	t_env_list	*temp;
+	t_env_list	*prev;
 	t_env_list	*temp_2;
 	t_env_list	*newNode;
 
 	temp = *env_head;
+	prev = *env_head;
 	if (ft_export_edgecase(str) == 1)
 		return ;
-	while (ft_strncmp(temp->next->var, "_", ft_strlen(temp->next->var)))
+	while (temp != NULL)
 	{
-		temp = temp->next;
 		if (ft_strncmp(temp->var, ft_get_var(str), ft_strlen(temp->var)) == 0 && ft_strlen(temp->var) == ft_strlen(ft_get_var(str)))
 		{
 			free(temp->content);
@@ -42,9 +42,12 @@ void	ft_add_export(t_env_list **env_head, char *str)
 			temp->var = ft_get_var(str); // gets allocated
 			return ;
 		}	
-		if (temp->next == NULL) //if you deleted the _ var
+		if (ft_strncmp(temp->var, "_", ft_strlen(temp->var)) == 0)
 			break ;
+		prev = temp;
+		temp = temp->next;
 	}
+	temp = prev;
 	temp_2 = temp->next;
 	newNode = malloc(sizeof(t_env_list));
 	newNode->full = str; // same problem: does william allocate it?
