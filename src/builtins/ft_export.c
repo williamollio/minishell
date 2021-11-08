@@ -18,7 +18,8 @@ int	ft_export_edgecase(char *str)
 	return (0);
 }
 
-// in here i write a new var to env  over verwrite the content if var already exists
+// in here i write a new var to env and override the content if var already exists
+// cant change first element and cant change _ atm
 void	ft_add_export(t_env_list **env_head, char *str)
 {
 	t_env_list	*temp;
@@ -34,11 +35,11 @@ void	ft_add_export(t_env_list **env_head, char *str)
 		if (ft_strncmp(temp->var, ft_get_var(str), ft_strlen(temp->var)) == 0 && ft_strlen(temp->var) == ft_strlen(ft_get_var(str)))
 		{
 			free(temp->content);
-			temp->content = ft_get_content(str);
-			free(temp->full); // added this so check again if export and unset works
-			temp->full = str;
+			temp->content = ft_get_content(str); // gets allocated
+			free(temp->full);
+			temp->full = str; // i dont know if william allocates this string before passing it to me
 			free(temp->var);
-			temp->var = ft_get_var(str);
+			temp->var = ft_get_var(str); // gets allocated
 			return ;
 		}	
 		if (temp->next == NULL) //if you deleted the _ var
@@ -46,9 +47,9 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	}
 	temp_2 = temp->next;
 	newNode = malloc(sizeof(t_env_list));
-	newNode->full = str;
-	newNode->var = ft_get_var(str);
-	newNode->content = ft_get_content(str);
+	newNode->full = str; // same problem: does william allocate it?
+	newNode->var = ft_get_var(str); // gets allocated
+	newNode->content = ft_get_content(str); // gets allocated
 	temp->next = newNode;
 	newNode->next = temp_2;
 	if (*env_head == NULL)
@@ -92,7 +93,7 @@ void	ft_export_node(t_env_list **env_head, char *str)
 			ft_add_export(env_head, nodes[i]);
 			i++;
 		}
-		// ft_free2(nodes);
+		// ft_free2(nodes); // propably cant free nodes here because i never reallocate full, it uses the same pointer as nodes[i]
 		return ;
 	}
 	ft_add_export(env_head, str);

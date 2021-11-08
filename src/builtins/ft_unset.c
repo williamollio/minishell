@@ -48,7 +48,7 @@ void	ft_unset_node(t_env_list **env_head, char *str)
 			ft_delete_node(env_head, nodes[i]);
 			i++;
 		}
-		// ft_free2(nodes);
+		// ft_free2(nodes); // same problem as in export
 	}
 	else
 		ft_delete_node(env_head, str);

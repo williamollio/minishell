@@ -6,4 +6,5 @@ void	ft_pwd(void)
 
 	pwd = getcwd(NULL, FILENAME_MAX);
 	printf("%s\n", pwd);
+	free(pwd);
 }

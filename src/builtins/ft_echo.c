@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-// the commeted part is unnecessary ifwilliam includes '$' in parsing
+// the commented part is unnecessary ifwilliam includes '$' in parsing
 void	ft_echo(char *str, char *arg)
 {
 	char	*join_space;
