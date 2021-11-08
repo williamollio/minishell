@@ -8,7 +8,8 @@ SRC = ./src/minishell.c ./src/builtins/ft_exit.c ./src/error/ft_error.c \
 		./src/builtins/ft_cd.c ./src/builtins/ft_export.c ./src/builtins/ft_pwd.c ./src/builtins/ft_unset.c \
 		./src/execution/ft_child_system.c ./src/execution/ft_child_builtin.c ./src/execution/ft_redirections.c \
 		./src/execution/ft_pipe_fork.c ./src/execution/ft_execution.c ./src/builtins/ft_echo.c \
-		./src/helper/ft_system_executer.c ./src/execution/ft_heredoc.c ./src/helper/ft_list_helper.c
+		./src/helper/ft_system_executer.c ./src/execution/ft_heredoc.c ./src/helper/ft_list_helper.c \
+		./src/builtins/ft_env.c
 
 OBJ = $(SRC:.c=.o)
 

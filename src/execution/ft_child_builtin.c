@@ -9,7 +9,7 @@ void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status)
 	else if (ft_strncmp(test->cmd, "unset", 5) == 0)
 		ft_unset_node(env_head, test->str);
 	else if (ft_strncmp(test->cmd, "env", 3) == 0)
-		ft_print_list(*env_head);
+		ft_env(*env_head);
 	else if (ft_strncmp(test->cmd, "exit", 4) == 0)
 		ft_exit();
 	else if (ft_strncmp(test->cmd, "pwd", 3) == 0)
