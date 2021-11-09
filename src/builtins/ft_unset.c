@@ -5,6 +5,8 @@ void	ft_delete_node(t_env_list **env_head, char *str)
 	t_env_list	*temp;
 	t_env_list	*prev;
 	
+	if (ft_strncmp(str, "_", ft_strlen(str)) == 0)
+		return ;
 	temp = *env_head;
 	if (temp == NULL)
 		return ;
@@ -48,7 +50,7 @@ void	ft_unset_node(t_env_list **env_head, char *str)
 			ft_delete_node(env_head, nodes[i]);
 			i++;
 		}
-		// ft_free2(nodes); // same problem as in export
+		ft_free2(nodes);
 	}
 	else
 		ft_delete_node(env_head, str);

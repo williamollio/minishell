@@ -1,10 +1,11 @@
 #include "../../includes/minishell.h"
 
-// chekcs for dumb shit like this export = or export =====
+// checks for dumb shit like this export = or export =====
 // also checks shit like this export test
 int	ft_export_edgecase(char *str)
 {
 	char		*err;
+	char		*var;
 	
 	if (str[0] == '=')
 	{
@@ -15,6 +16,21 @@ int	ft_export_edgecase(char *str)
 	}
 	if (!ft_strchr(str, '='))
 		return (1);
+	var = ft_get_var(str);
+	if (ft_strncmp(var, "_", ft_strlen(var)) == 0)
+	{
+		free(var);
+		return (1);
+	}
+	if (!ft_isalpha(var[0]) &&  var[0] != '_')
+	{
+		ft_putstr_fd("bash: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		free(var);
+		return (1);
+	}
+	free(var);
 	return (0);
 }
 
