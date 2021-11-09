@@ -31,7 +31,7 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 	*parse = NULL;
 	i = 0;
 	paths = ft_line_path(envp);
-	while (line[i])
+	while (line[i] != '\0')
 	{
 		ft_bef(parse, line, &i);
 		if (!ft_caller_builtin(parse, line, &i))
@@ -39,8 +39,16 @@ int ft_parsing(char **envp, char *line, t_parse **parse)
 		else if (!ft_caller_sys_fct(parse, paths, line, &i))
 			printf("sys function found\n");
 		ft_after(parse, line, &i);
+		// ft_print_last(parse);
+		// printf("&line[i]:%s$\n", &line[i]);
+		if (line[i] == '\0')
+			break;
+		//i++;
 	}
 	ft_free2(paths);
 	ft_get_list(*parse);
 	return (EXIT_SUCCESS);
 }
+
+
+// access

@@ -1,5 +1,9 @@
 #include "../../includes/minishell.h"
 
+void ft_print_last(t_parse **head)
+{
+	ft_print_node(ft_get_last(head));
+}
 
 t_parse	*ft_get_last(t_parse **head)
 {
@@ -13,11 +17,13 @@ t_parse	*ft_get_last(t_parse **head)
 
 void	ft_print_node(t_parse *tmp)
 {
+	printf("---\n");
 	printf("cmd : %s\n", tmp->cmd);
 	printf("flag : %d\n", tmp->flag);
 	printf("arg : %s\n", tmp->arg);
 	printf("str : %s\n", tmp->str);
 	printf("op : %d\n", tmp->op);
+	printf("---\n");
 }
 
 t_parse *ft_get_list(t_parse *parse_list)

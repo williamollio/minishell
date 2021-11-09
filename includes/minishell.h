@@ -119,15 +119,18 @@ int		ft_strncmp2(const char *str1, const char *str2, int x, int *i); // takes a 
 int		ft_op(const char *line, int i); // look for operators
 int		ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x); // call the function checkcommand
 char	*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
-int		ft_operator_tool(char *str, int *x); // looks for operator
+int		ft_operator_tool(char *str, int *x); // looks for operator, return its value and increment the index
+int		ft_operator_tool2(char *str, int *x); // looks for operator and return its value
 void	ft_operator_bef(t_parse **parse, char *line, int *x); //handle cases where operator appears before functions cmd
-void	ft_operator_after(t_parse **parse, char *line, int *x); //handle cases where operator appears after functions cmd
-void	ft_file(t_parse **parse, char *line, int *x, int op); // Initialize str file if needed
+int		ft_operator_after(t_parse **parse, char *line, int *x); //handle cases where operator appears after functions cmd
+void	ft_file_bef(t_parse **parse, char *line, int *x, int op); // Initialize str file if needed
+void	ft_file_after(t_parse **parse, char *line, int *x, int op);
 void	ft_arg(t_parse **parse, char *line, int *x); // initialize arg variables
 void	ft_arg_tool(t_parse *last, char *line, int *x); // tool of the ft_arg
 void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage error cases in ft_arg
 void	ft_append(char **last_arg, char **arg) ; // append strings in the variables
 void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
+void	ft_skip_space(char *line, int *x); // ignores spaces
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
@@ -138,6 +141,7 @@ void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
+void	ft_print_last(t_parse **head); // print last node
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
 
 /* NEW HELPER */

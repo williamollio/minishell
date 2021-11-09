@@ -10,7 +10,7 @@ void ft_append(char **last_arg, char **arg)
 		*last_arg = *arg;
 	else
 	{
-		temp = ft_strjoin(*last_arg, "");
+		temp = ft_strjoin(*last_arg, " ");
 		ft_free1(*last_arg);
 		*last_arg = temp;
 		temp = ft_strjoin(*last_arg, *arg);
@@ -25,9 +25,9 @@ void ft_arg_tool(t_parse *last, char *line, int *x)
 	int		y;
 	char	*arg;
 
-	i = 1;
+	i = 0;
 	y = *x;
-	while (line[*x] && line[*x] != ' ' && ft_operator_tool(line, x) == 0)
+	while (line[*x] && line[*x] != ' ' && ft_operator_tool2(line, x) == 0)
 	{
 		i++;
 		*x += 1;
@@ -62,9 +62,9 @@ void ft_str_tool(t_parse *last, char *line, int *x)
 	int		y;
 	char	*str;
 
-	i = 1;
+	i = 0;
 	y = *x;
-	while (line[*x] && line[*x] != ' ' && ft_operator_tool(line, x) == 0)
+	while (line[*x] && line[*x] != ' ' && ft_operator_tool2(line, x) == 0)
 	{
 		i++;
 		*x += 1;
@@ -103,10 +103,9 @@ void ft_str_error(t_parse *last, t_parse **parse, int *x, char *line)
 
 	i = 1;
 	y = *x;
-	printf("last->cmd : %s\n", last->cmd);
 	if (*parse == NULL || ft_strncmp(last->cmd, "", 1) == 0)
 	{
-		while (line[*x] && line[*x] != ' ' && ft_operator_tool(line, x) == 0)
+		while (line[*x] && line[*x] != ' ' && ft_operator_tool2(line, x) == 0)
 		{
 			i++;
 			*x += 1;
