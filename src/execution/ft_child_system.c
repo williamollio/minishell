@@ -31,7 +31,7 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": No such file or directory\n", 2); // because if the path is not valid i return this message, william checks if the cmd exists first
-	exit(0);
+	exit(1);
 }
 
 void	ft_create_split(t_sys *sys, t_parse *test)
@@ -63,10 +63,10 @@ void	ft_child_for_sys(t_parse *test, char **envp, t_env_list **env_head)
 		ft_free2(sys.paths);
 		if (execve(sys.cmdpath, sys.split, envp) == -1)
 		{
+			perror("minishell");
 			ft_free2(sys.split);
 			ft_free1(sys.cmdpath);
-			perror("execve failed\n");
-			exit(0);
+			exit(126); // cant destroy the exit code from execve (maybe need to change it)
 		}
 	}
 	else
@@ -75,6 +75,6 @@ void	ft_child_for_sys(t_parse *test, char **envp, t_env_list **env_head)
 		ft_putstr_fd(test->cmd, 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_free2(sys.split);
-		exit(0);
+		exit(127);
 	}
 }

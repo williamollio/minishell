@@ -12,6 +12,7 @@ int	ft_export_edgecase(char *str)
 		err = ft_substr(str, 0, ft_strlen(str));
 		printf("bash: export: `%s': not a valid identifier\n", err);
 		free(err);
+		exit_status = 1;
 		return (1);
 	}
 	if (!ft_strchr(str, '='))
@@ -28,6 +29,7 @@ int	ft_export_edgecase(char *str)
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("': not a valid identifier", 2);
 		free(var);
+		exit_status = 1;
 		return (1);
 	}
 	free(var);
@@ -97,7 +99,8 @@ void	ft_export_node(t_env_list **env_head, char *str)
 {
 	char	**nodes;
 	int		i;
-	
+
+	exit_status = 0;
 	if (str[0] == '\0')
 	{
 		ft_sort_env(*env_head);

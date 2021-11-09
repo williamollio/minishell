@@ -39,6 +39,8 @@ int	ft_count_cmds(t_parse *test)
 
 void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec *exec)
 {
+	int	status;
+
 	ft_fork(exec);
 	if (test->flag == SYS && exec->pid == 0)
 	{
@@ -55,7 +57,9 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 	else
 	{
 		close(exec->pipes[1]);
-		wait(NULL);
+		wait(&status);
+		if (WIFEXITED(status))
+			exit_status = WEXITSTATUS(status);
 		ft_parent(exec);
 	}
 }
@@ -63,6 +67,7 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i segfault if i have no commands, beause while loop statement has changed
 {
 	t_exec	exec;
+	// int		status;
 
 	ft_init_exec(&exec);
 	if (!test)
@@ -99,6 +104,10 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i se
 			ft_parent(&exec);
 		test = test->next;
 	}
+	// muss waitpid im while loop callen, je nach anzahl der childs
+	// waitpid(0, &status, -1);
+	// if (WIFEXITED(status))
+	// 		exit_status = WEXITSTATUS(status);
 	ft_close_all(&exec);
 	return ;
 }

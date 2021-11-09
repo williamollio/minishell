@@ -33,6 +33,8 @@
 # define EX 9
 # define RET 10
 
+extern int	exit_status;
+
 typedef struct	s_env_list
 {
 	char				*full;
@@ -84,7 +86,7 @@ void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // init
 void	ft_echo(char  *str, char *arg);
 void	ft_cd(t_env_list **env_head, char  *line);
 void	ft_pwd(void);
-void	ft_exit(void);
+void	ft_exit(t_parse *test);
 void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);

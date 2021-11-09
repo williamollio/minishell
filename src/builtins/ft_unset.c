@@ -40,7 +40,8 @@ void	ft_unset_node(t_env_list **env_head, char *str)
 {
 	char	**nodes;
 	int		i;
-	
+
+	exit_status = 0;
 	if (ft_strchr(str, ' '))
 	{
 		nodes = ft_split(str, ' ');
