@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+int	exit_status;
+
 void ft_sigint(int signal)
 {
 	if (signal == SIGINT)

@@ -11,13 +11,13 @@ void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status)
 	else if (ft_strncmp(test->cmd, "env", 3) == 0)
 		ft_env(*env_head);
 	else if (ft_strncmp(test->cmd, "exit", 4) == 0)
-		ft_exit();
+		ft_exit(test);
 	else if (ft_strncmp(test->cmd, "pwd", 3) == 0)
 		ft_pwd();
 	else if (ft_strncmp(test->cmd, "cd", 2) == 0)
 		ft_cd(env_head, test->str);
 	if (status == EX)
-		exit(0);
+		exit(exit_status);
 	else if (status == RET)
 		return ;
 }
