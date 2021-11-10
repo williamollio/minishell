@@ -1,5 +1,3 @@
-
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -13,9 +11,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
-#include "stdbool.h" // for boolean variable type
-#include <signal.h> // for the signal function
-#include <errno.h> // for errno var
+#include "stdbool.h"
+#include <signal.h>
+#include <errno.h>
 
 /** OP VARIABLE **/
 # define PIPE 1 // |
@@ -83,6 +81,8 @@ typedef struct s_sys
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // initialize the shell
+void	ft_sigint(int signal); // handle ctrl + c
+void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd dup
 
 /** BUILDINS FUNCTION **/
 void	ft_echo(char  *str, char *arg);
@@ -115,18 +115,33 @@ void	ft_msg_cmd(char *arr); // display message error when command not found
 void	ft_msg_pars(char *arr); // display message error when encountering a parse error
 void	ft_msg_arg(char *arr); // display message error when encountering an option with a built-in
 
-/** PARSE **/
-int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
-int		check_commandpath(char **paths, char *cmd); // check if it's a system function
-char	**ft_line_path(char **envp); // line where PATH is in env
-int		ft_is_builtin(char *s); // check if the command is built-in
-int		ft_operator(int i, t_parse **parse, char **arr); //handle cases where operator appears
-int		ft_operator_tool(int i, char **arr); //search for any operator in a string, and return the int corresponding
-void	ft_file(int i, t_parse **parse, char **arr, int op); // Initialize str file if needed
-int		ft_arg(int *x, t_parse **parse, char **arr); // search for arguments
+/* PARSING */
 void	ft_get_env_list(char **envp, t_env_list **env_head); // turns env variable into a list
 char	*ft_get_content(char *full); // returns content from env string
 char	*ft_get_var(char *full); // returns var from env string
+char	**ft_line_path(char **envp); // line where PATH is in env
+int		countrows(char **paths); // count rows in paths
+int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
+void	ft_bef(t_parse **parse, char *line, int *x); // skip spaces
+void	ft_after(t_parse **parse, char *line, int *x); // skip spaces
+int		ft_caller_builtin(t_parse **parse, char *line, int *x); // call the function ft_is_buildin and creates a node if necessary
+int		ft_is_builtin(char *line, int x, int *y); // check if the command is built-in
+int		ft_strncmp2(const char *str1, const char *str2, int x, int *i); // takes a pointer as in index
+int		ft_op(const char *line, int i); // look for operators
+int		ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x); // call the function checkcommand
+char	*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
+int		ft_operator_tool(char *str, int *x); // looks for operator, return its value and increment the index
+int		ft_operator_tool2(char *str, int *x); // looks for operator and return its value
+void	ft_operator_bef(t_parse **parse, char *line, int *x); //handle cases where operator appears before functions cmd
+int		ft_operator_after(t_parse **parse, char *line, int *x); //handle cases where operator appears after functions cmd
+void	ft_file_bef(t_parse **parse, char *line, int *x, int op); // Initialize str file if needed
+void	ft_file_after(t_parse **parse, char *line, int *x, int op);
+void	ft_arg(t_parse **parse, char *line, int *x); // initialize arg variables
+void	ft_arg_tool(t_parse *last, char *line, int *x); // tool of the ft_arg
+void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage error cases in ft_arg
+void	ft_append(char **last_arg, char **arg) ; // append strings in the variables
+void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
+void	ft_skip_space(char *line, int *x); // ignores spaces
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
@@ -137,7 +152,7 @@ void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere
 t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
-char	**ft_get_paths(char **paths); // get paths variable
+void	ft_print_last(t_parse **head); // print last node
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
 void	ft_system_executer(char *str, char **envp); // execute any bash command by passing the cmd string as str and env as envp
 void	ft_addorder(t_env_list **head, char *str); // add elements in alphabetical order to list
@@ -145,10 +160,14 @@ void	ft_addfront(t_env_list **head, char *str); // add element to front of list
 void	ft_addback_sorted(t_env_list **head, char *str); // variation of addback for sorting the list
 void	ft_free_list(t_env_list **head_a);
 
+/* NEW HELPER */
+char	**ft_get_paths(char **paths); // static function to get paths variable
+
 #endif
 
 /** TO DO **/
 /* free arr in parsing */
+/* implement ft_tool in minishel.c */
 /* in ft_exit all shit has to be freed and cleared */
 
 

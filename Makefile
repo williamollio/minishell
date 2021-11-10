@@ -2,7 +2,7 @@ NAME = minishell.a
 
 CC = gcc
 
-SRC = ./src/minishell.c ./src/builtins/ft_exit.c ./src/error/ft_error.c \
+SRC = ./src/minishell.c ./src/builtins/ft_exit.c\
 		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse2.c \
 		./src/helper/ft_helper2.c ./src/parse/ft_parse3.c ./src/init/ft_init.c \
 		./src/builtins/ft_cd.c ./src/builtins/ft_export.c ./src/builtins/ft_pwd.c ./src/builtins/ft_unset.c \

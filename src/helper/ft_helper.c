@@ -16,7 +16,7 @@ void	ft_print_list_parse(t_parse **head)
 	tmp = *head;
 	while (tmp != NULL)
 	{
-		printf("---------\n");
+		printf("------------------\n");
 		printf("cmd : %s\n", tmp->cmd);
 		printf("flag : %d\n", tmp->flag);
 		printf("arg : %s\n", tmp->arg);

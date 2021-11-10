@@ -28,6 +28,7 @@ int main(int argc, char **argv, char **envp)
 	ft_init(argc, argv, envp, &env_head);
 	while (1)
 	{
+		//ft_tool(&fd_in_old, &fd_out_old);
 		dup2(fd_in_old, 0);
 		dup2(fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
