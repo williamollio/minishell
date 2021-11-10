@@ -54,7 +54,7 @@ void	ft_cd_go_back(t_env_list **env_head, char *old, char *current, int print)
 	else
 	{
 		if (print == 1)
-			printf("%s\n", old);
+			ft_putendl_fd(old, 1);
 		ft_free_current_old(&current, &old);
 	}
 	ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));

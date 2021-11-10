@@ -88,24 +88,24 @@ void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // init
 void	ft_echo(char  *str, char *arg);
 void	ft_cd(t_env_list **env_head, char  *line);
 void	ft_pwd(void);
-void	ft_exit(t_parse *test);
+void	ft_exit(t_parse *parse);
 void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
 void	ft_env(t_env_list *env_head);
 
 /** EXECUTION **/
-void	ft_execution(t_parse *test, char **envp, t_env_list **env_head); // main of pipex part
-void	ft_child_for_sys(t_parse *test, char **envp, t_env_list **env_head); // execute system commands
-void	ft_child_for_built(t_parse *test, t_env_list **env_head, int status); // execute builtin commands
+void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head); // main of pipex part
+void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head); // execute system commands
+void	ft_child_for_built(t_parse *parse, t_env_list **env_head, int status); // execute builtin commands
 void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
 void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input
-int		ft_redirect_in(t_exec *exec, t_parse **test); // takes input either from infile or stdin
-void	ft_redirect_out(t_exec *exec, t_parse *test); // redirect output either to file, stdout or pipe
+int		ft_redirect_in(t_exec *exec, t_parse **parse); // takes input either from infile or stdin
+void	ft_redirect_out(t_exec *exec, t_parse *parse); // redirect output either to file, stdout or pipe
 void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
 void	ft_fork(t_exec *exec); // fork a process
 int		ft_countrows(char **paths); // counts rows in a 2d array
-void	ft_heredoc(t_exec *exec, t_parse *test); //opens heredoc, that waits fors limiter
+void	ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);

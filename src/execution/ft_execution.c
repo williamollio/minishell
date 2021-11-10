@@ -25,35 +25,35 @@ void	ft_init_exec(t_exec *exec)
 	exec->child_status = 0;
 }
 
-int	ft_count_cmds(t_parse *test)
+int	ft_count_cmds(t_parse *parse)
 {
 	int	count;
 
 	count = 0;
-	while (test != NULL)
+	while (parse != NULL)
 	{
-		if (test->flag == SYS || test->flag == BUILT)
+		if (parse->flag == SYS || parse->flag == BUILT)
 			count++;
-		test = test->next;
+		parse = parse->next;
 	}
 	return (count);
 }
 
-void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec *exec)
+void	ft_exec_multiple(t_parse *parse, char **envp, t_env_list **env_head, t_exec *exec)
 {
 	exec->waitcount++;
 	ft_fork(exec);
-	if (test->flag == SYS && exec->pid == 0)
+	if (parse->flag == SYS && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
-		ft_child_for_sys(test, envp, env_head);
+		ft_child_for_sys(parse, envp, env_head);
 	}
-	if (test->flag == BUILT && exec->pid == 0)
+	if (parse->flag == BUILT && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
-		ft_child_for_built(test, env_head, EX);
+		ft_child_for_built(parse, env_head, EX);
 	}
 	else
 	{
@@ -62,43 +62,43 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 	}
 }
 
-void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i segfault if i have no commands, beause while loop statement has changed
+void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head) // now i segfault if i have no commands, beause while loop statement has changed
 {
 	t_exec	exec;
 
 	ft_init_exec(&exec);
-	if (!test)
+	if (!parse)
 		return ;
 	while (1) // only use last infile when there are multiple
 	{
-		if (test->next == NULL)
+		if (parse->next == NULL)
 			break ;
-		if (test->next->flag != FILE || test->flag != FILE)
+		if (parse->next->flag != FILE || parse->flag != FILE)
 			break ;
-		test = test->next;
+		parse = parse->next;
 	}
-	if (ft_redirect_in(&exec, &test) == 1)
+	if (ft_redirect_in(&exec, &parse) == 1)
 		return ;
-	exec.cmdcount = ft_count_cmds(test);
+	exec.cmdcount = ft_count_cmds(parse);
 	// the while loop conditions is bad. If there are multiple outfiles, i need to quit the whileloop,
 	// between the next to last and last node. I also need to open all outfiles but only write to the last one.
 	// its also possible that there are more commands coming after an outfile.
 	// Need to communicate this with william
-	while (test != NULL && test->flag != FILE) // (test != NULL && test->flag != FILE)
+	while (parse != NULL && parse->flag != FILE) // (parse != NULL && parse->flag != FILE)
 	{
 		ft_pipe(&exec);
 		ft_in_is_tempfd(&exec);
-		ft_redirect_out(&exec, test);
-		if (exec.cmdcount == 1 && test->flag == BUILT)
+		ft_redirect_out(&exec, parse);
+		if (exec.cmdcount == 1 && parse->flag == BUILT)
 		{
-			ft_child_for_built(test, env_head, RET);
+			ft_child_for_built(parse, env_head, RET);
 			ft_parent(&exec);
 		}
-		else if (test->flag == SYS || test->flag == BUILT)
-			ft_exec_multiple(test, envp, env_head, &exec);
+		else if (parse->flag == SYS || parse->flag == BUILT)
+			ft_exec_multiple(parse, envp, env_head, &exec);
 		else
 			ft_parent(&exec);
-		test = test->next;
+		parse = parse->next;
 	}
 	while (exec.waitcount > 0)
 	{

@@ -10,7 +10,9 @@ int	ft_export_edgecase(char *str)
 	if (str[0] == '=')
 	{
 		err = ft_substr(str, 0, ft_strlen(str));
-		printf("bash: export: `%s': not a valid identifier\n", err);
+		ft_putstr_fd("bash: export: `", 2);
+		ft_putstr_fd(err, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
 		free(err);
 		exit_status = 1;
 		return (1);
