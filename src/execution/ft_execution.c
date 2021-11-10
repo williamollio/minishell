@@ -21,6 +21,8 @@ void	ft_init_exec(t_exec *exec)
 	exec->outfile = -1;
 	exec->infile = -1;
 	exec->cmdcount = 0;
+	exec->waitcount = 0;
+	exec->child_status = 0;
 }
 
 int	ft_count_cmds(t_parse *test)
@@ -39,8 +41,7 @@ int	ft_count_cmds(t_parse *test)
 
 void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec *exec)
 {
-	int	status;
-
+	exec->waitcount++;
 	ft_fork(exec);
 	if (test->flag == SYS && exec->pid == 0)
 	{
@@ -57,9 +58,6 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 	else
 	{
 		close(exec->pipes[1]);
-		wait(&status);
-		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
 		ft_parent(exec);
 	}
 }
@@ -67,7 +65,6 @@ void	ft_exec_multiple(t_parse *test, char **envp, t_env_list **env_head, t_exec 
 void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i segfault if i have no commands, beause while loop statement has changed
 {
 	t_exec	exec;
-	// int		status;
 
 	ft_init_exec(&exec);
 	if (!test)
@@ -87,7 +84,6 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i se
 	// between the next to last and last node. I also need to open all outfiles but only write to the last one.
 	// its also possible that there are more commands coming after an outfile.
 	// Need to communicate this with william
-	// two file descriptors are left open for some reason.
 	while (test != NULL && test->flag != FILE) // (test != NULL && test->flag != FILE)
 	{
 		ft_pipe(&exec);
@@ -104,10 +100,13 @@ void	ft_execution(t_parse *test, char **envp, t_env_list **env_head) // now i se
 			ft_parent(&exec);
 		test = test->next;
 	}
-	// muss waitpid im while loop callen, je nach anzahl der childs
-	// waitpid(0, &status, -1);
-	// if (WIFEXITED(status))
-	// 		exit_status = WEXITSTATUS(status);
+	while (exec.waitcount > 0)
+	{
+		waitpid(0, &exec.child_status, 0);
+		if (WIFEXITED(exec.child_status))
+			exit_status = WEXITSTATUS(exec.child_status);
+		exec.waitcount--;
+	}
 	ft_close_all(&exec);
 	return ;
 }

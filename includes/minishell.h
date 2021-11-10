@@ -63,6 +63,8 @@ typedef struct s_exec
 	int		outfile;
 	int		infile;
 	int		cmdcount;
+	int		waitcount;
+	int		child_status;
 }			t_exec;
 
 typedef struct s_sys
