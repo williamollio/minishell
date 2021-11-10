@@ -29,9 +29,15 @@ int ft_operator_tool2(char *str, int *x)
 	if (str[*x] == '|')
 		return (1);
 	else if (ft_strnstr(&str[*x], "<<", 2) != NULL)
+	{
+
 		return (4);
+	}
 	else if (ft_strnstr(&str[*x], ">>", 2) != NULL)
+	{
+
 		return (5);
+	}
 	else if (str[*x] == '>')
 		return (2);
 	else if (str[*x] == '<')
@@ -81,14 +87,15 @@ void ft_file_bef(t_parse **parse, char *line, int *x, int op)
 		y++;
 	}
 	str = ft_substr(line, 0, y);
-	// printf("before str %s\n", str);
 	if (*parse == NULL)
 	{
+		//printf("node with ft_before %s\n", str);
 		ft_addback_parse(parse, str, FILE);
 		ft_get_last(parse)->op = op;
 	}
 	else
 	{
+		//printf("node with ft_before %s\n", str);
 		ft_get_last(parse)->op = op;
 		ft_addback_parse(parse, str, FILE);
 	}
@@ -111,6 +118,8 @@ void ft_operator_bef(t_parse **parse, char *line, int *x)
 				*x+=1;
 			ft_file_bef(parse, &line[*x], x, op);
 		}
+		else if (*parse != NULL)
+			ft_get_last(parse)->op = op;
 	}
 	ft_skip_space(line, x);
 }

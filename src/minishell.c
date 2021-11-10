@@ -2,19 +2,6 @@
 
 int	exit_status;
 
-void ft_sigint(int signal)
-{
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-	// else if (signal == SIGSEGV) // ??
-	// 	exit(EXIT_FAILURE);
-}
-
 int main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -39,7 +26,7 @@ int main(int argc, char **argv, char **envp)
 		if ((ft_strncmp(ft_strtrim(line, " "), "\n", 1) && ft_strlen(ft_strtrim(line, " "))) && !ft_parsing(envp, line, &parse))
 		{
 			ft_print_list_parse(&parse);
-			ft_execution(parse, envp, &env_head);
+			//ft_execution(parse, envp, &env_head);
 		}
 		add_history(line);
 		ft_free_list_parse(&parse);
