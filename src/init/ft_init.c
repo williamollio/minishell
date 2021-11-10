@@ -2,18 +2,12 @@
 
 void	ft_silience(char **envp)
 {
-	int		pipes[2];
 	pid_t	childpid;
 	char	**cmd;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = "stty";
 	cmd[1] = "-echoctl";
-	if (pipe(pipes) == -1)
-	{
-		perror("pipe");
-		exit(0);
-	}
 	childpid = fork();
 	if (childpid == -1)
 	{

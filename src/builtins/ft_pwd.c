@@ -4,6 +4,8 @@ void	ft_pwd(void)
 {
 	char	*pwd;
 
+	exit_status = 0;
 	pwd = getcwd(NULL, FILENAME_MAX);
-	printf("%s\n", pwd);
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
 }

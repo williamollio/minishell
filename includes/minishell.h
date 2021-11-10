@@ -5,9 +5,9 @@
 #define clear() printf("\033[H\033[J")
 
 #include <stdlib.h>
-#include <fcntl.h>
+#include <fcntl.h> // for open and all open flags
 #include <stdio.h>
-#include <sys/param.h>
+#include <sys/param.h> // for MAXPATHLEN macro
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
@@ -26,6 +26,12 @@
 # define BUILT 6
 # define SYS 7
 # define FILE 8
+
+/** FLAG for child_builtin **/
+# define EX 9
+# define RET 10
+
+extern int	exit_status;
 
 typedef struct	s_env_list
 {
@@ -55,6 +61,8 @@ typedef struct s_exec
 	int		outfile;
 	int		infile;
 	int		cmdcount;
+	int		waitcount;
+	int		child_status;
 }			t_exec;
 
 typedef struct s_sys
@@ -80,21 +88,24 @@ void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd
 void	ft_echo(char  *str, char *arg);
 void	ft_cd(t_env_list **env_head, char  *line);
 void	ft_pwd(void);
-void	ft_exit(void);
+void	ft_exit(t_parse *parse);
 void	ft_unset_node(t_env_list **env_head, char *str);
 void	ft_export_node(t_env_list **env_head, char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
+void	ft_env(t_env_list *env_head);
 
 /** EXECUTION **/
-void	ft_execution(t_parse *test, char **envp, t_env_list **env_head); // main of pipex part
-void	ft_child_for_sys(t_parse *test, char **envp); // execute system commands
-void	ft_child_for_built(t_parse *test, t_env_list **env_head); // execute builtin commands
+void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head); // main of pipex part
+void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head); // execute system commands
+void	ft_child_for_built(t_parse *parse, t_env_list **env_head, int status); // execute builtin commands
 void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
 void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input
-int		ft_redirect_in(t_exec *exec, t_parse **test); // takes input either from infile or stdin
-void	ft_redirect_out(t_exec *exec, t_parse *test); // redirect output either to file, stdout or pipe
+int		ft_redirect_in(t_exec *exec, t_parse **parse); // takes input either from infile or stdin
+void	ft_redirect_out(t_exec *exec, t_parse *parse); // redirect output either to file, stdout or pipe
 void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
 void	ft_fork(t_exec *exec); // fork a process
+int		ft_countrows(char **paths); // counts rows in a 2d array
+void	ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);
@@ -143,6 +154,11 @@ t_parse	*ft_get_last(t_parse **head); // return the last node of the list
 void	ft_print_node(t_parse *tmp); // print a node
 void	ft_print_last(t_parse **head); // print last node
 char	*ft_extract_content(t_env_list *env_head, char *var); // returns the value of the env variable you pass in to it
+void	ft_system_executer(char *str, char **envp); // execute any bash command by passing the cmd string as str and env as envp
+void	ft_addorder(t_env_list **head, char *str); // add elements in alphabetical order to list
+void	ft_addfront(t_env_list **head, char *str); // add element to front of list 
+void	ft_addback_sorted(t_env_list **head, char *str); // variation of addback for sorting the list
+void	ft_free_list(t_env_list **head_a);
 
 /* NEW HELPER */
 char	**ft_get_paths(char **paths); // static function to get paths variable
@@ -152,10 +168,13 @@ char	**ft_get_paths(char **paths); // static function to get paths variable
 /** TO DO **/
 /* free arr in parsing */
 /* implement ft_tool in minishel.c */
+/* in ft_exit all shit has to be freed and cleared */
+
 
 
 /** -------------------------------- alex -------------------------------- **/
 /* when minishell starts, OLDPWD shouldnt exist */
 /* add heredoc (<<) */
+/* currently we exit often when errors occur (maybe not good) */
 /* init struct vars */
 /* execute builtins in child when theres morethen 1 cmd */

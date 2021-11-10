@@ -31,9 +31,9 @@ void	ft_addback(t_env_list **head_ref, char *str)
 
 	last = *head_ref;
 	newNode = malloc(sizeof(t_env_list));
-	newNode->full = ft_strdup(str); //changed
-	newNode->var = ft_get_var(str);
-	newNode->content = ft_get_content(str);
+	newNode->full = ft_strdup(str); // full gets allocated
+	newNode->var = ft_get_var(str); // var gets allocated
+	newNode->content = ft_get_content(str); // content gets allocated
 	newNode->next = NULL;
 	if (*head_ref == NULL)
 	{

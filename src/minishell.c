@@ -1,6 +1,21 @@
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	exit_status;
+
+void ft_sigint(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+	// else if (signal == SIGSEGV) // ??
+	// 	exit(EXIT_FAILURE);
+}
+
+int main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	t_env_list	*env_head;

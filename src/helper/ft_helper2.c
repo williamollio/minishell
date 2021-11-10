@@ -57,7 +57,7 @@ char	*ft_extract_content(t_env_list *env_head, char *var)
 	}
 	x = 0;
 	while (env_head->full[x] != '=')
-	x++;
+		x++;
 	content = ft_substr(env_head->full, x + 1, ft_strlen(env_head->full) - x);
 	return (content);
 }
