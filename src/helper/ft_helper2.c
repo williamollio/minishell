@@ -18,9 +18,6 @@ t_parse	*ft_get_last(t_parse **head)
 void	ft_print_node(t_parse *tmp)
 {
 	printf("---\n");
-	printf("cmd : %s\n", tmp->cmd);
-	printf("flag : %d\n", tmp->flag);
-	printf("arg : %s\n", tmp->arg);
 	printf("str : %s\n", tmp->str);
 	printf("op : %d\n", tmp->op);
 	printf("---\n");

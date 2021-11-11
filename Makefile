@@ -4,11 +4,10 @@ CC = gcc
 
 SRC = ./src/minishell.c ./src/builtins/ft_exit.c\
 		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse2.c \
-		./src/helper/ft_helper2.c ./src/parse/ft_parse3.c ./src/init/ft_init.c \
+		./src/helper/ft_helper2.c ./src/parse/ft_split2.c ./src/init/ft_init.c \
 		./src/builtins/ft_cd.c ./src/builtins/ft_export.c ./src/builtins/ft_pwd.c ./src/builtins/ft_unset.c \
-		./src/execution/ft_child_system.c ./src/execution/ft_child_builtin.c ./src/execution/ft_redirections.c \
-		./src/execution/ft_pipe_fork.c ./src/execution/ft_execution.c ./src/builtins/ft_echo.c \
-		./src/helper/ft_system_executer.c ./src/execution/ft_heredoc.c ./src/helper/ft_list_helper.c \
+		  ./src/builtins/ft_echo.c \
+		./src/helper/ft_system_executer.c  ./src/helper/ft_list_helper.c \
 		./src/builtins/ft_env.c
 
 OBJ = $(SRC:.c=.o)
@@ -50,7 +49,7 @@ subsystem : header
 	cp ./libft/libft.a libft.a
 
 $(NAME): subsystem
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(SRC) libft.a -o minishell
+	$(CC) $(CFLAGS) $(SRC) libft.a -o minishell
 
 clean :
 	rm -f $(OBJ)

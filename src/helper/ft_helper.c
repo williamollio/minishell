@@ -12,16 +12,20 @@ void	ft_print_list(t_env_list *head)
 void	ft_print_list_parse(t_parse **head)
 {
 	t_parse	*tmp;
+	int i;
 
 	tmp = *head;
 	while (tmp != NULL)
 	{
 		printf("------------------\n");
-		printf("cmd : %s\n", tmp->cmd);
-		printf("flag : %d\n", tmp->flag);
-		printf("arg : %s\n", tmp->arg);
 		printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
+		i = 0;
+		while (tmp->cmd[i])
+		{
+			printf("cmd i%d: %s\n",i, tmp->cmd[i]);
+			i++;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -40,11 +44,9 @@ void	ft_free_list_parse(t_parse **head_a)
 
 void	ft_init_parse(t_parse **head)
 {
-	(* head)->cmd = "";
-	(* head)->arg = "";
 	(* head)->str = "";
 	(* head)->op = 0;
-	(* head)->flag = 0;
+	// init cmd
 }
 
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
@@ -55,11 +57,8 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
 	last = *head_ref;
 	newNode = malloc(sizeof(t_parse));
 	ft_init_parse(&newNode);
-	if (nbr == 8)
-		newNode->str = str;
-	else
-		newNode->cmd = str;
-	newNode->flag = nbr;
+	newNode->str = str;
+	newNode->op = nbr;
 	newNode->next = NULL;
 	if (*head_ref == NULL)
 	{

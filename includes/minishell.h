@@ -16,6 +16,7 @@
 #include <errno.h>
 
 /** OP VARIABLE **/
+# define CMD 0
 # define PIPE 1 // |
 # define OUT 2 // >
 # define IN 3 // <
@@ -43,11 +44,9 @@ typedef struct	s_env_list
 
 typedef struct	s_parse
 {
-	char				*cmd;
-	char				*arg;
 	char				*str;
+	char				**cmd;
 	int					op;
-	int					flag;
 	struct s_parse		*prev;
 	struct s_parse		*next;
 }			t_parse;
@@ -142,6 +141,10 @@ void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage
 void	ft_append(char **last_arg, char **arg) ; // append strings in the variables
 void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 void	ft_skip_space(char *line, int *x); // ignores spaces
+
+/** NEW **/
+char	**ft_split2(char const *s, char c,  int *count);
+void	ft_add_next(t_parse **head_ref, t_parse *previous, char **str, int nbr);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
