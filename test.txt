@@ -1,3 +1,10 @@
 <in cmd "str1 str2 str3" | cmd2 -arg | cmd3 >out >out2
-cmd "str1 str2 str3" >in | cmd2 -arg | cmd3 >out >out2
-cmd "str1 str2 str3" >in | cmd2 -arg str | cmd3 str >out >out2
+cmd "str1 str2 str3" >out | cmd2 -arg | cmd3 >out2 >out3
+cmd "str1 str2 str3" >out | cmd2 -arg str | cmd3 str >out2 >out3
+cmd <in -arg | cmd2 "str |" >out>>out2
+cmd1 <in1 -arg1 > out1 | cmd2 <in2 -arg2 > out2
+echo $PWD
+echo $PWD|cat -e
+echo $PWD hallo | cat -e
+echo '$PWD hallo | cat -e'
+echo "$PWD hallo | cat -e"

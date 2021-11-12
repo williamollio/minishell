@@ -9,6 +9,7 @@ int main(int argc, char **argv, char **envp)
 	t_parse		*parse;
 	int			fd_in_old = -1;
 	int			fd_out_old = -1;
+	char		*s1;
 
 	fd_in_old = dup(0);
 	fd_out_old = dup(1);
@@ -23,13 +24,18 @@ int main(int argc, char **argv, char **envp)
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
-		if ((ft_strncmp(ft_strtrim(line, " "), "\n", 1) && ft_strlen(ft_strtrim(line, " "))) && !ft_parsing(envp, line, &parse))
+		s1 = ft_strtrim(line, " ");
+		if ((ft_strncmp(s1, "\n", 1) && ft_strlen(s1)) && !ft_parsing(envp, line, &parse, &env_head))
 		{
+			printf("MAIN: -------------------------\n");
 			ft_print_list_parse(&parse);
+			printf("-------------------------------\n");
 			//ft_execution(parse, envp, &env_head);
 		}
 		add_history(line);
+		ft_free1(s1);
 		ft_free_list_parse(&parse);
+		system("leaks minishell");
 	}
 	return (0);
 }

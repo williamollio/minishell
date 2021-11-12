@@ -36,7 +36,6 @@ int ft_operator_tool2(char *str, int *x)
 		return (1);
 	else if (ft_strnstr(&str[*x], "<<", 2) != NULL)
 	{
-
 		return (4);
 	}
 	else if (ft_strnstr(&str[*x], ">>", 2) != NULL)

@@ -77,6 +77,16 @@ typedef struct s_sys
 	int		x;
 }			t_sys;
 
+typedef struct s_replace
+{
+	int		i;
+	int		start;
+	char	*var;
+	char	*content;
+	char	*tofree;
+	int		quote_flag;	
+}			t_replace;
+
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // initialize the shell
@@ -119,8 +129,6 @@ void	ft_get_env_list(char **envp, t_env_list **env_head); // turns env variable 
 char	*ft_get_content(char *full); // returns content from env string
 char	*ft_get_var(char *full); // returns var from env string
 char	**ft_line_path(char **envp); // line where PATH is in env
-int		countrows(char **paths); // count rows in paths
-int		ft_parsing(char **envp, char *line, t_parse **parse); // general function
 void	ft_bef(t_parse **parse, char *line, int *x); // skip spaces
 void	ft_after(t_parse **parse, char *line, int *x); // skip spaces
 int		ft_caller_builtin(t_parse **parse, char *line, int *x); // call the function ft_is_buildin and creates a node if necessary
@@ -129,8 +137,6 @@ int		ft_strncmp2(const char *str1, const char *str2, int x, int *i); // takes a 
 int		ft_op(const char *line, int i); // look for operators
 int		ft_caller_sys_fct(t_parse **parse, char **paths, char *line, int *x); // call the function checkcommand
 char	*ft_clean_sys_fct(char *line, int *x, int *y); // cleaner for builtin
-int		ft_operator_tool(char *str, int *x); // looks for operator, return its value and increment the index
-int		ft_operator_tool2(char *str, int *x); // looks for operator and return its value
 void	ft_operator_bef(t_parse **parse, char *line, int *x); //handle cases where operator appears before functions cmd
 int		ft_operator_after(t_parse **parse, char *line, int *x); //handle cases where operator appears after functions cmd
 void	ft_file_bef(t_parse **parse, char *line, int *x, int op); // Initialize str file if needed
@@ -138,13 +144,30 @@ void	ft_file_after(t_parse **parse, char *line, int *x, int op);
 void	ft_arg(t_parse **parse, char *line, int *x); // initialize arg variables
 void	ft_arg_tool(t_parse *last, char *line, int *x); // tool of the ft_arg
 void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage error cases in ft_arg
-void	ft_append(char **last_arg, char **arg) ; // append strings in the variables
 void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
-void	ft_skip_space(char *line, int *x); // ignores spaces
 
-/** NEW **/
+
+/** NEW *************************************************************************************/
+int		ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head); // general function
 char	**ft_split2(char const *s, char c,  int *count);
+void	ft_splitter(t_parse **parse);
+void	ft_seperator(t_parse **parse);
+int		ft_lexer(char *line, t_parse **parse);
+void	ft_convert_dollar(t_parse **parse, t_env_list *env_head);
+
+// utils
 void	ft_add_next(t_parse **head_ref, t_parse *previous, char **str, int nbr);
+int		ft_operator_tool(char *str, int *x); // looks for operator, return its value and increment the index
+int		ft_operator_tool2(char *str, int *x); // looks for operator and return its value
+void	ft_skip_space(char *line, int *x); // ignores spaces
+int		countrows(char **paths); // count rows in paths
+void	ft_append(char **last_arg, char **arg); // append strings in the variables
+
+// print
+void	ft_print_list_parse_2(t_parse **head);
+// void	ft_print_list_parse3(t_parse **head);
+/** NEW *************************************************************************************/
+
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);

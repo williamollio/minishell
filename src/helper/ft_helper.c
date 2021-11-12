@@ -9,10 +9,9 @@ void	ft_print_list(t_env_list *head)
 	}
 }
 
-void	ft_print_list_parse(t_parse **head)
+void	ft_print_list_parse_2(t_parse **head)
 {
 	t_parse	*tmp;
-	int i;
 
 	tmp = *head;
 	while (tmp != NULL)
@@ -20,7 +19,45 @@ void	ft_print_list_parse(t_parse **head)
 		printf("------------------\n");
 		printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
-		i = 0;
+		tmp = tmp->next;
+	}
+}
+
+// void	ft_print_list_parse3(t_parse **head)
+// {
+// 	t_parse	*tmp;
+// 	int x = 0;
+// 	tmp = *head;
+// 	while (tmp != NULL)
+// 	{
+// 		printf("------------------\n");
+// 		printf("str : %s\n", tmp->str);
+// 		printf("op : %d\n", tmp->op);
+// 		if (x == 1)
+// 		{
+// 			int i = 0;
+// 			while (tmp->cmd[i])
+// 			{
+// 				printf("cmd i%d: %s\n",i, tmp->cmd[i]);
+// 				i++;
+// 			}
+// 		}
+// 		tmp = tmp->next;
+// 		x++;
+// 	}
+// }
+
+void	ft_print_list_parse(t_parse **head)
+{
+	t_parse	*tmp;
+
+	tmp = *head;
+	while (tmp != NULL)
+	{
+		printf("------------------\n");
+		printf("str : %s\n", tmp->str);
+		printf("op : %d\n", tmp->op);
+		int i = 0;
 		while (tmp->cmd[i])
 		{
 			printf("cmd i%d: %s\n",i, tmp->cmd[i]);
@@ -38,6 +75,7 @@ void	ft_free_list_parse(t_parse **head_a)
 	{
 		tmp = (* head_a);
 		(* head_a) = (* head_a)->next;
+		ft_free2(tmp->cmd);
 		free(tmp);
 	}
 }
@@ -46,7 +84,7 @@ void	ft_init_parse(t_parse **head)
 {
 	(* head)->str = "";
 	(* head)->op = 0;
-	// init cmd
+	(*head)->cmd = NULL;
 }
 
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
