@@ -34,24 +34,10 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 	exit(1);
 }
 
-void	ft_create_split(t_sys *sys, t_parse *parse)
-{
-	sys->join_space = ft_strjoin(parse->cmd, " ");
-	sys->join_arg = ft_strjoin(sys->join_space, parse->arg);
-	ft_free1(sys->join_space);
-	sys->join_space = ft_strjoin(sys->join_arg, " ");
-	ft_free1(sys->join_arg);
-	sys->join_str = ft_strjoin(sys->join_space, parse->str);
-	ft_free1(sys->join_space);
-	sys->split = ft_split(sys->join_str, ' ');
-	ft_free1(sys->join_str);
-}
-
 void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head)
 {
 	t_sys	sys;
 
-	ft_create_split(&sys, parse);
 	sys.rowsinpath = 0;
 	sys.pathname = ft_extract_content(*env_head, "PATH");
 	if (sys.pathname != NULL)
@@ -59,12 +45,11 @@ void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head)
 		sys.paths = ft_split(sys.pathname, ':');
 		ft_free1(sys.pathname);
 		sys.rowsinpath = ft_countrows(sys.paths);
-		sys.cmdpath = ft_check_commandpath(sys.rowsinpath, sys.paths, parse->cmd);
+		sys.cmdpath = ft_check_commandpath(sys.rowsinpath, sys.paths, parse->cmd[0]);
 		ft_free2(sys.paths);
-		if (execve(sys.cmdpath, sys.split, envp) == -1)
+		if (execve(sys.cmdpath, parse->cmd, envp) == -1)
 		{
 			perror("minishell");
-			ft_free2(sys.split);
 			ft_free1(sys.cmdpath);
 			exit(126); // cant destroy the exit code from execve (maybe need to change it)
 		}
@@ -72,7 +57,7 @@ void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head)
 	else
 	{
 		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(parse->cmd, 2);
+		ft_putstr_fd(parse->cmd[0], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_free2(sys.split);
 		exit(127);

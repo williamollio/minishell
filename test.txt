@@ -8,3 +8,9 @@ echo $PWD|cat -e
 echo $PWD hallo | cat -e
 echo '$PWD hallo | cat -e'
 echo "$PWD hallo | cat -e"
+
+wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2
+< test.txt < Makefile<README.md wc -l|cat -e | rev
+
+export TEST=1 test=2 sup=
+export TEST=1 test=2 sup= | env

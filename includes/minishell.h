@@ -62,6 +62,7 @@ typedef struct s_exec
 	int		cmdcount;
 	int		waitcount;
 	int		child_status;
+	int		breakout;
 }			t_exec;
 
 typedef struct s_sys
@@ -93,17 +94,17 @@ void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // init
 void	ft_sigint(int signal); // handle ctrl + c
 void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd dup
 
-/** BUILDINS FUNCTION **/
-void	ft_echo(char  *str, char *arg);
+/** BUILDINS FUNCTION **/ /** ALL OF THESE HAVE TO STAY **/
+void	ft_echo(char **cmd);
 void	ft_cd(t_env_list **env_head, char  *line);
 void	ft_pwd(void);
 void	ft_exit(t_parse *parse);
-void	ft_unset_node(t_env_list **env_head, char *str);
-void	ft_export_node(t_env_list **env_head, char *str);
+void	ft_unset_node(t_env_list **env_head, char **cmd);
+void	ft_export_node(t_env_list **env_head, char **cmd);
 void	ft_delete_node(t_env_list **env_head, char *str);
 void	ft_env(t_env_list *env_head);
 
-/** EXECUTION **/
+/** EXECUTION **/ /** ALL OF THESE HAVE TO STAY **/
 void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head); // main of pipex part
 void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head); // execute system commands
 void	ft_child_for_built(t_parse *parse, t_env_list **env_head, int status); // execute builtin commands
@@ -115,6 +116,11 @@ void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
 void	ft_fork(t_exec *exec); // fork a process
 int		ft_countrows(char **paths); // counts rows in a 2d array
 void	ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
+int		ft_is_builtin_new(char *line); // checks if command is abuiltin
+void	ft_close_all(t_exec *exec); // closes all existing file-descriptors
+void	ft_init_exec(t_exec *exec, t_parse *parse); // init struct variables
+int		ft_set_infile(t_exec *exec, t_parse **parse); // open all infiles, but only use the last one
+void	ft_wait(t_exec exec); // waits for all childs to finish executing
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);
@@ -147,13 +153,13 @@ void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage
 void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 
 
-/** NEW *************************************************************************************/
+/** NEW *********************************************************************************************************/
 int		ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head); // general function
-char	**ft_split2(char const *s, char c,  int *count);
-void	ft_splitter(t_parse **parse);
-void	ft_seperator(t_parse **parse);
-int		ft_lexer(char *line, t_parse **parse);
-void	ft_convert_dollar(t_parse **parse, t_env_list *env_head);
+int		ft_lexer(char *line, t_parse **parse); // create tokens (splitting on special chars and ignoring them if quoted)
+void	ft_convert_dollar(t_parse **parse, t_env_list *env_head); // searches for a $VAR in str of the Node and replaces it with content
+void	ft_seperator(t_parse **parse); // puts the tokens in the right order and changes content if necessary
+void	ft_splitter(t_parse **parse); // create 2D arrays out of strings in every function
+char	**ft_split2(char const *s, char c,  int *count); // only split, when char is not quoted
 
 // utils
 void	ft_add_next(t_parse **head_ref, t_parse *previous, char **str, int nbr);
@@ -166,7 +172,7 @@ void	ft_append(char **last_arg, char **arg); // append strings in the variables
 // print
 void	ft_print_list_parse_2(t_parse **head);
 // void	ft_print_list_parse3(t_parse **head);
-/** NEW *************************************************************************************/
+/** NEW *********************************************************************************************************/
 
 
 /** HELPER **/

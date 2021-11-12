@@ -110,3 +110,23 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
 	last->next = newNode;
 	return ;
 }
+
+int	ft_is_builtin_new(char *line)
+{
+	if (ft_strncmp(line, "echo", ft_strlen(line)) == 0 && (ft_strlen(line) == 4))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "pwd", ft_strlen(line)) == 0 && (ft_strlen(line) == 3))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "cd", ft_strlen(line)) == 0 && (ft_strlen(line) == 2))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "export", ft_strlen(line)) == 0 && (ft_strlen(line) == 6))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "unset", ft_strlen(line)) == 0 && (ft_strlen(line) == 5))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "env", ft_strlen(line)) == 0 && (ft_strlen(line) == 3))
+		return (EXIT_SUCCESS);
+	else if (ft_strncmp(line, "exit", ft_strlen(line)) == 0 && (ft_strlen(line) == 4))
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
+}
