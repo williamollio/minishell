@@ -30,11 +30,13 @@ char	*ft_replace_str(char *str, t_replace rep)
 
 void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env_list *env_head)
 {
+	char	*temp2;
+
 	rep->var = ft_substr(str, rep->start, rep->i - rep->start);
 	if (ft_strncmp(rep->var, "?", 1) == 0 && ft_strlen(rep->var) > 0)
 	{
-		char *temp = ft_itoa(exit_status);
-		rep->content = ft_strjoin(temp, &rep->var[1]);
+		temp2 = ft_itoa(exit_status);
+		rep->content = ft_strjoin(temp2, &rep->var[1]);
 		free(temp);
 	}
 	else
