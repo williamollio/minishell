@@ -14,3 +14,4 @@ wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2
 
 export TEST=1 test=2 sup=
 export TEST=1 test=2 sup= | env
+

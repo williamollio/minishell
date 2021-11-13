@@ -10,7 +10,7 @@ void	ft_exec_multiple(t_parse *parse, char **envp, t_env_list **env_head, t_exec
 		close(exec->pipes[0]);
 		ft_child_for_sys(parse, envp, env_head);
 	}
-	if (!ft_is_builtin_new(parse->cmd[0]) && exec->pid == 0)
+	else if (!ft_is_builtin_new(parse->cmd[0]) && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
@@ -30,8 +30,8 @@ void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
 	ft_init_exec(&exec, parse);
 	if (!parse)
 		return ;
-	if (ft_set_infile(&exec, &parse) == 1)
-		return ;
+	if (ft_set_infile(&exec, &parse) == 1) // call  it in the loop
+		return ; // not sure if i stll nedd to execute the other shit
 	while (parse != NULL)
 	{
 		ft_pipe(&exec);

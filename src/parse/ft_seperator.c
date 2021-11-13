@@ -2,8 +2,8 @@
 
 char	**ft_create_cmd(char **split, int count)
 {
-	int	s;
-	int	i;
+	int		s;
+	int		i;
 	char	**cmd;
 
 	s = 1;

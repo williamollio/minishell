@@ -45,14 +45,16 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	t_env_list	*prev;
 	t_env_list	*temp_2;
 	t_env_list	*newNode;
+	char		*str_var;
 
 	temp = *env_head;
 	prev = *env_head;
 	if (ft_export_edgecase(str) == 1)
 		return ;
+	str_var = ft_get_var(str);
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->var, ft_get_var(str), ft_strlen(temp->var)) == 0 && ft_strlen(temp->var) == ft_strlen(ft_get_var(str)))
+		if (ft_strncmp(temp->var, str_var, ft_strlen(temp->var)) == 0 && ft_strlen(temp->var) == ft_strlen(str_var))
 		{
 			free(temp->content);
 			temp->content = ft_get_content(str); // gets allocated
@@ -60,6 +62,7 @@ void	ft_add_export(t_env_list **env_head, char *str)
 			temp->full = ft_strdup(str); // i dont know if william allocates this string before passing it to me
 			free(temp->var);
 			temp->var = ft_get_var(str); // gets allocated
+			free(str_var);
 			return ;
 		}	
 		if (ft_strncmp(temp->var, "_", ft_strlen(temp->var)) == 0)
@@ -67,6 +70,7 @@ void	ft_add_export(t_env_list **env_head, char *str)
 		prev = temp;
 		temp = temp->next;
 	}
+	free(str_var);
 	temp = prev;
 	temp_2 = temp->next;
 	newNode = malloc(sizeof(t_env_list));
@@ -96,7 +100,7 @@ void	ft_sort_env(t_env_list *env_head)
 	return ;
 }
 
-// checks if there is multiple things to export
+// fixed leaks
 void	ft_export_node(t_env_list **env_head, char **cmd)
 {
 	int		i;

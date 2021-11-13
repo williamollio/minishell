@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 // already worked on this
+// no leaks
 void	ft_echo(char **cmd)
 {
 	int	i;

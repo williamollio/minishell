@@ -1,5 +1,6 @@
 #include "../../includes/minishell.h"
 
+// no leaks
 void	ft_pwd(void)
 {
 	char	*pwd;

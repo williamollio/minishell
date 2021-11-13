@@ -49,7 +49,7 @@ void	ft_cd_go_back(t_env_list **env_head, char *old, char *current, int print)
 		perror(old);
 		exit_status = 1;
 		ft_reset_paths(env_head, current, old); // in that case i cant free current or old, beacuse their pointer get used again for the list
-		return ; // added new
+		return ;
 	}
 	else
 	{
@@ -64,7 +64,7 @@ void	ft_cd_go_home(t_env_list **env_head, char *old, char *current)
 {
 	char	*home;
 
-	home = ft_extract_content(*env_head, "HOME"); // gets allocated
+	home = ft_extract_content(*env_head, "HOME");
 	if (home == NULL)
 	{
 		ft_putendl_fd("bash: cd: HOME not set", 2);
@@ -79,7 +79,7 @@ void	ft_cd_go_home(t_env_list **env_head, char *old, char *current)
 		exit_status = 1;
 		ft_reset_paths(env_head, current, old); // in that case i cant free current or old, beacuse their pointer get used again for the list
 		free(home);
-		return ; // added new
+		return ;
 	}
 	else
 	{
@@ -89,16 +89,15 @@ void	ft_cd_go_home(t_env_list **env_head, char *old, char *current)
 	ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 }
 
-// make sure that william parses - as string and not as arg for cd
 void	ft_cd(t_env_list **env_head, char *path)
 {
 	char	*old;
 	char	*current;
 	
 	exit_status = 0;
-	old = ft_extract_content(*env_head, "OLDPWD"); // gets allocated
-	current = ft_extract_content(*env_head, "PWD"); // gets allocated
-	if (path[0] == '\0' || ((ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1)) // fuer den fall cd ohne path oder cd --
+	old = ft_extract_content(*env_head, "OLDPWD");
+	current = ft_extract_content(*env_head, "PWD");
+	if (path == NULL || ((ft_strncmp(path, "--", 2) == 0 && ft_strlen(path) == 2)) || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1))
 		ft_cd_go_home(env_head, old, current);
 	else if (ft_strncmp(path, "-", 1) == 0 && ft_strlen(path) == 1)
 		ft_cd_go_back(env_head, old, current, 1);
@@ -112,7 +111,7 @@ void	ft_cd(t_env_list **env_head, char *path)
 			perror(path);
 			exit_status = 1;
 			ft_reset_paths(env_head, current, old); // in that case i cant free current or old, beacuse their pointer get used again for the list
-			return ; // added new
+			return ;
 		}
 		else
 			ft_free_current_old(&current, &old);

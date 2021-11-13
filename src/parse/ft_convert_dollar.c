@@ -31,11 +31,25 @@ char	*ft_replace_str(char *str, t_replace rep)
 void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env_list *env_head)
 {
 	rep->var = ft_substr(str, rep->start, rep->i - rep->start);
-	rep->content = ft_extract_content(env_head, rep->var);
+	if (ft_strncmp(rep->var, "?", 1) == 0 && ft_strlen(rep->var) > 0)
+	{
+		char *temp = ft_itoa(exit_status);
+		rep->content = ft_strjoin(temp, &rep->var[1]);
+		free(temp);
+	}
+	else
+	{
+		rep->content = ft_extract_content(env_head, rep->var);
+		if (rep->content == NULL)
+		{
+			free(rep->var);
+			return ;
+		}
+	}
 	rep->tofree = temp->str;
 	temp->str = ft_replace_str(str, *rep);
-	free(rep->var);
 	free(rep->tofree);
+	free(rep->var);
 	rep->i = 0;
 	rep->quote_flag = 1;
 }

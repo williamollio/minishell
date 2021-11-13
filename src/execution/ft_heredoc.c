@@ -15,7 +15,7 @@ void	ft_heredoc(t_exec *exec, t_parse *parse)
 		line = readline("\x1b[35m>>> \x1b[0m");
 		if (line == NULL)
 			break ;
-		if (ft_strncmp(parse->str, line, ft_strlen(parse->str)) == 0 && ft_strlen(line) == ft_strlen(parse->str))
+		if (ft_strncmp(parse->cmd[0], line, ft_strlen(parse->cmd[0])) == 0 && ft_strlen(line) == ft_strlen(parse->cmd[0]))
 			break ;
 		ft_putendl_fd(line, fd[1]);
 	}
