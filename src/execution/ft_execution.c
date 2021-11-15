@@ -26,28 +26,97 @@ void	ft_exec_multiple(t_parse *parse, char **envp, t_env_list **env_head, t_exec
 void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
 {
 	t_exec	exec;
+	int		ret;
 
 	ft_init_exec(&exec, parse);
 	if (!parse)
 		return ;
-	if (ft_set_infile(&exec, &parse) == 1) // call  it in the loop
-		return ; // not sure if i stll nedd to execute the other shit
 	while (parse != NULL)
 	{
-		ft_pipe(&exec);
-		ft_in_is_tempfd(&exec);
-		ft_redirect_out(&exec, parse);
-		if (exec.cmdcount == 1 && !ft_is_builtin_new(parse->cmd[0]))
+		ret = ft_redirect_in(&exec, &parse);
+		if (ret == -1)
+			return ;
+		if (ret == 0)
 		{
-			ft_child_for_built(parse, env_head, RET);
-			ft_parent(&exec);
+			ft_pipe(&exec);
+			ft_in_is_tempfd(&exec);
+			ft_redirect_out(&exec, parse);
+			if (exec.cmdcount == 1 && !ft_is_builtin_new(parse->cmd[0]))
+			{
+				ft_child_for_built(parse, env_head, RET);
+				ft_parent(&exec);
+			}
+			else if (parse->op == CMD || parse->op == PIPE)
+				ft_exec_multiple(parse, envp, env_head, &exec);
+			else
+				ft_parent(&exec);
 		}
-		else if (parse->op == CMD || parse->op == PIPE)
-			ft_exec_multiple(parse, envp, env_head, &exec);
-		else
-			ft_parent(&exec);
 		parse = parse->next;
 	}
 	ft_wait(exec);
 	ft_close_all(&exec);
 }
+
+// void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
+// {
+// 	t_exec	exec;
+
+// 	ft_init_exec(&exec, parse);
+// 	if (!parse)
+// 		return ;
+// 	if (ft_set_infile(&exec, &parse) == 1) // call  it in the loop
+// 		return ; // not sure if i stll nedd to execute the other shit
+// 	while (parse != NULL)
+// 	{
+// 		ft_pipe(&exec);
+// 		ft_in_is_tempfd(&exec);
+// 		ft_redirect_out(&exec, parse);
+// 		if (exec.cmdcount == 1 && !ft_is_builtin_new(parse->cmd[0]))
+// 		{
+// 			ft_child_for_built(parse, env_head, RET);
+// 			ft_parent(&exec);
+// 		}
+// 		else if (parse->op == CMD || parse->op == PIPE)
+// 			ft_exec_multiple(parse, envp, env_head, &exec);
+// 		else
+// 			ft_parent(&exec);
+// 		parse = parse->next;
+// 	}
+// 	ft_wait(exec);
+// 	ft_close_all(&exec);
+// }
+
+// void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
+// {
+// 	t_exec	exec;
+// 	int		ret;
+
+// 	ft_init_exec(&exec, parse);
+// 	if (!parse)
+// 		return ;
+// 	while (parse != NULL)
+// 	{
+// 		ret = ft_redirect_in(&exec, &parse);
+// 		if (ret == -1)
+// 			return ;
+// 		if (ret == 0)
+// 		{
+// 			ft_pipe(&exec);
+// 			ft_in_is_tempfd(&exec);
+// 			ft_redirect_out(&exec, parse);
+// 			if (exec.cmdcount == 1 && !ft_is_builtin_new(parse->cmd[0]))
+// 			{
+// 				ft_child_for_built(parse, env_head, RET);
+// 				ft_parent(&exec);
+// 			}
+// 			else if (parse->op == CMD || parse->op == PIPE)
+// 				ft_exec_multiple(parse, envp, env_head, &exec);
+// 			else
+// 				ft_parent(&exec);
+// 		}
+// 		parse = parse->next;
+// 	}
+// 	ft_wait(exec);
+// 	ft_close_all(&exec);
+// }
+

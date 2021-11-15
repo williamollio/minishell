@@ -47,6 +47,7 @@ typedef struct	s_parse
 	char				*str;
 	char				**cmd;
 	int					op;
+	int					pipe_flag;
 	struct s_parse		*prev;
 	struct s_parse		*next;
 }			t_parse;
@@ -57,6 +58,7 @@ typedef struct s_exec
 	pid_t	pid;
 	int		temp_fd;
 	int		stout;
+	int		stin;
 	int		outfile;
 	int		infile;
 	int		cmdcount;
@@ -178,7 +180,7 @@ void	ft_print_list_parse_2(t_parse **head);
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
 void	ft_print_list_parse(t_parse **head); // print the list
-void	ft_addback_parse(t_parse **head_ref, char *str, int nbr); // create the list
+void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag); // create the list
 void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created
 t_parse	*ft_get_list(t_parse *parse_list); //get parse list from everywhere

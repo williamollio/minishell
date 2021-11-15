@@ -20,19 +20,22 @@ int	ft_redirect_in(t_exec *exec, t_parse **parse)
 		exec->infile = open((*parse)->cmd[0], 0);
 		if (exec->infile == -1)
 		{
-			perror((*parse)->str);
-			return (1);
+			perror((*parse)->cmd[0]);
+			return (-1);
 		}
 		if ((*parse)->next->op != IN && (*parse)->next->op != LEFT)
+		{
+			close(exec->temp_fd);
 			exec->temp_fd = dup(exec->infile);
+		}
 		close(exec->infile);
+		return (1);
 	}
 	else if ((*parse)->op == LEFT)
-		ft_heredoc(exec, *parse);
-	else
 	{
-		exec->temp_fd = dup(STDIN_FILENO);
-		exec->breakout = 1;
+		close(exec->temp_fd);
+		ft_heredoc(exec, *parse);
+		return (1);
 	}
 	return (0);
 }

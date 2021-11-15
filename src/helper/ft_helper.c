@@ -19,33 +19,16 @@ void	ft_print_list_parse_2(t_parse **head)
 		printf("------------------\n");
 		printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
+		printf("pipe_flag : %d\n", tmp->pipe_flag);
+		if (tmp->cmd)
+		{
+
+			if (tmp->cmd[0])
+				printf("cmd : %s\n", tmp->cmd[0]);
+		}
 		tmp = tmp->next;
 	}
 }
-
-// void	ft_print_list_parse3(t_parse **head)
-// {
-// 	t_parse	*tmp;
-// 	int x = 0;
-// 	tmp = *head;
-// 	while (tmp != NULL)
-// 	{
-// 		printf("------------------\n");
-// 		printf("str : %s\n", tmp->str);
-// 		printf("op : %d\n", tmp->op);
-// 		if (x == 1)
-// 		{
-// 			int i = 0;
-// 			while (tmp->cmd[i])
-// 			{
-// 				printf("cmd i%d: %s\n",i, tmp->cmd[i]);
-// 				i++;
-// 			}
-// 		}
-// 		tmp = tmp->next;
-// 		x++;
-// 	}
-// }
 
 void	ft_print_list_parse(t_parse **head)
 {
@@ -55,8 +38,9 @@ void	ft_print_list_parse(t_parse **head)
 	while (tmp != NULL)
 	{
 		printf("------------------\n");
-		printf("str : %s\n", tmp->str);
+		// printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
+		printf("pipe_flag : %d\n", tmp->pipe_flag);
 		int i = 0;
 		while (tmp->cmd[i])
 		{
@@ -84,10 +68,11 @@ void	ft_init_parse(t_parse **head)
 {
 	(* head)->str = "";
 	(* head)->op = 0;
-	(*head)->cmd = NULL;
+	(* head)->pipe_flag = 0;
+	(* head)->cmd = NULL;
 }
 
-void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
+void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag)
 {
 	t_parse	*newNode;
 	t_parse	*last;
@@ -97,6 +82,11 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr)
 	ft_init_parse(&newNode);
 	newNode->str = str;
 	newNode->op = nbr;
+	if (pipe_flag)
+	{
+		newNode->pipe_flag = *pipe_flag;
+		*pipe_flag = 0;
+	}
 	newNode->next = NULL;
 	if (*head_ref == NULL)
 	{

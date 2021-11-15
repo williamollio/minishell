@@ -30,8 +30,9 @@ void	ft_init_exec(t_exec *exec, t_parse *parse)
 	exec->pipes[0] = -1;
 	exec->pipes[1] = -1;
 	exec->pid = -1;
-	exec->temp_fd = -1;
+	exec->temp_fd = dup(STDIN_FILENO);
 	exec->stout = dup(STDOUT_FILENO);
+	exec->stin = dup(STDIN_FILENO);
 	exec->outfile = -1;
 	exec->infile = -1;
 	exec->cmdcount = ft_count_cmds(parse);
@@ -40,22 +41,22 @@ void	ft_init_exec(t_exec *exec, t_parse *parse)
 	exec->breakout = 0;
 }
 
-int	ft_set_infile(t_exec *exec, t_parse **parse)
-{
-	while (1)
-	{
-		if (ft_redirect_in(exec, parse) == 1)
-			return (1);
-		if (exec->breakout == 1)
-			break ;
-		*parse = (*parse)->next;
-		if ((*parse)->next == NULL)
-			break ;
-		if ((*parse)->op != IN && (*parse)->op != LEFT)
-			break ;
-	}
-	return (0);
-}
+// int	ft_set_infile(t_exec *exec, t_parse **parse)
+// {
+// 	while (1)
+// 	{
+// 		if (ft_redirect_in(exec, parse) == 1)
+// 			return (1);
+// 		if (exec->breakout == 1)
+// 			break ;
+// 		*parse = (*parse)->next;
+// 		if ((*parse)->next == NULL)
+// 			break ;
+// 		if ((*parse)->op != IN && (*parse)->op != LEFT)
+// 			break ;
+// 	}
+// 	return (0);
+// }
 
 void	ft_wait(t_exec exec)
 {
