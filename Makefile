@@ -10,6 +10,7 @@ SRC = ./src/minishell.c ./src/builtins/ft_exit.c\
 		./src/helper/ft_system_executer.c  ./src/helper/ft_list_helper.c \
 		./src/builtins/ft_env.c ./src/parse/ft_lexer.c ./src/parse/ft_seperator.c ./src/parse/ft_splitter.c \
 		./src/parse/ft_convert_dollar.c \
+		./src/parse/ft_quotes.c \
 		./src/execution/ft_child_builtin.c ./src/execution/ft_child_system.c ./src/execution/ft_execution.c \
 		./src/execution/ft_heredoc.c ./src/execution/ft_pipe_fork.c ./src/execution/ft_redirections.c \
 		./src/execution/ft_execution_utils.c

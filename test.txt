@@ -15,3 +15,17 @@ wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2
 export TEST=1 test=2 sup=
 export TEST=1 test=2 sup= | env
 
+echo ok"hello"ok1"mfg" == echo ok'hello'ok1'mfg'
+-- okhellook1mfg
+
+echo okhellook1"mfg" == echo okhellook1'mfg'
+-- okhellook1mfg
+
+echo "o""k       "hellook1 == echo 'o''k       'hellook1
+-- ok       hellook1
+
+echo '"***hello***"'
+"***hello***"
+
+echo "'***hello***'"
+"***hello***'

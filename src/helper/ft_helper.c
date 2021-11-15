@@ -55,7 +55,6 @@ void	ft_print_list_parse(t_parse **head)
 	while (tmp != NULL)
 	{
 		printf("------------------\n");
-		printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
 		int i = 0;
 		while (tmp->cmd[i])

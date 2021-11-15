@@ -37,7 +37,7 @@ void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env_list *env_head)
 	{
 		temp2 = ft_itoa(exit_status);
 		rep->content = ft_strjoin(temp2, &rep->var[1]);
-		free(temp);
+		free(temp2);
 	}
 	else
 	{
@@ -76,7 +76,7 @@ void	ft_replace(char *str, t_parse *temp, t_env_list *env_head)
 		}
 		rep.i++;
 	}
-} 
+}
 
 void	ft_convert_dollar(t_parse **parse, t_env_list *env_head)
 {
