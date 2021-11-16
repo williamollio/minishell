@@ -39,6 +39,8 @@ void	ft_init_exec(t_exec *exec, t_parse *parse)
 	exec->waitcount = 0;
 	exec->child_status = 0;
 	exec->breakout = 0;
+	exec->out_action = 0;
+	exec->ret = 0;
 }
 
 // int	ft_set_infile(t_exec *exec, t_parse **parse)
@@ -67,7 +69,7 @@ void	ft_wait(t_exec exec)
 		waitpid(0, &exec.child_status, 0);
 		if (WIFEXITED(exec.child_status))
 			exit_status = WEXITSTATUS(exec.child_status);
-		if (WIFSIGNALED(exec.child_status))
+		if (WIFSIGNALED(exec.child_status)) //this aint doin nothin
 			signaled = WTERMSIG(exec.child_status);
 		if (signaled == 3)
 			ft_putendl_fd("^\\Quit: 3", 1);

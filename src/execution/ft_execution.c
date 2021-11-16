@@ -62,6 +62,27 @@ int	ft_choose_outfile(t_exec *exec, t_parse *parse)
 	return (0);
 }
 
+void	ft_write_here(t_parse *parse, t_exec *exec)
+{
+	if (parse->next != NULL)
+	{	
+		if (parse->next->op == PIPE || parse->next->pipe_flag == PIPE)
+		{
+			ft_write_to_pipe(exec);
+		}
+		if (parse->next->op == OUT || parse->next->op == RIGHT)
+		{
+			exec->out_action = ft_choose_outfile(exec, parse);
+		}
+	}
+	else
+	{
+		dup2(exec->stout, STDOUT_FILENO);
+		close(exec->stout);
+	}
+	
+}
+
 int	ft_file_only(t_parse *parse, t_exec *exec)
 {
 	while (parse != NULL)
@@ -95,87 +116,63 @@ int	ft_file_only(t_parse *parse, t_exec *exec)
 			}
 		}
 		else
-		{
-			// ft_in_is_tempfd(exec);
 			ft_choose_outfile(exec, parse);
-		}
 		parse = parse->next;
 	}
 	return 0;
 }
 
+int	ft_skip_outfiles(t_parse **parse, t_exec *exec)
+{
+	if (exec->out_action == 1)
+		return (0);
+	if (exec->out_action == 2)
+	{
+		while ((*parse)->next->op == OUT || (*parse)->next->op == RIGHT)
+			*parse = (*parse)->next;
+		exec->out_action = 0;
+	}
+	return (1);
+}
+
+void	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env_list **env_head)
+{
+	ft_pipe(exec);
+	ft_in_is_tempfd(exec);
+	ft_write_here(*parse, exec);
+	if (exec->cmdcount == 1 && !ft_is_builtin_new((*parse)->cmd[0]))
+	{
+		ft_child_for_built(*parse, env_head, RET);
+		ft_parent(exec);
+	}
+	else if ((*parse)->op == CMD || (*parse)->op == PIPE)
+		ft_exec_multiple(*parse, envp, env_head, exec);
+	else
+		ft_parent(exec);
+}
+
 void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
 {
 	t_exec	exec;
-	int		ret;
-	int		out_action;
 
-	out_action = 0;
 	ft_init_exec(&exec, parse);
 	if (!parse)
 		return ;
-
-
 	if (exec.cmdcount == 0) // added later
 	{
 		ft_file_only(parse, &exec); // added later
 		return ;
 	}
-
-
 	while (parse != NULL)
 	{
-		ret = ft_redirect_in(&exec, &parse);
-		if (ret == -1)
+		exec.ret = ft_redirect_in(&exec, &parse);
+		if (exec.ret == -1)
 			return ;
-		if (ret == 0)
+		if (exec.ret == 0)
 		{
-			ft_pipe(&exec);
-			ft_in_is_tempfd(&exec);
-
-
-
-			if (parse->next != NULL)
-			{
-				if (parse->next->op == PIPE || parse->next->pipe_flag == PIPE)
-				{
-					ft_write_to_pipe(&exec);
-				}
-				if (parse->next->op == OUT || parse->next->op == RIGHT)
-				{
-					out_action = ft_choose_outfile(&exec, parse);
-				}
-			}
-			// else if (exec.cmdcount == 0 && parse->op >= 2 && parse->op <= 5) // added later 
-			// {
-			// 	out_action = ft_choose_outfile(&exec, parse);
-			// }
-			else
-			{
-				dup2(exec.stout, STDOUT_FILENO);
-				close(exec.stout);
-			}
-
-
-			if (exec.cmdcount == 1 && !ft_is_builtin_new(parse->cmd[0]))
-			{
-				ft_child_for_built(parse, env_head, RET);
-				ft_parent(&exec);
-			}
-			else if (parse->op == CMD || parse->op == PIPE)
-				ft_exec_multiple(parse, envp, env_head, &exec);
-			else
-				ft_parent(&exec);
-
-
-			if (out_action == 1)
+			ft_core(&parse, &exec, envp, env_head); // this needs to return an int for errors
+			if (!ft_skip_outfiles(&parse, &exec))
 				break ;
-			if (out_action == 2)
-			{
-				while (parse->next->op == OUT || parse->next->op == RIGHT)
-					parse = parse->next;
-				out_action = 0;
-			}
 		}
 		parse = parse->next;
 	}

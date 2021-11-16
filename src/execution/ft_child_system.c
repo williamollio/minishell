@@ -17,7 +17,7 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 	char	*slash;
 
 	i = 0;
-	if (cmd[0] == '/') // for absolute paths
+	if (cmd[0] == '/' || cmd[0] == '.') // for absolute paths
 		return (ft_strdup(cmd));
 	while (i <= rows)
 	{
@@ -49,7 +49,7 @@ void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head)
 		sys.rowsinpath = ft_countrows(sys.paths);
 		sys.cmdpath = ft_check_commandpath(sys.rowsinpath, sys.paths, parse->cmd[0]);
 		ft_free2(sys.paths);
-		if (parse->cmd[0][0] == '/') // for absolute paths
+		if (parse->cmd[0][0] == '/' || parse->cmd[0][0] == '.') // for absolute paths and shel in shell
 		{
 			split2 = ft_split(parse->cmd[0], '/');
 			sys.rowsinpath = ft_countrows(split2);
