@@ -57,6 +57,8 @@ int	ft_lexer(char *line, t_parse **parse)
 			str = ft_get_next_str(line, &i, &quote_flag, op, &pipe_flag);
 			if (!ft_nothing(str))
 				ft_addback_parse(parse, str, op, &pipe_flag);
+			else 
+				free(str);
 		}
 		else
 			i++;

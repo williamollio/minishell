@@ -19,7 +19,9 @@ void	ft_heredoc(t_exec *exec, t_parse *parse)
 			break ;
 		ft_putendl_fd(line, fd[1]);
 	}
-	if (parse->next->op != IN && parse->next->op != LEFT)
+	if (parse->next == NULL) // added later
+		exec->temp_fd = dup(fd[0]);
+	else if (parse->next->op != IN && parse->next->op != LEFT)
 		exec->temp_fd = dup(fd[0]);
 	close(fd[0]);
 	close(fd[1]);

@@ -23,6 +23,12 @@ int	ft_redirect_in(t_exec *exec, t_parse **parse)
 			perror((*parse)->cmd[0]);
 			return (-1);
 		}
+		if ((*parse)->next == NULL)
+		{
+			close(exec->temp_fd);
+			close(exec->infile);
+			return (1);
+		}
 		if ((*parse)->next->op != IN && (*parse)->next->op != LEFT)
 		{
 			close(exec->temp_fd);
@@ -38,35 +44,4 @@ int	ft_redirect_in(t_exec *exec, t_parse **parse)
 		return (1);
 	}
 	return (0);
-}
-
-// for now only first outfile
-void	ft_redirect_out(t_exec *exec, t_parse *parse)
-{
-	if (parse->next == NULL)
-	{
-		dup2(exec->stout, STDOUT_FILENO);
-		close(exec->stout);
-		close(exec->pipes[1]);
-		return ;
-	}
-	else if (parse->next->op == PIPE)
-	{
-		dup2(exec->pipes[1], STDOUT_FILENO);
-		close(exec->pipes[1]);
-	}
-	else if(parse->next->op == OUT)
-	{
-		exec->outfile = open(parse->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
-		dup2(exec->outfile, 1);
-		close(exec->outfile);
-		close(exec->pipes[1]);
-	}
-	else if(parse->next->op == RIGHT)
-	{
-		exec->outfile = open(parse->next->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0777);
-		dup2(exec->outfile, 1);
-		close(exec->outfile);
-		close(exec->pipes[1]);
-	}
 }
