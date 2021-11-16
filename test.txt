@@ -29,3 +29,10 @@ echo '"***hello***"'
 
 echo "'***hello***'"
 "***hello***'
+
+echo ok"'hello'"ok1"hello1"ok2
+
+echo "text"   "$USER"    "$USER"
+echo """"""""$USER""""""""
+echo "-n -n -n"-n bonjour
+echo "'$USER'"

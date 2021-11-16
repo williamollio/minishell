@@ -90,13 +90,13 @@ typedef struct s_replace
 
 typedef struct s_quotes
 {
+	int		flag_single;
+	int		flag_double;
 	int		i;
 	int		x;
 	int		i1;
 	int		i2;
 	int		pos1;
-	int		flag_single;
-	int		flag_double;
 	char	*temp1;
 	char	*temp2;
 	char	*temp3;
@@ -214,6 +214,10 @@ char	**ft_get_paths(char **paths); // static function to get paths variable
 /* free arr in parsing */
 /* implement ft_tool in minishel.c */
 /* in ft_exit all shit has to be freed and cleared */
+
+/** -------------------------------- will -------------------------------- **/
+/* doubles quotes / single quotes */
+/* double free echo $? */
 
 
 
