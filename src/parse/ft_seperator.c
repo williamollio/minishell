@@ -26,12 +26,19 @@ void	ft_flip_nodes(t_parse **parse, t_parse *temp)
 		temp->prev->next = temp->next;
 		temp->next = temp->prev;
 		*parse = temp;
+		temp->prev = NULL;
+		temp->next->prev = temp;
+		temp->next->next->prev = temp->next;
 	}
 	else // dont know if its working
 	{
 		temp->prev->next = temp->next;
 		temp->next = temp->prev;
 		temp->prev->prev->next = temp;
+		
+		temp->prev = temp->next->prev;
+		temp->next->prev = temp;
+		temp->next->next->prev = temp->next;
 	}
 }
 
@@ -40,7 +47,7 @@ int ft_special(t_parse **parse, char **split, t_parse *temp)
 	char	*str;
 	int		i;
 
-	if (split[1] != NULL && *parse != temp  && (temp->prev->op == CMD || temp->prev->op == PIPE))
+	if (split[1] != NULL && *parse != temp  && (temp->prev->op == CMD || temp->prev->op == PIPE) && temp->pipe_flag == 0)
 	{
 		str = ft_strdup(temp->prev->str);
 		free(temp->prev->str);
