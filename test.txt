@@ -25,8 +25,8 @@ wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2						--> worki
 < in1 cat -e | < in2 cat																--> working
 < in1 cat -e > out1 | < in2 cat															--> working
 
- env | rev | head -5 | cat -e | rev														--> working
- in1 <in2 <in3 < Makefile rev | head -5 | cat -e | rev > out > out2 > out3 >> out4		--> working
+env | rev | head -5 | cat -e | rev														--> working
+< in1 <in2 <in3 < Makefile rev | head -5 | cat -e | rev > out > out2 > out3 >> out4		--> working
 
 echo ok"hello"ok1"mfg" == echo ok'hello'ok1'mfg'
 -- okhellook1mfg

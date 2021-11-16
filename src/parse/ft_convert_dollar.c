@@ -70,7 +70,7 @@ void	ft_replace(char *str, t_parse *temp, t_env_list *env_head)
 		{
 			rep.i++;
 			rep.start = rep.i;
-			while (str[rep.i] && str[rep.i] != ' ' && !ft_operator_tool2(str, &rep.i) && str[rep.i] != '"')
+			while (str[rep.i] && str[rep.i] != ' ' && !ft_operator_tool2(str, &rep.i) && str[rep.i] != '"' && str[rep.i] != '/')
 				rep.i++;
 			ft_replacer(str, &rep, temp, env_head);
 			str = temp->str;

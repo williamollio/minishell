@@ -65,6 +65,9 @@ typedef struct s_exec
 	int		waitcount;
 	int		child_status;
 	int		breakout;
+
+	int		ret;
+	int		out_action;
 }			t_exec;
 
 typedef struct s_sys
