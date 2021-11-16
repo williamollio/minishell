@@ -213,12 +213,10 @@ char	**ft_get_paths(char **paths); // static function to get paths variable
 #endif
 
 /** TO DO **/
-/* free arr in parsing */
 /* implement ft_tool in minishel.c */
 /* in ft_exit all shit has to be freed and cleared */
 
 /** -------------------------------- will -------------------------------- **/
-/* doubles quotes / single quotes */
 /* double free echo $? */
 
 

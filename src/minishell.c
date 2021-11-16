@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
 		s1 = ft_strtrim(line, " ");
-		if ((ft_strncmp(s1, "\n", 1) && ft_strlen(s1)) && !ft_parsing(envp, line, &parse, &env_head))
+		if (s1 && !ft_parsing(envp, line, &parse, &env_head))
 		{
 			printf("MAIN: --------------------------------------------------------\n");
 			ft_print_list_parse(&parse);
@@ -33,9 +33,10 @@ int main(int argc, char **argv, char **envp)
 			ft_execution(parse, envp, &env_head);
 		}
 		add_history(line);
-		ft_free1(s1);
+		if (s1)
+			ft_free1(s1);
 		ft_free_list_parse(&parse);
-		// system("leaks minishell");
+		//system("leaks minishell");
 	}
 	return (0);
 }
