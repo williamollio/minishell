@@ -3,6 +3,8 @@ cmd "str1 str2 str3" >out | cmd2 -arg | cmd3 >out2 >out3
 cmd "str1 str2 str3" >out | cmd2 -arg str | cmd3 str >out2 >out3
 cmd <in -arg | cmd2 "str |" >out>>out2
 cmd1 <in1 -arg1 > out1 | cmd2 <in2 -arg2 > out2
+
+
 echo $PWD
 echo $PWD|cat -e
 echo $PWD hallo | cat -e
@@ -10,12 +12,24 @@ echo '$PWD hallo | cat -e'
 echo "$PWD hallo | cat -e"
 
 
-wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2
-< test.txt < Makefile<README.md wc -l|cat -e | rev
+export TEST=1 test=2 sup=																--> working
+export TEST=1 test=2 sup= | env															--> working
 
-export TEST=1 test=2 sup=
-export TEST=1 test=2 sup= | env
 
-< Makefile cat > out | < README.md cat -e -->double free
-< README.md cat -e | <Makefile cat
-< Makefile > outfile
+wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2						--> working
+< test.txt < Makefile<README.md wc -l|cat -e | rev										--> working
+
+< Makefile cat > out | < README.md cat -e 												--> working
+< README.md cat -e | <Makefile cat														--> working
+
+< in1 cat -e | < in2 cat																--> working
+< in1 cat -e > out1 | < in2 cat															--> working
+
+ env | rev | head -5 | cat -e | rev														--> working
+ in1 <in2 <in3 < Makefile rev | head -5 | cat -e | rev > out > out2 > out3 >> out4		--> working
+
+
+< in1 < in2																				--> working
+< in1 cat < in2																			--> working
+< Makefile > outfile																	--> working
+> out																					--> working

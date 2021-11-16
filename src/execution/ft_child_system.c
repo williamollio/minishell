@@ -25,10 +25,7 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 		ret = ft_strjoin(slash, cmd);
 		ft_free1(slash);
 		if (access(ret, F_OK) != -1)
-		{
-			printf("ret = %s\n", ret);
 			return (ret);
-		}
 		free(ret);
 		i++;
 	}
