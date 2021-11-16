@@ -21,7 +21,7 @@ char	*ft_get_next_str(char *line, int *i, int *quote_flag, int op, int *pipe_fla
 
 	ft_skip_space(line, i);
 	x = (*i);
-	while ((ft_operator_tool2(line, i) == 0 || (*quote_flag) == (-1)) && line[*i] != '\0')
+	while (line[*i] != '\0' && (ft_operator_tool2(line, i) == 0 || (*quote_flag) == (-1)))
 	{
 		if (line[*i] == '"' || ft_strncmp(&line[*i], "'", 1) == 0)
 			(*quote_flag) *= (-1);
@@ -48,8 +48,8 @@ int	ft_lexer(char *line, t_parse **parse)
 	loopflag = 0;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '"' || ft_strncmp(&line[i], "'", 1) == 0)
-			quote_flag *= (-1);
+		// if (line[i] == '"' || ft_strncmp(&line[i], "'", 1) == 0) // for "e"cho case
+		// 	quote_flag *= (-1);
 		ft_skip_space(line, &i);
 		op = ft_operator_tool(line, &i);
 		if ((op || loopflag == 0) && quote_flag == 1)
@@ -57,7 +57,7 @@ int	ft_lexer(char *line, t_parse **parse)
 			str = ft_get_next_str(line, &i, &quote_flag, op, &pipe_flag);
 			if (!ft_nothing(str))
 				ft_addback_parse(parse, str, op, &pipe_flag);
-			else 
+			else
 				free(str);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:13:04 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/16 18:00:50 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/16 18:56:08 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 		i++;
 	start = i;
 	if (start == ft_strlen(s1))
-		return ("");
+		return NULL;
 	i = ft_strlen(s1) - 1;
 	if (i == (-1))
-		return ("");
+		return NULL;
 	while (s1[i] && ft_strcheck((char const)s1[i], set) == 1)
 		i--;
 	end = i;

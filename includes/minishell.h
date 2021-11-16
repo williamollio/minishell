@@ -188,7 +188,6 @@ int		countrows(char **paths); // count rows in paths
 void	ft_append(char **last_arg, char **arg); // append strings in the variables
 
 void	ft_quotes(t_parse **parse);
-char	*ft_remove_quotes_2(char *str);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
@@ -214,12 +213,10 @@ char	**ft_get_paths(char **paths); // static function to get paths variable
 #endif
 
 /** TO DO **/
-/* free arr in parsing */
 /* implement ft_tool in minishel.c */
 /* in ft_exit all shit has to be freed and cleared */
 
 /** -------------------------------- will -------------------------------- **/
-/* doubles quotes / single quotes */
 /* double free echo $? */
 
 
