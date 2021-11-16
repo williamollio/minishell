@@ -38,7 +38,6 @@ void	ft_print_list_parse(t_parse **head)
 	while (tmp != NULL)
 	{
 		printf("------------------\n");
-		// printf("str : %s\n", tmp->str);
 		printf("op : %d\n", tmp->op);
 		printf("pipe_flag : %d\n", tmp->pipe_flag);
 		int i = 0;

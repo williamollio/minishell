@@ -17,9 +17,7 @@ int ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head)
 
 
 	ft_seperator(parse);
-
-
-
+  
 	t_parse 	*temp = *parse;
 
 	while (temp != NULL)

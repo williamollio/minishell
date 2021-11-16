@@ -87,8 +87,24 @@ typedef struct s_replace
 	char	*var;
 	char	*content;
 	char	*tofree;
-	int		quote_flag;	
+	int		quote_flag;
 }			t_replace;
+
+typedef struct s_quotes
+{
+	int		flag_single;
+	int		flag_double;
+	int		i;
+	int		x;
+	int		i1;
+	int		i2;
+	int		pos1;
+	char	*temp1;
+	char	*temp2;
+	char	*temp3;
+	char	*temp4;
+	char	*temp5;
+}			t_quotes;
 
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
@@ -155,7 +171,7 @@ void	ft_arg_error(t_parse *last, t_parse **parse, int *x, char *line); // manage
 void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 
 
-/** NEW *********************************************************************************************************/
+/** NEW PARSING *********************************************************************************************************/
 int		ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head); // general function
 int		ft_lexer(char *line, t_parse **parse); // create tokens (splitting on special chars and ignoring them if quoted)
 void	ft_convert_dollar(t_parse **parse, t_env_list *env_head); // searches for a $VAR in str of the Node and replaces it with content
@@ -171,15 +187,12 @@ void	ft_skip_space(char *line, int *x); // ignores spaces
 int		countrows(char **paths); // count rows in paths
 void	ft_append(char **last_arg, char **arg); // append strings in the variables
 
-// print
-void	ft_print_list_parse_2(t_parse **head);
-// void	ft_print_list_parse3(t_parse **head);
-/** NEW *********************************************************************************************************/
-
+void	ft_quotes(t_parse **parse);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
 void	ft_print_list_parse(t_parse **head); // print the list
+void	ft_print_list_parse_2(t_parse **head);
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag); // create the list
 void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created
@@ -203,6 +216,10 @@ char	**ft_get_paths(char **paths); // static function to get paths variable
 /* free arr in parsing */
 /* implement ft_tool in minishel.c */
 /* in ft_exit all shit has to be freed and cleared */
+
+/** -------------------------------- will -------------------------------- **/
+/* doubles quotes / single quotes */
+/* double free echo $? */
 
 
 

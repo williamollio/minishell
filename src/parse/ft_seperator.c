@@ -66,7 +66,7 @@ int ft_special(t_parse **parse, char **split, t_parse *temp)
 
 void	ft_seperator(t_parse **parse)
 {
-	t_parse *temp;
+	t_parse	*temp;
 	char	**split;
 	char	**cmd;
 	int		count = 0;
