@@ -53,3 +53,10 @@ echo "'$USER'"
 < in1 cat < in2																			--> working
 < Makefile > outfile																	--> working
 > out																					--> working
+
+
+echo "$PWD         "a
+/Users/wollio/Desktop/projects/4/minishell         a
+
+echo "         $PWD"
+         /Users/wollio/Desktop/projects/4/minishell

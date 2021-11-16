@@ -60,11 +60,17 @@ void	ft_init_exec(t_exec *exec, t_parse *parse)
 
 void	ft_wait(t_exec exec)
 {
+	int	signaled;
+
 	while (exec.waitcount > 0)
 	{
 		waitpid(0, &exec.child_status, 0);
 		if (WIFEXITED(exec.child_status))
 			exit_status = WEXITSTATUS(exec.child_status);
+		if (WIFSIGNALED(exec.child_status))
+			signaled = WTERMSIG(exec.child_status);
+		if (signaled == 3)
+			ft_putendl_fd("^\\Quit: 3", 1);
 		exec.waitcount--;
 	}
 }

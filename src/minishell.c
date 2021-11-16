@@ -33,7 +33,8 @@ int main(int argc, char **argv, char **envp)
 			ft_execution(parse, envp, &env_head);
 		}
 		add_history(line);
-		ft_free1(s1);
+		if (ft_strncmp(s1, "", 0) != 0)
+			ft_free1(s1);
 		ft_free_list_parse(&parse);
 		// system("leaks minishell");
 	}

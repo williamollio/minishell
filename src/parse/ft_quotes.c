@@ -94,6 +94,22 @@ char *ft_remove_quotes(char *str)
 	return (quotes.temp4);
 }
 
+char *ft_remove_quotes_2(char *str)
+{
+	t_quotes	quotes;
+
+	ft_init_quotes(&quotes);
+	while (str[quotes.i])
+	{
+		if (str[quotes.i] == '"')
+			ft_double(str, &quotes);
+		quotes.i++;
+	}
+	free(str);
+	free(quotes.temp3);
+	return (quotes.temp4);
+}
+
 void ft_quotes(t_parse **parse)
 {
 	t_parse	*tmp;

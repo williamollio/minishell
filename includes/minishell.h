@@ -188,6 +188,7 @@ int		countrows(char **paths); // count rows in paths
 void	ft_append(char **last_arg, char **arg); // append strings in the variables
 
 void	ft_quotes(t_parse **parse);
+char	*ft_remove_quotes_2(char *str);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
