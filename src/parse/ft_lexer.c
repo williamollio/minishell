@@ -46,6 +46,8 @@ int	ft_lexer(char *line, t_parse **parse)
 	quote_flag = 1;
 	i = 0;
 	loopflag = 0;
+	if (ft_strchr(line , '\\') != NULL || ft_strchr(line , ';'))
+		return (-1);
 	while (line[i] != '\0')
 	{
 		// if (line[i] == '"' || ft_strncmp(&line[i], "'", 1) == 0) // for "e"cho case
