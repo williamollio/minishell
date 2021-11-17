@@ -1,9 +1,19 @@
 #include "../../includes/minishell.h"
 
+int ft_variable_pid(int pid)
+{
+	static int pid_2 = 0;
+	if (pid != -1)
+		pid_2 = pid;
+	return (pid_2);
+}
+
 void	ft_exec_multiple(t_parse *parse, char **envp, t_env_list **env_head, t_exec *exec)
 {
 	exec->waitcount++;
-	ft_fork(exec);
+	signal(SIGINT, sigfunc_child);
+	signal(SIGQUIT, sigfunc_child);
+	ft_variable_pid(ft_fork(exec));
 	if (ft_is_builtin_new(parse->cmd[0]) && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
@@ -65,7 +75,7 @@ int	ft_choose_outfile(t_exec *exec, t_parse *parse)
 void	ft_write_here(t_parse *parse, t_exec *exec)
 {
 	if (parse->next != NULL)
-	{	
+	{
 		if (parse->next->op == PIPE || parse->next->pipe_flag == PIPE)
 		{
 			ft_write_to_pipe(exec);
@@ -80,7 +90,7 @@ void	ft_write_here(t_parse *parse, t_exec *exec)
 		dup2(exec->stout, STDOUT_FILENO);
 		close(exec->stout);
 	}
-	
+
 }
 
 int	ft_file_only(t_parse *parse, t_exec *exec)

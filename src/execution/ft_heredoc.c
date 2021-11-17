@@ -1,5 +1,17 @@
 #include "../../includes/minishell.h"
 
+static int flag = 0;
+
+void ft_sigint2(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(1, "Hit ENTER to go back to shell!", 31);
+		flag = 1;
+		return ;
+	}
+}
+
 void	ft_heredoc(t_exec *exec, t_parse *parse)
 {
 	int		fd[2];
@@ -12,6 +24,14 @@ void	ft_heredoc(t_exec *exec, t_parse *parse)
 	}
 	while (1)
 	{
+		signal(SIGINT, ft_sigint2);
+		if (flag)
+		{
+			flag = 0;
+			close(fd[0]);
+			close(fd[1]);
+			return;
+		}
 		line = readline("\x1b[35m>>> \x1b[0m");
 		if (line == NULL)
 			break ;

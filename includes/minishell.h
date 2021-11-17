@@ -33,7 +33,6 @@
 # define RET 10
 
 extern int	exit_status;
-
 typedef struct	s_env_list
 {
 	char				*full;
@@ -134,7 +133,7 @@ void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redir
 int		ft_redirect_in(t_exec *exec, t_parse **parse); // takes input either from infile or stdin
 void	ft_redirect_out(t_exec *exec, t_parse *parse); // redirect output either to file, stdout or pipe
 void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
-void	ft_fork(t_exec *exec); // fork a process
+int		ft_fork(t_exec *exec); // fork a process
 int		ft_countrows(char **paths); // counts rows in a 2d array
 void	ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
 int		ft_is_builtin_new(char *line); // checks if command is abuiltin
@@ -175,7 +174,7 @@ void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 
 
 /** NEW PARSING *********************************************************************************************************/
-int		ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head); // general function
+int		ft_parsing(char *line, t_parse **parse, t_env_list **env_head); // general function
 int		ft_lexer(char *line, t_parse **parse); // create tokens (splitting on special chars and ignoring them if quoted)
 void	ft_convert_dollar(t_parse **parse, t_env_list *env_head); // searches for a $VAR in str of the Node and replaces it with content
 void	ft_seperator(t_parse **parse); // puts the tokens in the right order and changes content if necessary
@@ -191,6 +190,9 @@ int		countrows(char **paths); // count rows in paths
 void	ft_append(char **last_arg, char **arg); // append strings in the variables
 
 void	ft_quotes(t_parse **parse);
+
+void	sigfunc_child(int sig);
+int		ft_variable_pid(int pid);
 
 /** HELPER **/
 void	ft_print_list(t_env_list *head);
