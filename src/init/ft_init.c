@@ -36,14 +36,34 @@ void ft_init(int argc, char **argv, char **envp, t_env_list **env_head)
 	ft_get_env_list(envp, env_head);
 }
 
+void	sigfunc_child(int signal)
+{
+	if (signal == SIGINT || signal == SIGQUIT)
+	{
+		kill(ft_variable_pid(-1), signal);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return ;
+	}
+}
+
 void ft_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 1);
+		rl_replace_line("", 0);
 		rl_redisplay();
+		return ;
+	}
+	if (signal == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return ;
 	}
 	/*
 	* else if (signal == SIGSEGV)

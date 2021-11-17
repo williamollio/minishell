@@ -1,6 +1,7 @@
 #include "../includes/minishell.h"
 
 int	exit_status;
+int	pid;
 
 int main(int argc, char **argv, char **envp)
 {
@@ -20,7 +21,6 @@ int main(int argc, char **argv, char **envp)
 		dup2(fd_in_old, 0);
 		dup2(fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
-		signal(SIGQUIT, SIG_IGN);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);

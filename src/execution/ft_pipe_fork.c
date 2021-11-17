@@ -9,7 +9,7 @@ void	ft_pipe(t_exec *exec)
 	}
 }
 
-void	ft_fork(t_exec *exec)
+int	ft_fork(t_exec *exec)
 {
 	exec->pid = fork();
 	if (exec->pid == -1)
@@ -17,4 +17,5 @@ void	ft_fork(t_exec *exec)
 		perror("fork");
 		exit(0);
 	}
+	return (exec->pid);
 }
