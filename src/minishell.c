@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
 		s1 = ft_strtrim(line, " ");
-		if (s1 && !ft_parsing(envp, line, &parse, &env_head))
+		if (s1 && !ft_parsing(line, &parse, &env_head))
 		{
 			printf("MAIN: --------------------------------------------------------\n");
 			ft_print_list_parse(&parse);

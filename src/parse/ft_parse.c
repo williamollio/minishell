@@ -1,16 +1,15 @@
 #include "../../includes/minishell.h"
 
-int ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head)
+int ft_parsing(char *line, t_parse **parse, t_env_list **env_head)
 {
 	*parse = NULL;
-	(void)envp;
 	if (ft_lexer(line, parse) < 0)
 	{
 		ft_putendl_fd("unclosed quotes or unspecified special characters", 2);
 		return (EXIT_FAILURE);
 	}
-	printf("after lexer\n");
-	ft_print_list_parse_2(parse);
+	// printf("after lexer\n");
+	// ft_print_list_parse_2(parse);
 	ft_convert_dollar(parse, *env_head);
 
 	ft_seperator(parse);

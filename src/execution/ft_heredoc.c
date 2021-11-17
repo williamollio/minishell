@@ -1,5 +1,15 @@
 #include "../../includes/minishell.h"
 
+int flag = 0;
+
+void ft_sigint2(int signal)
+{
+	if (signal == SIGINT)
+	{
+		flag = 1;
+		return ;
+	}
+}
 void	ft_heredoc(t_exec *exec, t_parse *parse)
 {
 	int		fd[2];
@@ -13,6 +23,9 @@ void	ft_heredoc(t_exec *exec, t_parse *parse)
 	while (1)
 	{
 		line = readline("\x1b[35m>>> \x1b[0m");
+		signal(SIGINT, &ft_sigint2);
+		if (flag)
+			break;
 		if (line == NULL)
 			break ;
 		if (ft_strncmp(parse->cmd[0], line, ft_strlen(parse->cmd[0])) == 0 && ft_strlen(line) == ft_strlen(parse->cmd[0]))

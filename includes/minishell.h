@@ -175,7 +175,7 @@ void	ft_str(t_parse **parse, char *line, int *x); // initialize str variables
 
 
 /** NEW PARSING *********************************************************************************************************/
-int		ft_parsing(char **envp, char *line, t_parse **parse, t_env_list **env_head); // general function
+int		ft_parsing(char *line, t_parse **parse, t_env_list **env_head); // general function
 int		ft_lexer(char *line, t_parse **parse); // create tokens (splitting on special chars and ignoring them if quoted)
 void	ft_convert_dollar(t_parse **parse, t_env_list *env_head); // searches for a $VAR in str of the Node and replaces it with content
 void	ft_seperator(t_parse **parse); // puts the tokens in the right order and changes content if necessary
