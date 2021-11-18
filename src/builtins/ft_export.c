@@ -78,7 +78,7 @@ void	ft_export_node(t_env **env_head, char **cmd)
 {
 	int		i;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	if (cmd[1] == NULL)
 	{
 		ft_sort_env(*env_head);

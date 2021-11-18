@@ -16,7 +16,7 @@ void	ft_free_current_old(char **current, char **old)
 
 void	ft_init_cd(t_cd *cd, t_env **env_head)
 {
-	exit_status = 0;
+	g_exit_status = 0;
 	cd->old = ft_extract_content(*env_head, "OLDPWD");
 	cd->current = ft_extract_content(*env_head, "PWD");
 }

@@ -46,7 +46,7 @@ void	ft_unset_node(t_env **env_head, char **cmd)
 {
 	int		i;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	i = 1;
 	while (cmd[i])
 	{

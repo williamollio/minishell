@@ -6,7 +6,7 @@ void	ft_identifier_error(char *err, char *var)
 	ft_putstr_fd(err, 2);
 	ft_putendl_fd("': not a valid identifier", 2);
 	free(var);
-	exit_status = 1;
+	g_exit_status = 1;
 }
 
 int	ft_export_errors(char *str, int i, char *var)

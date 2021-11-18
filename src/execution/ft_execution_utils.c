@@ -51,7 +51,7 @@ void	ft_wait(t_exec exec)
 	{
 		waitpid(0, &exec.child_status, 0);
 		if (WIFEXITED(exec.child_status))
-			exit_status = WEXITSTATUS(exec.child_status);
+			g_exit_status = WEXITSTATUS(exec.child_status);
 		if (WIFSIGNALED(exec.child_status))
 			signaled = WTERMSIG(exec.child_status);
 		if (signaled == 3)

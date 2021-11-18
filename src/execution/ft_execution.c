@@ -1,16 +1,5 @@
 #include "../../includes/minishell.h"
 
-int	ft_variable_pid(int pid)
-{
-	static int	pid_2 = 0;
-
-	if (pid == -2)
-		return (-1);
-	if (pid != -1)
-		pid_2 = pid;
-	return (pid_2);
-}
-
 int	ft_exec_multiple(t_parse *pars, char **envp, t_env **env, t_exec *exec)
 {
 	exec->waitcount++;

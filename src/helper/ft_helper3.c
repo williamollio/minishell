@@ -32,3 +32,26 @@ void	ft_addback_sorted(t_env **head, char *str)
 	last->next = newNode;
 	return ;
 }
+
+int	ft_variable_pid(int pid)
+{
+	static int	pid_2 = 0;
+
+	if (pid == -2)
+		return (-1);
+	if (pid != -1)
+		pid_2 = pid;
+	return (pid_2);
+}
+
+void	sigfunc_child(int signal)
+{
+	if (signal == SIGINT || signal == SIGQUIT)
+	{
+		kill(ft_variable_pid(-1), signal);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return ;
+	}
+}

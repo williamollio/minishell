@@ -17,7 +17,7 @@ void	ft_child_for_built(t_parse *parse, t_env **env_head, int status)
 	else if (ft_strncmp(parse->cmd[0], "cd", 2) == 0)
 		ft_cd(env_head, parse->cmd[1]);
 	if (status == EX)
-		exit(exit_status);
+		exit(g_exit_status);
 	else if (status == RET)
 		return ;
 }

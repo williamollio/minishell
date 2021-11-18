@@ -44,7 +44,7 @@ void	ft_echo(char **cmd)
 
 	printflag = 0;
 	i = 1;
-	exit_status = 0;
+	g_exit_status = 0;
 	if (!cmd[1])
 		write(1, "\n", 1);
 	else if (ft_strncmp(cmd[1], "-n", 2) == 0 && !ft_check_for_n(cmd[1]))
