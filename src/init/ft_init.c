@@ -23,7 +23,7 @@ void	ft_silience(char **envp)
 	}
 }
 
-void ft_init(int argc, char **argv, char **envp, t_env_list **env_head)
+void	ft_init(int argc, char **argv, char **envp, t_env **env_head)
 {
 	(void)argv;
 	if (argc != 1)
@@ -48,7 +48,7 @@ void	sigfunc_child(int signal)
 	}
 }
 
-void ft_sigint(int signal)
+void	ft_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -65,10 +65,6 @@ void ft_sigint(int signal)
 		rl_redisplay();
 		return ;
 	}
-	/*
-	* else if (signal == SIGSEGV)
-	*	exit(EXIT_FAILURE);
-	*/
 }
 
 // void ft_tool(int *fd_in_old, int *fd_out_old)

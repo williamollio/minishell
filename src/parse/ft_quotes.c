@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void ft_init_quotes(t_quotes *quotes)
+static void	ft_init_quotes(t_quotes *quotes)
 {
 	quotes->flag_single = 1;
 	quotes->flag_double = 1;
@@ -16,12 +16,12 @@ static void ft_init_quotes(t_quotes *quotes)
 	quotes->temp5 = NULL;
 }
 
-void ft_single(char *str, t_quotes *quotes)
+void	ft_single(char *str, t_quotes *quotes)
 {
 	quotes->i2 = quotes->i;
 	quotes->i++;
 	quotes->x = 0;
-	while (str[quotes->i] && ft_strncmp(&str[quotes->i] , "'", 1) != 0)
+	while (str[quotes->i] && ft_strncmp(&str[quotes->i], "'", 1) != 0)
 	{
 		quotes->i++;
 		quotes->x++;
@@ -43,7 +43,7 @@ void ft_single(char *str, t_quotes *quotes)
 	quotes->i1 = quotes->i + 1;
 }
 
-void ft_double(char *str, t_quotes *quotes)
+void	ft_double(char *str, t_quotes *quotes)
 {
 	quotes->i2 = quotes->i;
 	quotes->i++;
@@ -70,7 +70,7 @@ void ft_double(char *str, t_quotes *quotes)
 	quotes->i1 = quotes->i + 1;
 }
 
-char *ft_remove_quotes(char *str)
+char	*ft_remove_quotes(char *str)
 {
 	t_quotes	quotes;
 
@@ -82,7 +82,7 @@ char *ft_remove_quotes(char *str)
 			quotes.flag_double *= (-1);
 			ft_double(str, &quotes);
 		}
-		else if (ft_strncmp(&str[quotes.i] , "'", 1) == 0)
+		else if (ft_strncmp(&str[quotes.i], "'", 1) == 0)
 		{
 			quotes.flag_single *= (-1);
 			ft_single(str, &quotes);
@@ -94,7 +94,7 @@ char *ft_remove_quotes(char *str)
 	return (quotes.temp4);
 }
 
-void ft_quotes(t_parse **parse)
+void	ft_quotes(t_parse **parse)
 {
 	t_parse	*tmp;
 	int		i;

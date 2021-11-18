@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	ft_replace_var(t_env_list **temp, char **str_var, char *str)
+void	ft_replace_var(t_env **temp, char **str_var, char *str)
 {
 	free((*temp)->content);
 	(*temp)->content = ft_get_content(str);
@@ -11,10 +11,10 @@ void	ft_replace_var(t_env_list **temp, char **str_var, char *str)
 	free(*str_var);
 }
 
-void	ft_add_var(t_env_list **t, t_env_list **prev, t_env_list **env, char *s)
+void	ft_add_var(t_env **t, t_env **prev, t_env **env, char *s)
 {
-	t_env_list	*temp_2;
-	t_env_list	*newNode;
+	t_env	*temp_2;
+	t_env	*newNode;
 
 	(*t) = (*prev);
 	temp_2 = (*t)->next;
@@ -31,10 +31,10 @@ void	ft_add_var(t_env_list **t, t_env_list **prev, t_env_list **env, char *s)
 	}
 }
 
-void	ft_add_export(t_env_list **env_head, char *str)
+void	ft_add_export(t_env **env_head, char *str)
 {
-	t_env_list	*temp;
-	t_env_list	*prev;
+	t_env	*temp;
+	t_env	*prev;
 	char		*str_var;
 
 	temp = *env_head;
@@ -49,7 +49,7 @@ void	ft_add_export(t_env_list **env_head, char *str)
 		{
 			ft_replace_var(&temp, &str_var, str);
 			return ;
-		}	
+		}
 		if (ft_strncmp(temp->var, "_", ft_strlen(temp->var)) == 0)
 			break ;
 		prev = temp;
@@ -59,9 +59,9 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	ft_add_var(&temp, &prev, env_head, str);
 }
 
-void	ft_sort_env(t_env_list *env_head)
+void	ft_sort_env(t_env *env_head)
 {
-	t_env_list	*sorted;
+	t_env	*sorted;
 
 	sorted = NULL;
 	while (env_head != NULL)
@@ -74,7 +74,7 @@ void	ft_sort_env(t_env_list *env_head)
 	return ;
 }
 
-void	ft_export_node(t_env_list **env_head, char **cmd)
+void	ft_export_node(t_env **env_head, char **cmd)
 {
 	int		i;
 

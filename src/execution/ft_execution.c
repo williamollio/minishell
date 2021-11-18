@@ -11,7 +11,7 @@ int	ft_variable_pid(int pid)
 	return (pid_2);
 }
 
-int	ft_exec_multiple(t_parse *pars, char **envp, t_env_list **env, t_exec *exec)
+int	ft_exec_multiple(t_parse *pars, char **envp, t_env **env, t_exec *exec)
 {
 	exec->waitcount++;
 	signal(SIGINT, sigfunc_child);
@@ -51,7 +51,7 @@ int	ft_skip_outfiles(t_parse **parse, t_exec *exec)
 	return (1);
 }
 
-int	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env_list **env_head)
+int	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env **env_head)
 {
 	if (ft_pipe(exec) == -1)
 		return (-1);
@@ -73,7 +73,7 @@ int	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env_list **env_head)
 	return (0);
 }
 
-void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
+void	ft_execution(t_parse *parse, char **envp, t_env **env_head)
 {
 	t_exec	exec;
 

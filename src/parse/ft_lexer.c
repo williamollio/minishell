@@ -1,11 +1,21 @@
 #include "../../includes/minishell.h"
 
+void	ft_init_lexer(t_lexer *lex)
+{
+	lex->i = 0;
+	lex->op = 0;
+	lex->pipe_flag = 0;
+	lex->quote_flag = 1;
+	lex->loopflag = 0;
+	lex->str = NULL;
+}
+
 int	ft_nothing(char *str)
 {
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] != ' ')
 			return (0);
@@ -14,57 +24,52 @@ int	ft_nothing(char *str)
 	return (1);
 }
 
-char	*ft_get_next_str(char *line, int *i, int *quote_flag, int op, int *pipe_flag)
+char	*ft_get_next_str(char *line, t_lexer *lex)
 {
 	char	*ret;
 	int		x;
 
-	ft_skip_space(line, i);
-	x = (*i);
-	while (line[*i] != '\0' && (ft_operator_tool2(line, i) == 0 || (*quote_flag) == (-1)))
+	if (lex->op == 4 || lex->op == 5)
+		lex->i += 2;
+	else if (lex->op)
+		lex->i += 1;
+	ft_skip_space(line, &lex->i);
+	x = (lex->i);
+	while (line[lex->i] != '\0' && (ft_operator_tool2(line, &lex->i) == 0
+			|| (lex->quote_flag) == (-1)))
 	{
-		if (line[*i] == '"' || ft_strncmp(&line[*i], "'", 1) == 0)
-			(*quote_flag) *= (-1);
-		(*i)++;
+		if (line[lex->i] == '"' || ft_strncmp(&line[lex->i], "'", 1) == 0)
+			(lex->quote_flag) *= (-1);
+		(lex->i)++;
 	}
-	ret = ft_substr(line, x , (*i) - x);
-	if (ft_nothing(ret) && op == 1)
-		*pipe_flag = 1;
+	ret = ft_substr(line, x, lex->i - x);
+	if (ft_nothing(ret) && lex->op == 1)
+		lex->pipe_flag = 1;
 	return (ret);
 }
 
 int	ft_lexer(char *line, t_parse **parse)
 {
-	int		i;
-	int		op;
-	int		loopflag;
-	int		quote_flag;
-	char	*str;
-	int		pipe_flag;
+	t_lexer	lex;
 
-	pipe_flag = 0;
-	quote_flag = 1;
-	i = 0;
-	loopflag = 0;
-	if (ft_strchr(line , '\\') != NULL || ft_strchr(line , ';'))
+	ft_init_lexer(&lex);
+	if (ft_strchr(line, '\\') != NULL || ft_strchr(line, ';'))
 		return (-1);
-	while (line[i] != '\0')
+	while (line[lex.i] != '\0')
 	{
-		// if (line[i] == '"' || ft_strncmp(&line[i], "'", 1) == 0) // for "e"cho case
-		// 	quote_flag *= (-1);
-		ft_skip_space(line, &i);
-		op = ft_operator_tool(line, &i);
-		if ((op || loopflag == 0) && quote_flag == 1)
+		ft_skip_space(line, &lex.i);
+		lex.op = ft_operator_tool2(line, &lex.i);
+		if ((lex.op || lex.loopflag == 0) && lex.quote_flag == 1)
 		{
-			str = ft_get_next_str(line, &i, &quote_flag, op, &pipe_flag);
-			if (!ft_nothing(str))
-				ft_addback_parse(parse, str, op, &pipe_flag);
+			lex.str = ft_get_next_str(line, &lex);
+			if (!ft_nothing(lex.str))
+				ft_addback_parse(parse, lex.str, lex.op, &lex.pipe_flag);
 			else
-				free(str);
+				free(lex.str);
 		}
 		else
-			i++;
-		loopflag++;
+			lex.i++;
+		lex.loopflag++;
 	}
-	return (quote_flag);
+	return (lex.quote_flag);
 }

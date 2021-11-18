@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-void	ft_remove(t_env_list *temp, char *str)
+void	ft_remove(t_env *temp, char *str)
 {
-	t_env_list	*prev;
+	t_env	*prev;
 
 	while (ft_strncmp(temp->next->var, str, ft_strlen(temp->next->var)) != 0
 		|| ft_strlen(temp->next->var) != ft_strlen(str))
@@ -20,9 +20,9 @@ void	ft_remove(t_env_list *temp, char *str)
 	free(temp);
 }
 
-void	ft_delete_node(t_env_list **env_head, char *str)
+void	ft_delete_node(t_env **env_head, char *str)
 {
-	t_env_list	*temp;
+	t_env	*temp;
 
 	if (ft_strncmp(str, "_", ft_strlen(str)) == 0)
 		return ;
@@ -42,7 +42,7 @@ void	ft_delete_node(t_env_list **env_head, char *str)
 		ft_remove(temp, str);
 }
 
-void	ft_unset_node(t_env_list **env_head, char **cmd)
+void	ft_unset_node(t_env **env_head, char **cmd)
 {
 	int		i;
 

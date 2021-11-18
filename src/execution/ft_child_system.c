@@ -58,7 +58,7 @@ void	ft_execute_child(t_sys *sys, t_parse *parse, char **envp)
 	}
 }
 
-void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head)
+void	ft_child_for_sys(t_parse *parse, char **envp, t_env **env_head)
 {
 	t_sys	sys;
 

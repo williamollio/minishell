@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void ft_append(char **last_arg, char **arg)
+void	ft_append(char **last_arg, char **arg)
 {
 	char	*temp;
 

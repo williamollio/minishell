@@ -6,7 +6,7 @@ int	pid;
 int main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	t_env_list	*env_head;
+	t_env	*env_head;
 	t_parse		*parse;
 	int			fd_in_old = -1;
 	int			fd_out_old = -1;
@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **envp)
 		if (s1 && !ft_parsing(line, &parse, &env_head))
 		{
 			printf("MAIN: --------------------------------------------------------\n");
-			ft_print_list_parse(&parse);
+			//ft_print_list_parse(&parse);
 			printf("--------------------------------------------------------------\n");
 			ft_execution(parse, envp, &env_head);
 		}
@@ -37,7 +37,7 @@ int main(int argc, char **argv, char **envp)
 		if (s1)
 			ft_free1(s1);
 		ft_free_list_parse(&parse);
-		// system("leaks minishell");
+		system("leaks minishell");
 	}
 	return (0);
 }

@@ -28,7 +28,7 @@ char	*ft_replace_str(char *str, t_replace rep)
 	return (ret);
 }
 
-void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env_list *env_head)
+void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env *env_head)
 {
 	char	*temp2;
 
@@ -56,8 +56,7 @@ void	ft_replacer(char *str, t_replace *rep, t_parse *temp, t_env_list *env_head)
 	rep->quote_flag = 1;
 }
 
-
-void	ft_replace(char *str, t_parse *temp, t_env_list *env_head)
+void	ft_replace(char *str, t_parse *temp, t_env *env_head)
 {
 	t_replace	rep;
 
@@ -70,7 +69,9 @@ void	ft_replace(char *str, t_parse *temp, t_env_list *env_head)
 		{
 			rep.i++;
 			rep.start = rep.i;
-			while (str[rep.i] && str[rep.i] != ' ' && !ft_operator_tool2(str, &rep.i) && str[rep.i] != '"' && str[rep.i] != '/' && str[rep.i] != '$')
+			while (str[rep.i] && str[rep.i] != ' '
+				&& !ft_operator_tool2(str, &rep.i) && str[rep.i] != '"'
+				&& str[rep.i] != '/' && str[rep.i] != '$')
 				rep.i++;
 			ft_replacer(str, &rep, temp, env_head);
 			str = temp->str;
@@ -79,7 +80,7 @@ void	ft_replace(char *str, t_parse *temp, t_env_list *env_head)
 	}
 }
 
-void	ft_convert_dollar(t_parse **parse, t_env_list *env_head)
+void	ft_convert_dollar(t_parse **parse, t_env *env_head)
 {
 	t_parse	*temp;
 

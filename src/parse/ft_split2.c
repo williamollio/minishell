@@ -22,49 +22,44 @@ static size_t	ft_count2(char const *s, char c, int *flag)
 	return (row);
 }
 
-char	**ft_snake2(char const *s, char c, size_t count, char **mat, int flag)
+char	**ft_snake2(char const *s, char c, size_t count, t_split *sp)
 {
-	size_t	i;
-	size_t	tail;
-	size_t	head;
-
-	i = 0;
-	head = 0;
-	tail = 0;
-	while (i < count)
+	sp->i = 0;
+	sp->h = 0;
+	sp->t = 0;
+	while (sp->i < count)
 	{
-		while (s[head] && s[head] == c)
-			head++;
-		tail = head;
-		while ((s[tail] && s[tail] != c) || flag == -1)
+		while (s[sp->h] && s[sp->h] == c)
+			sp->h++;
+		sp->t = sp->h;
+		while ((s[sp->t] && s[sp->t] != c) || sp->flag == -1)
 		{
-			if (s[tail] == '"' || ft_strncmp(&s[tail], "'", 1) == 0)
-				(flag) *= (-1);
-			tail++;
+			if (s[sp->t] == '"' || ft_strncmp(&s[sp->t], "'", 1) == 0)
+				(sp->flag) *= (-1);
+			sp->t++;
 		}
-		if (s[head] == '\0')
+		if (s[sp->h] == '\0')
 			break ;
-		mat[i] = (char *)malloc(sizeof(char) * (tail - head + 1));
-		ft_memcpy(mat[i], &((char *)s)[head], (tail - head));
-		mat[i][tail - head] = '\0';
-		i++;
-		head = tail;
+		sp->mat[sp->i] = (char *)malloc(sizeof(char) * (sp->t - sp->h + 1));
+		ft_memcpy(sp->mat[sp->i], &((char *)s)[sp->h], (sp->t - sp->h));
+		sp->mat[sp->i][sp->t - sp->h] = '\0';
+		sp->i++;
+		sp->h = sp->t;
 	}
-	mat[i] = NULL;
-	return (mat);
+	sp->mat[sp->i] = NULL;
+	return (sp->mat);
 }
 
 char	**ft_split2(char const *s, char c, int *count)
 {
-	char	**mat;
-	int		flag;
+	t_split	sp;
 
-	flag = 1;
+	sp.flag = 1;
 	if (!s)
 		return (NULL);
-	*count = ft_count2(s, c, &flag);
-	mat = (char **)malloc((sizeof(char *) * (*count)) + 1);
-	if (!mat)
+	*count = ft_count2(s, c, &sp.flag);
+	sp.mat = (char **)malloc((sizeof(char *) * (*count)) + 1);
+	if (!sp.mat)
 		return (NULL);
-	return (ft_snake2(s, c, *count, mat, flag));
+	return (ft_snake2(s, c, *count, &sp));
 }

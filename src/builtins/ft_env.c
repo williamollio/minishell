@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 // no loeaks
-void	ft_env(t_env_list *env_head)
+void	ft_env(t_env *env_head)
 {
 	char	*path_existence;
 

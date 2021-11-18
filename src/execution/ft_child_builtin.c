@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	ft_child_for_built(t_parse *parse, t_env_list **env_head, int status)
+void	ft_child_for_built(t_parse *parse, t_env **env_head, int status)
 {
 	if (ft_strncmp(parse->cmd[0], "echo", 4) == 0)
 		ft_echo(parse->cmd);
