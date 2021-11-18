@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
+/*   Updated: 2021/11/18 18:58:38 by wollio           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	ft_replace_var(t_env **temp, char **str_var, char *str)
@@ -35,7 +47,7 @@ void	ft_add_export(t_env **env_head, char *str)
 {
 	t_env	*temp;
 	t_env	*prev;
-	char		*str_var;
+	char	*str_var;
 
 	temp = *env_head;
 	prev = *env_head;

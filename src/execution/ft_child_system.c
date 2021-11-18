@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_child_system.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
+/*   Updated: 2021/11/18 18:50:25 by wollio           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	ft_countrows(char **paths)
@@ -71,7 +83,7 @@ void	ft_child_for_sys(t_parse *parse, char **envp, t_env **env_head)
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(parse->cmd[0], 2);
 		ft_putendl_fd(": No such file or directory", 2);
-		ft_free2(sys.split);
+		ft_free1(sys.pathname);
 		exit(127);
 	}
 }

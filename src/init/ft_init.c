@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
+/*   Updated: 2021/11/18 18:51:19 by wollio           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	ft_silience(char **envp)
@@ -31,7 +43,6 @@ void	ft_init(int argc, char **argv, char **envp, t_env **env_head)
 		ft_putstr_fd("minishell : no arguments accepted\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	clear();
 	ft_silience(envp);
 	ft_get_env_list(envp, env_head);
 }

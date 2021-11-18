@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
+/*   Updated: 2021/11/18 18:58:29 by wollio           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-void	ft_reset_paths(t_env  **env_head, char *current, char *old)
+void	ft_reset_paths(t_env **env_head, char *current, char *old)
 {
 	ft_change_env_var(env_head, "PWD", current);
 	ft_change_env_var(env_head, "OLDPWD", old);
