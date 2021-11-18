@@ -1,10 +1,10 @@
 #include "../../includes/minishell.h"
 
-void	ft_delete_node(t_env_list **env_head, char *str)
+void	ft_delete_node(t_env **env_head, char *str)
 {
-	t_env_list	*temp;
-	t_env_list	*prev;
-	
+	t_env	*temp;
+	t_env	*prev;
+
 	if (ft_strncmp(str, "_", ft_strlen(str)) == 0)
 		return ;
 	temp = *env_head;
@@ -36,7 +36,7 @@ void	ft_delete_node(t_env_list **env_head, char *str)
 	}
 }
 
-void	ft_unset_node(t_env_list **env_head, char **cmd)
+void	ft_unset_node(t_env **env_head, char **cmd)
 {
 	int		i;
 

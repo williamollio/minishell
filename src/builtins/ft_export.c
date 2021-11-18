@@ -15,7 +15,7 @@ int	ft_export_edgecase(char *str)
 {
 	char		*var;
 	int			i;
-	
+
 	i = 0;
 	if (!ft_strchr(str, '='))
 		return (1);
@@ -49,12 +49,12 @@ int	ft_export_edgecase(char *str)
 }
 
 // in here i write a new var to env and override the content if var already exists
-void	ft_add_export(t_env_list **env_head, char *str)
+void	ft_add_export(t_env **env_head, char *str)
 {
-	t_env_list	*temp;
-	t_env_list	*prev;
-	t_env_list	*temp_2;
-	t_env_list	*newNode;
+	t_env	*temp;
+	t_env	*prev;
+	t_env	*temp_2;
+	t_env	*newNode;
 	char		*str_var;
 
 	temp = *env_head;
@@ -74,7 +74,7 @@ void	ft_add_export(t_env_list **env_head, char *str)
 			temp->var = ft_get_var(str); // gets allocated
 			free(str_var);
 			return ;
-		}	
+		}
 		if (ft_strncmp(temp->var, "_", ft_strlen(temp->var)) == 0)
 			break ;
 		prev = temp;
@@ -83,7 +83,7 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	free(str_var);
 	temp = prev;
 	temp_2 = temp->next;
-	newNode = malloc(sizeof(t_env_list));
+	newNode = malloc(sizeof(t_env));
 	newNode->full = ft_strdup(str); // same problem: does william allocate it?
 	newNode->var = ft_get_var(str); // gets allocated
 	newNode->content = ft_get_content(str); // gets allocated
@@ -96,9 +96,9 @@ void	ft_add_export(t_env_list **env_head, char *str)
 	}
 }
 
-void	ft_sort_env(t_env_list *env_head)
+void	ft_sort_env(t_env *env_head)
 {
-	t_env_list	*sorted;
+	t_env	*sorted;
 
 	sorted = NULL;
 	while (env_head != NULL)
@@ -111,8 +111,7 @@ void	ft_sort_env(t_env_list *env_head)
 	return ;
 }
 
-// fixed leaks
-void	ft_export_node(t_env_list **env_head, char **cmd)
+void	ft_export_node(t_env **env_head, char **cmd)
 {
 	int		i;
 

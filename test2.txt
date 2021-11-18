@@ -67,15 +67,15 @@ echo '\" ' " \"\""													--> NOT WORKING! (remove quotes)
 echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'						--> NOT WORKING! (remove quotes)
 echo "$USER""$USER""$USER"											--> working
 echo text"$USER"test												--> working
-echo '$USER' "$USER" "text \' text"									--> 
+echo '$USER' "$USER" "text \' text"									-->
 echo '$USER'														--> working
-echo $USER " "														--> 
-echo "$USER""Users/$USER/file""'$USER'"'$USER'						--> 
-echo "$USER$USER$USER"												--> 
-echo '$USER'"$USER"'$USER'											--> 
-echo '"$USER"''$USER'"""$USER"										--> 
-echo " $USER  "'$PWD'												--> 
-echo " $USER  \$ "'$PWD'											--> 
+echo $USER " "														-->
+echo "$USER""Users/$USER/file""'$USER'"'$USER'						-->
+echo "$USER$USER$USER"												-->
+echo '$USER'"$USER"'$USER'											-->
+echo '"$USER"''$USER'"""$USER"										-->
+echo " $USER  "'$PWD'												-->
+echo " $USER  \$ "'$PWD'											-->
 echo $USER=4														--> NOT WORKING!
 echo $USER=thallard 												--> NOT WORKING!
 echo $USER															--> working

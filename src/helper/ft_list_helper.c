@@ -1,32 +1,12 @@
 #include "../../includes/minishell.h"
 
-void	ft_addback_sorted(t_env_list **head, char *str)
+void	ft_addfront(t_env **head, char *str)
 {
-	t_env_list	*newNode;
-	t_env_list	*last;
-
-	last = *head;
-	newNode = malloc(sizeof(t_env_list));
-	newNode->full = ft_strdup(str);
-	newNode->next = NULL;
-	if (*head == NULL)
-	{
-		*head = newNode;
-		return ;
-	}
-	while (last->next != NULL)
-		last = last->next;
-	last->next = newNode;
-	return ;
-}
-
-void	ft_addfront(t_env_list **head, char *str)
-{
-	t_env_list	*newNode;
-	t_env_list	*temp;
+	t_env	*newNode;
+	t_env	*temp;
 
 	temp = *head;
-	newNode = malloc(sizeof(t_env_list));
+	newNode = malloc(sizeof(t_env));
 	newNode->full = ft_strdup(str);
 	newNode->next = NULL;
 	*head = newNode;
@@ -53,51 +33,54 @@ int	ft_compare(char	*s1, char *s2)
 	return (ret);
 }
 
-void	ft_addorder(t_env_list **head, char *str)
+void	ft_init_order(t_order *order, char *str, t_env **head)
 {
-	t_env_list	*newNode;
-	t_env_list	*temp1;
-	t_env_list	*temp2;
-
-	temp1 = *head;
-	temp2 = *head;
-	newNode = malloc(sizeof(t_env_list));
-	newNode->full = ft_strdup(str);
-	newNode->next = NULL;
-	if (*head == NULL)
-	{
-		*head = newNode;
-		return ;
-	}
-	while (temp1 != NULL)
-	{
-		if (ft_compare(temp1->full, str) >= 1)
-		{
-			if (temp1 == *head)
-				ft_addfront(head, str);
-			else
-			{
-				temp2->next = newNode;
-				newNode->next = temp1;
-			}
-			return ;
-		}
-		temp2 = temp1;
-		temp1 = temp1->next;
-	}
-	ft_addback_sorted(head, str);
-	return ;
+	order->temp1 = *head;
+	order->temp2 = *head;
+	order->newNode = malloc(sizeof(t_env));
+	order->newNode->full = ft_strdup(str);
+	order->newNode->next = NULL;
 }
 
-void	ft_free_list(t_env_list **head_a)
+int	ft_ft_compare(t_order *order, char *str, t_env **head)
 {
-	t_env_list	*tmp;
-
-	while ((* head_a) != NULL)
+	if (ft_compare(order->temp1->full, str) >= 1)
 	{
-		tmp = (* head_a);
-		(* head_a) = (* head_a)->next;
-		free(tmp->full);
-		free(tmp);
+		if (order->temp1 == *head)
+		{
+			free(order->newNode->full);
+			free(order->newNode);
+			ft_addfront(head, str);
+		}
+		else
+		{
+			order->temp2->next = order->newNode;
+			order->newNode->next = order->temp1;
+		}
+		return (1);
 	}
+	return (0);
+}
+
+void	ft_addorder(t_env **head, char *str)
+{
+	t_order	order;
+
+	ft_init_order(&order, str, head);
+	if (*head == NULL)
+	{
+		*head = order.newNode;
+		return ;
+	}
+	while (order.temp1 != NULL)
+	{
+		if (ft_ft_compare(&order, str, head))
+			return ;
+		order.temp2 = order.temp1;
+		order.temp1 = order.temp1->next;
+	}
+	free(order.newNode->full);
+	free(order.newNode);
+	ft_addback_sorted(head, str);
+	return ;
 }

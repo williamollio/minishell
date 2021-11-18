@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-void	ft_change_env_var(t_env_list **env_head, char *change, char *new)
+void	ft_change_env_var(t_env **env_head, char *change, char *new)
 {
-	t_env_list *temp;
+	t_env *temp;
 
 	temp = *env_head;
 	char	*equal_temp;
@@ -20,7 +20,7 @@ void	ft_change_env_var(t_env_list **env_head, char *change, char *new)
 	free(equal_temp);
 }
 
-void	ft_reset_paths(t_env_list **env_head, char *current, char *old)
+void	ft_reset_paths(t_env **env_head, char *current, char *old)
 {
 	ft_change_env_var(env_head, "PWD", current);
 	ft_change_env_var(env_head, "OLDPWD", old);
@@ -34,7 +34,7 @@ void	ft_free_current_old(char **current, char **old)
 		free(*old);
 }
 
-void	ft_cd_go_back(t_env_list **env_head, char *old, char *current, int print)
+void	ft_cd_go_back(t_env **env_head, char *old, char *current, int print)
 {
 	if (old == NULL)
 	{
@@ -60,7 +60,7 @@ void	ft_cd_go_back(t_env_list **env_head, char *old, char *current, int print)
 	ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 }
 
-void	ft_cd_go_home(t_env_list **env_head, char *old, char *current)
+void	ft_cd_go_home(t_env **env_head, char *old, char *current)
 {
 	char	*home;
 
@@ -89,11 +89,11 @@ void	ft_cd_go_home(t_env_list **env_head, char *old, char *current)
 	ft_change_env_var(env_head, "PWD", getcwd(NULL, MAXPATHLEN));
 }
 
-void	ft_cd(t_env_list **env_head, char *path)
+void	ft_cd(t_env **env_head, char *path)
 {
 	char	*old;
 	char	*current;
-	
+
 	exit_status = 0;
 	old = ft_extract_content(*env_head, "OLDPWD");
 	current = ft_extract_content(*env_head, "PWD");

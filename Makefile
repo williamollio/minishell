@@ -6,8 +6,8 @@ SRC = ./src/minishell.c ./src/builtins/ft_exit.c\
 		./src/parse/ft_get_env_list.c ./src/helper/ft_helper.c ./src/parse/ft_parse.c ./src/parse/ft_parse_utils.c ./src/parse/ft_parse_utils2.c\
 		./src/helper/ft_helper2.c ./src/parse/ft_split2.c ./src/init/ft_init.c \
 		./src/builtins/ft_cd.c ./src/builtins/ft_export.c ./src/builtins/ft_pwd.c ./src/builtins/ft_unset.c \
-		  ./src/builtins/ft_echo.c \
-		./src/helper/ft_system_executer.c  ./src/helper/ft_list_helper.c \
+		./src/builtins/ft_echo.c \
+		./src/helper/ft_helper3.c ./src/helper/ft_list_helper.c \
 		./src/builtins/ft_env.c ./src/parse/ft_lexer.c ./src/parse/ft_seperator.c ./src/parse/ft_splitter.c \
 		./src/parse/ft_convert_dollar.c \
 		./src/parse/ft_quotes.c \

@@ -7,7 +7,7 @@ char	*ft_get_var(char *full)
 
 	x = 0;
 	while (full[x] != '=')
-	x++;
+		x++;
 	var = ft_substr(full, 0, x);
 	return (var);
 }
@@ -19,21 +19,21 @@ char	*ft_get_content(char *full)
 
 	x = 0;
 	while (full[x] != '=')
-	x++;
+		x++;
 	con = ft_substr(full, x + 1, ft_strlen(full) - x);
 	return (con);
 }
 
-void	ft_addback(t_env_list **head_ref, char *str)
+void	ft_addback(t_env **head_ref, char *str)
 {
-	t_env_list	*newNode;
-	t_env_list	*last;
+	t_env	*newNode;
+	t_env	*last;
 
 	last = *head_ref;
-	newNode = malloc(sizeof(t_env_list));
-	newNode->full = ft_strdup(str); // full gets allocated
-	newNode->var = ft_get_var(str); // var gets allocated
-	newNode->content = ft_get_content(str); // content gets allocated
+	newNode = malloc(sizeof(t_env));
+	newNode->full = ft_strdup(str);
+	newNode->var = ft_get_var(str);
+	newNode->content = ft_get_content(str);
 	newNode->next = NULL;
 	if (*head_ref == NULL)
 	{
@@ -46,7 +46,7 @@ void	ft_addback(t_env_list **head_ref, char *str)
 	return ;
 }
 
-void	ft_get_env_list(char **envp, t_env_list **env_head)
+void	ft_get_env_list(char **envp, t_env **env_head)
 {
 	int	x;
 

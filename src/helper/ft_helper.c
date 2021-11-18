@@ -1,14 +1,15 @@
 #include "../../includes/minishell.h"
+/* DELETE PRINT FUNCTION */
 
-void	ft_print_list(t_env_list *head)
+void	ft_print_list(t_env *head)
 {
 	while (head != NULL)
 	{
-		printf("%s\n", head->full);
+		ft_putendl_fd(head->full, 1);
 		head = head->next;
 	}
 }
-
+/*
 void	ft_print_list_parse_2(t_parse **head)
 {
 	t_parse	*tmp;
@@ -43,32 +44,20 @@ void	ft_print_list_parse(t_parse **head)
 		int i = 0;
 		while (tmp->cmd[i])
 		{
-			printf("cmd i%d: %s\n",i, tmp->cmd[i]);
+			printf("cmd i%d: %s$\n",i, tmp->cmd[i]);
 			i++;
 		}
 		tmp = tmp->next;
 	}
 }
-
-void	ft_free_list_parse(t_parse **head_a)
-{
-	t_parse	*tmp;
-
-	while ((* head_a) != NULL)
-	{
-		tmp = (* head_a);
-		(* head_a) = (* head_a)->next;
-		ft_free2(tmp->cmd);
-		free(tmp);
-	}
-}
+*/
 
 void	ft_init_parse(t_parse **head)
 {
-	(* head)->str = "";
-	(* head)->op = 0;
-	(* head)->pipe_flag = 0;
-	(* head)->cmd = NULL;
+	(*head)->str = "";
+	(*head)->op = 0;
+	(*head)->pipe_flag = 0;
+	(*head)->cmd = NULL;
 }
 
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag)
@@ -100,21 +89,31 @@ void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag)
 	return ;
 }
 
+size_t	len(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
 int	ft_is_builtin_new(char *line)
 {
-	if (ft_strncmp(line, "echo", ft_strlen(line)) == 0 && (ft_strlen(line) == 4))
+	if (ft_strncmp(line, "echo", len(line)) == 0 && (len(line) == 4))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "pwd", ft_strlen(line)) == 0 && (ft_strlen(line) == 3))
+	else if (ft_strncmp(line, "pwd", len(line)) == 0 && (len(line) == 3))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "cd", ft_strlen(line)) == 0 && (ft_strlen(line) == 2))
+	else if (ft_strncmp(line, "cd", len(line)) == 0 && (len(line) == 2))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "export", ft_strlen(line)) == 0 && (ft_strlen(line) == 6))
+	else if (ft_strncmp(line, "export", len(line)) == 0 && (len(line) == 6))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "unset", ft_strlen(line)) == 0 && (ft_strlen(line) == 5))
+	else if (ft_strncmp(line, "unset", len(line)) == 0 && (len(line) == 5))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "env", ft_strlen(line)) == 0 && (ft_strlen(line) == 3))
+	else if (ft_strncmp(line, "env", len(line)) == 0 && (len(line) == 3))
 		return (EXIT_SUCCESS);
-	else if (ft_strncmp(line, "exit", ft_strlen(line)) == 0 && (ft_strlen(line) == 4))
+	else if (ft_strncmp(line, "exit", len(line)) == 0 && (len(line) == 4))
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
