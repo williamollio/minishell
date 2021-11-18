@@ -7,6 +7,7 @@ void	ft_echo(char **cmd)
 	int	i;
 
 	i = 1;
+	exit_status = 0;
 	if (!cmd[1])
 		write(1, "\n", 1);
 	else if (ft_strncmp(cmd[1], "-n", 2) == 0 && ft_strlen(cmd[1]) == 2)

@@ -13,7 +13,7 @@ SRC = ./src/minishell.c ./src/builtins/ft_exit.c\
 		./src/parse/ft_quotes.c \
 		./src/execution/ft_child_builtin.c ./src/execution/ft_child_system.c ./src/execution/ft_execution.c \
 		./src/execution/ft_heredoc.c ./src/execution/ft_pipe_fork.c ./src/execution/ft_redirections.c \
-		./src/execution/ft_execution_utils.c
+		./src/execution/ft_execution_utils.c ./src/execution/ft_files.c
 
 
 OBJ = $(SRC:.c=.o)

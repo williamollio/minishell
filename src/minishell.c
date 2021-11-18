@@ -21,6 +21,7 @@ int main(int argc, char **argv, char **envp)
 		dup2(fd_in_old, 0);
 		dup2(fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
+		// signal(SIGQUIT, &ft_sigint);
 		line = readline(ft_strjoin(getenv("USER"), "\x1b[35m @minishell \x1b[0m>> "));
 		if (line == NULL)
 			exit(EXIT_SUCCESS);
@@ -36,7 +37,7 @@ int main(int argc, char **argv, char **envp)
 		if (s1)
 			ft_free1(s1);
 		ft_free_list_parse(&parse);
-		//system("leaks minishell");
+		// system("leaks minishell");
 	}
 	return (0);
 }

@@ -43,23 +43,6 @@ void	ft_init_exec(t_exec *exec, t_parse *parse)
 	exec->ret = 0;
 }
 
-// int	ft_set_infile(t_exec *exec, t_parse **parse)
-// {
-// 	while (1)
-// 	{
-// 		if (ft_redirect_in(exec, parse) == 1)
-// 			return (1);
-// 		if (exec->breakout == 1)
-// 			break ;
-// 		*parse = (*parse)->next;
-// 		if ((*parse)->next == NULL)
-// 			break ;
-// 		if ((*parse)->op != IN && (*parse)->op != LEFT)
-// 			break ;
-// 	}
-// 	return (0);
-// }
-
 void	ft_wait(t_exec exec)
 {
 	int	signaled;
@@ -69,10 +52,22 @@ void	ft_wait(t_exec exec)
 		waitpid(0, &exec.child_status, 0);
 		if (WIFEXITED(exec.child_status))
 			exit_status = WEXITSTATUS(exec.child_status);
-		if (WIFSIGNALED(exec.child_status)) //this aint doin nothin
+		if (WIFSIGNALED(exec.child_status))
 			signaled = WTERMSIG(exec.child_status);
 		if (signaled == 3)
 			ft_putendl_fd("^\\Quit: 3", 1);
 		exec.waitcount--;
 	}
+}
+
+int	ft_catch_trash(t_parse *parse, t_exec *exec)
+{
+	if (!parse)
+		return (-1);
+	if (exec->cmdcount == 0)
+	{
+		ft_file_only(parse, exec);
+		return (-1);
+	}
+	return (0);
 }
