@@ -5,15 +5,15 @@ cd .. 							--> working
 cd . 							--> working
 cd /Users 						--> working
 cd // 							--> working
-cd '//' 						--> not working
+cd '//' 						--> working
 cd ////// 						--> working
 cd ./././ 						--> working
 cd / 							--> working
-cd '/etc' 						--> not working
-cd '/var' 						--> not working
-cd "$PWD/prompt"				--> not working
-cd "doesntexist"				--> not working
-cd "doesntexist" 2>/dev/null	--> not working
+cd '/etc' 						--> working
+cd '/var' 						--> working
+cd "$PWD/prompt"				--> working
+cd "doesntexist"				--> working
+cd "doesntexist" 2>/dev/null	--> working
 cd ../../..						--> working
 cd ..							--> working
 cd ..							--> working
@@ -21,9 +21,9 @@ cd ?							--> working
 cd +							--> working
 cd _							--> working
 cd bark bark					--> working
-cd '/'							--> not working
-cd $PWD/file_tests				--> not working
-cd $OLDPWD/builtins				--> not working
+cd '/'							--> working
+cd $PWD/file_tests				--> working
+cd $OLDPWD/builtins				--> working
 
 ECHO:
 
@@ -37,38 +37,38 @@ echo $ $															--> working
 ECHO																--> working
 echo rhobebou														--> working
 echo stop barking													--> working
-echo "bonjour"														--> not working (remove quotes)
+echo "bonjour"														--> working
 echo bonjour														--> working
-echo 'bonjour'														--> not working (remove quotes)
-echo -n bonjour														--> not working (space before prompt)
-echo -nn bonjour													--> not working
-echo -n -n -n bonjour												--> not working
-echo "-n" bonjour													--> not working (remove quotes)
-echo -n"-n" bonjour													--> not working (remove quotes)
-echo "-nnnn" bonjour												--> not working (remove quotes)
-echo "-nnnn" -n bonjour												--> not working (remove quotes)
-echo "-n -n -n"-n bonjour											--> not working (remove quotes)
-echo "-n '-n'" bonjour												--> not working (remove quotes)
+echo 'bonjour'														--> working
+echo -n bonjour														--> NOT WORKING! (space before prompt)
+echo -nn bonjour													--> NOT WORKING!
+echo -n -n -n bonjour												--> NOT WORKING!
+echo "-n" bonjour													--> NOT WORKING!
+echo -n"-n" bonjour													--> NOT WORKING!
+echo "-nnnn" bonjour												--> NOT WORKING!
+echo "-nnnn" -n bonjour												--> NOT WORKING!
+echo "-n -n -n"-n bonjour											--> NOT WORKING!
+echo "-n '-n'" bonjour												--> NOT WORKING!
 echo $USER															--> working
-echo "$USER"														--> not working (remove quotes)
-echo "'$USER'"														--> not working (remove quotes)
-echo " '$USER' "													--> not working (remove quotes)
-echo text"$USER"													--> not working (remove quotes)
-echo text"'$USER'" ' $USER '										--> not working (remove quotes)
-echo "text"   "$USER"    "$USER"									--> not working (remove quotes)
-echo '              $USER          '								--> not working (remove quotes)
-echo               text "$USER"            "$USER"text				--> not working (remove quotes)
-echo ''''''''''$USER''''''''''										--> not working (remove quotes)
-echo """"""""$USER""""""""											--> not working (remove quotes)
-echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''	--> not working (remove quotes)
-echo $USER '' $USER $USER '' $USER '' $USER -n $USER				--> not working (remove quotes)
-echo ' \' ' \'														--> not working (remove quotes)
-echo '\" ' " \"\""													--> not working (remove quotes)
-echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'						--> not working (remove quotes)
-echo "$USER""$USER""$USER"											--> 
-echo text"$USER"test												--> 
+echo "$USER"														--> working
+echo "'$USER'"														--> NOT WORKING!
+echo " '$USER' "													--> NOT WORKING!
+echo text"$USER"													--> working
+echo text"'$USER'" ' $USER '										--> NOT WORKING!
+echo "text"   "$USER"    "$USER"									--> NOT WORKING! (remove quotes)
+echo '              $USER          '								--> NOT WORKING! (remove quotes)
+echo               text "$USER"            "$USER"text				--> NOT WORKING! (remove quotes)
+echo ''''''''''$USER''''''''''										--> NOT WORKING! (wrong result)
+echo """"""""$USER""""""""											--> working
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''	--> NOT WORKING! (remove quotes)
+echo $USER '' $USER $USER '' $USER '' $USER -n $USER				--> NOT WORKING! (remove quotes)
+echo ' \' ' \'														--> NOT WORKING! (remove quotes)
+echo '\" ' " \"\""													--> NOT WORKING! (remove quotes)
+echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'						--> NOT WORKING! (remove quotes)
+echo "$USER""$USER""$USER"											--> working
+echo text"$USER"test												--> working
 echo '$USER' "$USER" "text \' text"									--> 
-echo '$USER'														--> 
+echo '$USER'														--> working
 echo $USER " "														--> 
 echo "$USER""Users/$USER/file""'$USER'"'$USER'						--> 
 echo "$USER$USER$USER"												--> 
@@ -76,13 +76,13 @@ echo '$USER'"$USER"'$USER'											-->
 echo '"$USER"''$USER'"""$USER"										--> 
 echo " $USER  "'$PWD'												--> 
 echo " $USER  \$ "'$PWD'											--> 
-echo $USER=4														--> 
-echo $USER=thallard 												--> not working
+echo $USER=4														--> NOT WORKING!
+echo $USER=thallard 												--> NOT WORKING!
 echo $USER															--> working
-echo $?																--> not working (weird error)
-echo $PWD/file														--> 
-echo "$PWD/file"													--> 
-echo "text" "text$USER" ... "$USER"									--> 
+echo $?																--> working
+echo $PWD/file														--> working
+echo "$PWD/file"													--> working
+echo "text" "text$USER" ... "$USER"									--> working
 echo $PWD															--> working
 
 EXIT:
@@ -97,35 +97,35 @@ exit -12030															--> working
 exit --1239312														--> working
 exit ++++1203020103													--> working
 exit +0																--> working
-exit ++++++0														--> NOT working
-exit -----0															--> NOT working
+exit ++++++0														--> NOT WORING!
+exit -----0															--> NOT WORING!
 exit azerty															--> working
 exit kewkwqke														--> working
 exit a																--> working
 exit z																--> working
-exit "1"
-exit "2"
-exit "+102"
-exit "1230"
+exit "1"															--> working
+exit "2"															--> working
+exit "+102"															--> working
+exit "1230"															--> working
 exit "+++1230"
-exit "1"23
+exit "1"23															--> working
 exit "2"32"32"
-exit "'42'"
+exit "'42'"															--> working
 exit '42'"42"42
 exit +'42'"42"42
 exit -'42'"42"42
 exit 9223372036854775807 											--> working
 exit 9223372036854775808
-exit -4
+exit -4																--> working
 exit 1																--> working
-exit -1
+exit -1																--> working
 exit 42																--> working
 exit 0																--> working
 exit --000															--> working
 exit +++++++000														--> working
 exit ++++3193912939													--> working
 exit ---31232103012													--> working
-exit "something"
+exit "something"													--> working
 exit echo															--> working
 exit cd ..															--> working
 exit 0 0															--> working
@@ -135,33 +135,32 @@ exit exit															--> working
 
 EXPORT:
 
-env | grep "_="
-export | grep "SHLVL"
-export | grep "OLDPWD"
-export | grep "PWD"
-export $?
-export TEST
-export TEST=
-export TEST=123
-export ___TEST=123
-export --TEST=123
-export ""=""
-export ''=''
-export "="="="
-export '='='='
-export TE\\\ST=100
-export TE-ST=100
-export -TEST=100
-export TEST-=100
-export _TEST=100
-export | grep "SHLVL"
-export TEST
-export ==========
-export 1TEST=
-export TEST
-export ""=""
-export TES=T=""
-export TE+S=T=""
+env | grep "_="														--> working
+export | grep "SHLVL"												--> working
+export | grep "OLDPWD"												--> working
+export | grep "PWD"													--> working
+export $?															--> working
+export TEST															--> working
+export TEST=														--> working
+export TEST=123														--> working
+export ___TEST=123													--> working
+export --TEST=123													--> working
+export ""=""														--> working
+export ''=''														--> working
+export "="="="														--> working
+export '='='='														--> working
+export TE\\\ST=100													--> working
+export TE-ST=100													--> working
+export -TEST=100													--> working
+export TEST-=100													--> working
+export _TEST=100													--> working
+export TEST															--> working
+export ==========													--> working
+export 1TEST=														--> working
+export TEST															--> working
+export ""=""														--> working
+export TES=T=""														--> working
+export TE+S=T=""													--> working
 export TES\\\\T=123
 export TES.T=123
 export TES\\\$T=123

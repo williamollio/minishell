@@ -1,25 +1,39 @@
 #include "../../includes/minishell.h"
 
+void	ft_identifier_error(char *err, char *var)
+{
+	ft_putstr_fd("bash: export: `", 2);
+	ft_putstr_fd(err, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	free(var);
+	exit_status = 1;
+}
+
 // checks for dumb shit like this export = or export =====
 // also checks shit like this export test
 int	ft_export_edgecase(char *str)
 {
-	char		*err;
 	char		*var;
+	int			i;
 	
-	if (str[0] == '=')
-	{
-		err = ft_substr(str, 0, ft_strlen(str));
-		ft_putstr_fd("bash: export: `", 2);
-		ft_putstr_fd(err, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		free(err);
-		exit_status = 1;
-		return (1);
-	}
+	i = 0;
 	if (!ft_strchr(str, '='))
 		return (1);
 	var = ft_get_var(str);
+	if (str[0] == '=')
+	{
+		ft_identifier_error(str, var);
+		return (1);
+	}
+	while (var[i])
+	{
+		if (var[i] == '-')
+		{
+			ft_identifier_error(str, var);
+			return (1);
+		}
+		i++;
+	}
 	if (ft_strncmp(var, "_", ft_strlen(var)) == 0)
 	{
 		free(var);
@@ -27,11 +41,7 @@ int	ft_export_edgecase(char *str)
 	}
 	if (!ft_isalpha(var[0]) &&  var[0] != '_')
 	{
-		ft_putstr_fd("bash: export: `", 2);
-		ft_putstr_fd(str, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		free(var);
-		exit_status = 1;
+		ft_identifier_error(str, var);
 		return (1);
 	}
 	free(var);
@@ -90,6 +100,7 @@ void	ft_sort_env(t_env_list *env_head)
 {
 	t_env_list	*sorted;
 
+	sorted = NULL;
 	while (env_head != NULL)
 	{
 		ft_addorder(&sorted, env_head->full);

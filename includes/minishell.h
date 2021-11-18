@@ -73,12 +73,13 @@ typedef struct s_sys
 {
 	char	**paths;
 	char 	**split;
+	char	**split2;
 	char	*pathname;
 	char	*cmdpath;
 	char 	*join_space;
 	char 	*join_arg;
 	char 	*join_str;
-	int		rowsinpath;
+	int		rows;
 	int		x;
 }			t_sys;
 
@@ -126,21 +127,27 @@ void	ft_env(t_env_list *env_head);
 
 /** EXECUTION **/ /** ALL OF THESE HAVE TO STAY **/
 void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head); // main of pipex part
-void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head); // execute system commands
+int		ft_is_builtin_new(char *line); // checks if command is abuiltin
 void	ft_child_for_built(t_parse *parse, t_env_list **env_head, int status); // execute builtin commands
 void	ft_parent(t_exec *exec); // output of last commands pipe will now ne in temp_fd
 void	ft_in_is_tempfd(t_exec *exec); // childs always read from temp_fd --> redirect temp_fd to be input
 int		ft_redirect_in(t_exec *exec, t_parse **parse); // takes input either from infile or stdin
-void	ft_redirect_out(t_exec *exec, t_parse *parse); // redirect output either to file, stdout or pipe
-void	ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
+void	ft_write_to_pipe(t_exec *exec); // sets pipe to stdout
+int		ft_file_only(t_parse *parse, t_exec *exec); // when there are only files in parse, open all of them
+int		ft_write_here(t_parse *parse, t_exec *exec); // write to outfile, pipe or stdout
+int		ft_choose_outfile(t_exec *exec, t_parse *parse); // open all outfiles and set last one to stdout
+int		ft_pipe(t_exec *exec); // creates a pipe for interprocess communication
 int		ft_fork(t_exec *exec); // fork a process
+int		ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
+void	ft_child_for_sys(t_parse *parse, char **envp, t_env_list **env_head); // execute system commands
 int		ft_countrows(char **paths); // counts rows in a 2d array
-void	ft_heredoc(t_exec *exec, t_parse *parse); //opens heredoc, that waits fors limiter
-int		ft_is_builtin_new(char *line); // checks if command is abuiltin
 void	ft_close_all(t_exec *exec); // closes all existing file-descriptors
+int		ft_count_cmds(t_parse *parse); // counts cmds for every parse
 void	ft_init_exec(t_exec *exec, t_parse *parse); // init struct variables
-int		ft_set_infile(t_exec *exec, t_parse **parse); // open all infiles, but only use the last one
 void	ft_wait(t_exec exec); // waits for all childs to finish executing
+int		ft_catch_trash(t_parse *parse, t_exec *exec); // checks for empty list and if there are even cdms inn the list
+
+
 
 /** ERROR MANAGEMENT **/
 void	ft_error(char *line);

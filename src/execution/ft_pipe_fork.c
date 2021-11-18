@@ -1,12 +1,13 @@
 #include "../../includes/minishell.h"
 
-void	ft_pipe(t_exec *exec)
+int	ft_pipe(t_exec *exec)
 {
 	if (pipe(exec->pipes) == -1)
 	{
 		perror("pipe");
-		exit(0);
+		return (-1);
 	}
+	return (0);
 }
 
 int	ft_fork(t_exec *exec)
@@ -15,7 +16,7 @@ int	ft_fork(t_exec *exec)
 	if (exec->pid == -1)
 	{
 		perror("fork");
-		exit(0);
+		return (-2);
 	}
 	return (exec->pid);
 }

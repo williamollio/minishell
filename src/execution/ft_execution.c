@@ -1,135 +1,41 @@
 #include "../../includes/minishell.h"
 
-int ft_variable_pid(int pid)
+int	ft_variable_pid(int pid)
 {
-	static int pid_2 = 0;
+	static int	pid_2 = 0;
+
+	if (pid == -2)
+		return (-1);
 	if (pid != -1)
 		pid_2 = pid;
 	return (pid_2);
 }
 
-void	ft_exec_multiple(t_parse *parse, char **envp, t_env_list **env_head, t_exec *exec)
+int	ft_exec_multiple(t_parse *pars, char **envp, t_env_list **env, t_exec *exec)
 {
 	exec->waitcount++;
 	signal(SIGINT, sigfunc_child);
 	signal(SIGQUIT, sigfunc_child);
-	ft_variable_pid(ft_fork(exec));
-	if (ft_is_builtin_new(parse->cmd[0]) && exec->pid == 0)
+	if (ft_variable_pid(ft_fork(exec)) == -1)
+		return (-1);
+	if (ft_is_builtin_new(pars->cmd[0]) && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
-		ft_child_for_sys(parse, envp, env_head);
+		ft_child_for_sys(pars, envp, env);
 	}
-	else if (!ft_is_builtin_new(parse->cmd[0]) && exec->pid == 0)
+	else if (!ft_is_builtin_new(pars->cmd[0]) && exec->pid == 0)
 	{
 		close(exec->pipes[1]);
 		close(exec->pipes[0]);
-		ft_child_for_built(parse, env_head, EX);
+		ft_child_for_built(pars, env, EX);
 	}
 	else
 	{
 		close(exec->pipes[1]);
 		ft_parent(exec);
 	}
-}
-
-void	ft_write_to_pipe(t_exec *exec)
-{
-	dup2(exec->pipes[1], STDOUT_FILENO);
-	close(exec->pipes[1]);
-}
-
-int	ft_choose_outfile(t_exec *exec, t_parse *parse)
-{
-	while (parse != NULL)
-	{
-		if (parse->op == OUT)
-		{
-			exec->outfile = open(parse->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
-			close(exec->pipes[1]);
-		}
-		if (parse->op == RIGHT)
-		{
-			exec->outfile = open(parse->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0777);
-			close(exec->pipes[1]);
-		}
-		parse = parse->next;
-		if (parse == NULL)
-		{
-			dup2(exec->outfile, 1);
-			close(exec->outfile);
-			return (1);
-		}
-		else if (parse->op != OUT && parse->op != RIGHT)
-		{
-			dup2(exec->outfile, 1);
-			close(exec->outfile);
-			return (2);
-		}
-		else
-			close(exec->outfile);
-	}
 	return (0);
-}
-
-void	ft_write_here(t_parse *parse, t_exec *exec)
-{
-	if (parse->next != NULL)
-	{
-		if (parse->next->op == PIPE || parse->next->pipe_flag == PIPE)
-		{
-			ft_write_to_pipe(exec);
-		}
-		if (parse->next->op == OUT || parse->next->op == RIGHT)
-		{
-			exec->out_action = ft_choose_outfile(exec, parse);
-		}
-	}
-	else
-	{
-		dup2(exec->stout, STDOUT_FILENO);
-		close(exec->stout);
-	}
-
-}
-
-int	ft_file_only(t_parse *parse, t_exec *exec)
-{
-	while (parse != NULL)
-	{
-		if (parse->op == IN || parse->op == LEFT)
-		{
-			if (parse->op == IN)
-			{
-				exec->infile = open(parse->cmd[0], 0);
-				if (exec->infile == -1)
-				{
-					perror(parse->cmd[0]);
-					return (-1);
-				}
-				if (parse->next == NULL)
-				{
-					close(exec->temp_fd);
-					return 1;
-				}
-				if (parse->next->op != IN && parse->next->op != LEFT)
-				{
-					close(exec->temp_fd);
-					dup2(exec->infile, exec->temp_fd);
-				}
-				close(exec->infile);
-			}
-			else if (parse->op == LEFT)
-			{
-				close(exec->temp_fd);
-				ft_heredoc(exec, parse);
-			}
-		}
-		else
-			ft_choose_outfile(exec, parse);
-		parse = parse->next;
-	}
-	return 0;
 }
 
 int	ft_skip_outfiles(t_parse **parse, t_exec *exec)
@@ -145,20 +51,26 @@ int	ft_skip_outfiles(t_parse **parse, t_exec *exec)
 	return (1);
 }
 
-void	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env_list **env_head)
+int	ft_core(t_parse **parse, t_exec *exec, char **envp, t_env_list **env_head)
 {
-	ft_pipe(exec);
+	if (ft_pipe(exec) == -1)
+		return (-1);
 	ft_in_is_tempfd(exec);
-	ft_write_here(*parse, exec);
+	if (ft_write_here(*parse, exec) == -1)
+		return (-1);
 	if (exec->cmdcount == 1 && !ft_is_builtin_new((*parse)->cmd[0]))
 	{
 		ft_child_for_built(*parse, env_head, RET);
 		ft_parent(exec);
 	}
 	else if ((*parse)->op == CMD || (*parse)->op == PIPE)
-		ft_exec_multiple(*parse, envp, env_head, exec);
+	{
+		if (ft_exec_multiple(*parse, envp, env_head, exec) == -1)
+			return (-1);
+	}
 	else
 		ft_parent(exec);
+	return (0);
 }
 
 void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
@@ -166,21 +78,20 @@ void	ft_execution(t_parse *parse, char **envp, t_env_list **env_head)
 	t_exec	exec;
 
 	ft_init_exec(&exec, parse);
-	if (!parse)
-		return ;
-	if (exec.cmdcount == 0) // added later
+	if (ft_catch_trash(parse, &exec) == -1)
 	{
-		ft_file_only(parse, &exec); // added later
+		ft_close_all(&exec);
 		return ;
 	}
 	while (parse != NULL)
 	{
 		exec.ret = ft_redirect_in(&exec, &parse);
 		if (exec.ret == -1)
-			return ;
+			break ;
 		if (exec.ret == 0)
 		{
-			ft_core(&parse, &exec, envp, env_head); // this needs to return an int for errors
+			if (ft_core(&parse, &exec, envp, env_head) == -1)
+				break ;
 			if (!ft_skip_outfiles(&parse, &exec))
 				break ;
 		}
