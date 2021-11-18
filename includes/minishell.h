@@ -109,6 +109,12 @@ typedef struct s_quotes
 	char	*temp5;
 }			t_quotes;
 
+typedef struct s_cd
+{
+	char	*old;
+	char	*current;
+}			t_cd;
+
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env_list **env_head); // initialize the shell
@@ -118,10 +124,15 @@ void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd
 /** BUILDINS FUNCTION **/ /** ALL OF THESE HAVE TO STAY **/
 void	ft_echo(char **cmd);
 void	ft_cd(t_env_list **env_head, char  *line);
+void	ft_reset_paths(t_env_list **env_head, char *current, char *old); // reset current old 
+void	ft_free_current_old(char **current, char **old); // free current old string
+void	ft_init_cd(t_cd *cd, t_env_list **env_head); // init cd vars
+void	ft_change_env_var(t_env_list **env_head, char *change, char *new); // changes env vars after cding
 void	ft_pwd(void);
 void	ft_exit(t_parse *parse);
 void	ft_unset_node(t_env_list **env_head, char **cmd);
 void	ft_export_node(t_env_list **env_head, char **cmd);
+int		ft_export_edgecase(char *str);
 void	ft_delete_node(t_env_list **env_head, char *str);
 void	ft_env(t_env_list *env_head);
 
