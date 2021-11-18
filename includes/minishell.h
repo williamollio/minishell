@@ -150,7 +150,7 @@ void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd
 /** BUILDINS FUNCTION **/ /** ALL OF THESE HAVE TO STAY **/
 void	ft_echo(char **cmd);
 void	ft_cd(t_env **env_head, char  *line);
-void	ft_reset_paths(t_env **env_head, char *current, char *old); // reset current old 
+void	ft_reset_paths(t_env **env_head, char *current, char *old); // reset current old
 void	ft_free_current_old(char **current, char **old); // free current old string
 void	ft_init_cd(t_cd *cd, t_env **env_head); // init cd vars
 void	ft_change_env_var(t_env **env_head, char *change, char *new); // changes env vars after cding
@@ -241,7 +241,7 @@ int		ft_variable_pid(int pid);
 /** HELPER **/
 void	ft_print_list(t_env *head);
 //void	ft_print_list_parse(t_parse **head); // print the list
-//void	ft_print_list_parse_2(t_parse **head);
+void	ft_print_list_parse_2(t_parse **head);
 void	ft_addback_parse(t_parse **head_ref, char *str, int nbr, int *pipe_flag); // create the list
 void	ft_free_list_parse(t_parse **head_a); // free the whole list
 void	ft_init_parse(t_parse **head); // for each new node created

@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-/* DELETE PRINT FUNCTION */
 
 void	ft_print_list(t_env *head)
 {
@@ -9,48 +8,6 @@ void	ft_print_list(t_env *head)
 		head = head->next;
 	}
 }
-/*
-void	ft_print_list_parse_2(t_parse **head)
-{
-	t_parse	*tmp;
-
-	tmp = *head;
-	while (tmp != NULL)
-	{
-		printf("------------------\n");
-		printf("str : %s\n", tmp->str);
-		printf("op : %d\n", tmp->op);
-		printf("pipe_flag : %d\n", tmp->pipe_flag);
-		if (tmp->cmd)
-		{
-
-			if (tmp->cmd[0])
-				printf("cmd : %s\n", tmp->cmd[0]);
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	ft_print_list_parse(t_parse **head)
-{
-	t_parse	*tmp;
-
-	tmp = *head;
-	while (tmp != NULL)
-	{
-		printf("------------------\n");
-		printf("op : %d\n", tmp->op);
-		printf("pipe_flag : %d\n", tmp->pipe_flag);
-		int i = 0;
-		while (tmp->cmd[i])
-		{
-			printf("cmd i%d: %s$\n",i, tmp->cmd[i]);
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-*/
 
 void	ft_init_parse(t_parse **head)
 {

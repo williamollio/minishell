@@ -41,6 +41,17 @@ void	ft_flip_nodes(t_parse **parse, t_parse *temp)
 	}
 }
 
+// int	ft_check(t_parse **parse, t_parse *temp, char **split)
+// {
+// 	if (split[1] != NULL && *parse != temp
+// 		&& (temp->prev->op == CMD)
+// 		&& temp->pipe_flag == 0
+// 		&& (temp->op >= 2 || temp->op <= 5)
+// 		&& (temp->op >= 2 || temp->op <= 5))
+// 		return (1);
+// 	return (0);
+// }
+
 int	ft_special(t_parse **parse, char **split, t_parse *temp)
 {
 	char	*str;
@@ -51,6 +62,8 @@ int	ft_special(t_parse **parse, char **split, t_parse *temp)
 		&& temp->pipe_flag == 0)
 	{
 		str = ft_strdup(temp->prev->str);
+		if (ft_strncmp(temp->prev->str, "", 1) == 0)
+			return (0);
 		free(temp->prev->str);
 		i = 1;
 		while (split[i])

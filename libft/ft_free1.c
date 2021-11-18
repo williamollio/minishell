@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 12:43:25 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/13 20:34:35 by akurz            ###   ########.fr       */
+/*   Updated: 2021/11/18 15:29:03 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free1(char *str) // change to double pointer to keep track of the pointing to NULL
+/* change to double pointer to keep track of the pointing to NULL */
+void	ft_free1(char *str)
 {
 	if (!str)
 		return ;
