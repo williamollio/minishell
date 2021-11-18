@@ -40,15 +40,15 @@ echo stop barking													--> working
 echo "bonjour"														--> working
 echo bonjour														--> working
 echo 'bonjour'														--> working
-echo -n bonjour														--> NOT WORKING! (space before prompt)
-echo -nn bonjour													--> NOT WORKING!
-echo -n -n -n bonjour												--> NOT WORKING!
-echo "-n" bonjour													--> NOT WORKING!
-echo -n"-n" bonjour													--> NOT WORKING!
-echo "-nnnn" bonjour												--> NOT WORKING!
-echo "-nnnn" -n bonjour												--> NOT WORKING!
-echo "-n -n -n"-n bonjour											--> NOT WORKING!
-echo "-n '-n'" bonjour												--> NOT WORKING!
+echo -n bonjour														--> working
+echo -nn bonjour													--> working
+echo -n -n -n bonjour												--> working
+echo "-n" bonjour													--> working
+echo -n"-n" bonjour													--> working
+echo "-nnnn" bonjour												--> working
+echo "-nnnn" -n bonjour												--> working
+echo "-n -n -n"-n bonjour											--> working
+echo "-n '-n'" bonjour												--> working
 echo $USER															--> working
 echo "$USER"														--> working
 echo "'$USER'"														--> NOT WORKING!
