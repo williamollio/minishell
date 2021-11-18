@@ -1,60 +1,40 @@
 #include "../../includes/minishell.h"
 
-void	ft_identifier_error(char *err, char *var)
+void	ft_replace_var(t_env **temp, char **str_var, char *str)
 {
-	ft_putstr_fd("bash: export: `", 2);
-	ft_putstr_fd(err, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
-	free(var);
-	exit_status = 1;
+	free((*temp)->content);
+	(*temp)->content = ft_get_content(str);
+	free((*temp)->full);
+	(*temp)->full = ft_strdup(str);
+	free((*temp)->var);
+	(*temp)->var = ft_get_var(str);
+	free(*str_var);
 }
 
-// checks for dumb shit like this export = or export =====
-// also checks shit like this export test
-int	ft_export_edgecase(char *str)
+void	ft_add_var(t_env **t, t_env **prev, t_env **env, char *s)
 {
-	char		*var;
-	int			i;
+	t_env	*temp_2;
+	t_env	*newNode;
 
-	i = 0;
-	if (!ft_strchr(str, '='))
-		return (1);
-	var = ft_get_var(str);
-	if (str[0] == '=')
+	(*t) = (*prev);
+	temp_2 = (*t)->next;
+	newNode = malloc(sizeof(t_env_list));
+	newNode->full = ft_strdup(s);
+	newNode->var = ft_get_var(s);
+	newNode->content = ft_get_content(s);
+	(*t)->next = newNode;
+	newNode->next = temp_2;
+	if (*env == NULL)
 	{
-		ft_identifier_error(str, var);
-		return (1);
+		*env = newNode;
+		return ;
 	}
-	while (var[i])
-	{
-		if (var[i] == '-')
-		{
-			ft_identifier_error(str, var);
-			return (1);
-		}
-		i++;
-	}
-	if (ft_strncmp(var, "_", ft_strlen(var)) == 0)
-	{
-		free(var);
-		return (1);
-	}
-	if (!ft_isalpha(var[0]) &&  var[0] != '_')
-	{
-		ft_identifier_error(str, var);
-		return (1);
-	}
-	free(var);
-	return (0);
 }
 
-// in here i write a new var to env and override the content if var already exists
 void	ft_add_export(t_env **env_head, char *str)
 {
 	t_env	*temp;
 	t_env	*prev;
-	t_env	*temp_2;
-	t_env	*newNode;
 	char		*str_var;
 
 	temp = *env_head;
@@ -64,15 +44,10 @@ void	ft_add_export(t_env **env_head, char *str)
 	str_var = ft_get_var(str);
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->var, str_var, ft_strlen(temp->var)) == 0 && ft_strlen(temp->var) == ft_strlen(str_var))
+		if (ft_strncmp(temp->var, str_var, ft_strlen(temp->var)) == 0
+			&& ft_strlen(temp->var) == ft_strlen(str_var))
 		{
-			free(temp->content);
-			temp->content = ft_get_content(str); // gets allocated
-			free(temp->full);
-			temp->full = ft_strdup(str); // i dont know if william allocates this string before passing it to me
-			free(temp->var);
-			temp->var = ft_get_var(str); // gets allocated
-			free(str_var);
+			ft_replace_var(&temp, &str_var, str);
 			return ;
 		}
 		if (ft_strncmp(temp->var, "_", ft_strlen(temp->var)) == 0)
@@ -81,19 +56,7 @@ void	ft_add_export(t_env **env_head, char *str)
 		temp = temp->next;
 	}
 	free(str_var);
-	temp = prev;
-	temp_2 = temp->next;
-	newNode = malloc(sizeof(t_env));
-	newNode->full = ft_strdup(str); // same problem: does william allocate it?
-	newNode->var = ft_get_var(str); // gets allocated
-	newNode->content = ft_get_content(str); // gets allocated
-	temp->next = newNode;
-	newNode->next = temp_2;
-	if (*env_head == NULL)
-	{
-		*env_head = newNode;
-		return ;
-	}
+	ft_add_var(&temp, &prev, env_head, str);
 }
 
 void	ft_sort_env(t_env *env_head)
@@ -122,7 +85,7 @@ void	ft_export_node(t_env **env_head, char **cmd)
 		return ;
 	}
 	i = 1;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		ft_add_export(env_head, cmd[i]);
 		i++;

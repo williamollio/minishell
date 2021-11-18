@@ -32,7 +32,7 @@ void	ft_check_exit_string(t_parse *parse, char *str)
 
 	i = 0;
 	num = ft_atoll(str);
-	while(str[i] == '-' || str[i] == '+')
+	while (str[i] == '-' || str[i] == '+')
 		i++;
 	if (num == 0 && str[i] != '0')
 		ft_exit_error(str, parse);
@@ -52,13 +52,14 @@ void	ft_exit(t_parse *parse)
 	x = 0;
 	if (parse->cmd[1] == NULL)
 	{
-		ft_free_list_parse(&parse); // need to check if it works if i  exit ina child or in a shell inside of a shell
+		ft_free_list_parse(&parse);
 		ft_putendl_fd("exit", 2);
 		exit(0);
 	}
 	while (parse->cmd[1][x])
 	{
-		if (!ft_isdigit(parse->cmd[1][x]) && parse->cmd[1][x] != '+' && parse->cmd[1][x] != '-')
+		if (!ft_isdigit(parse->cmd[1][x])
+			&& parse->cmd[1][x] != '+' && parse->cmd[1][x] != '-')
 			ft_exit_error(parse->cmd[1], parse);
 		x++;
 	}

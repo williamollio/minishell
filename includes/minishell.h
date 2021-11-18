@@ -5,9 +5,9 @@
 #define clear() printf("\033[H\033[J")
 
 #include <stdlib.h>
-#include <fcntl.h> // for open and all open flags
+#include <fcntl.h>
 #include <stdio.h>
-#include <sys/param.h> // for MAXPATHLEN macro
+#include <sys/param.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
@@ -17,11 +17,11 @@
 
 /** OP VARIABLE **/
 # define CMD 0
-# define PIPE 1 // |
-# define OUT 2 // >
-# define IN 3 // <
-# define LEFT 4 // <<
-# define RIGHT 5 // >>
+# define PIPE 1
+# define OUT 2
+# define IN 3
+# define LEFT 4
+# define RIGHT 5
 
 /** FLAG VARIABLE **/
 # define BUILT 6
@@ -135,6 +135,12 @@ typedef struct s_order
 	t_env	*temp2;
 }			t_order;
 
+typedef struct s_cd
+{
+	char	*old;
+	char	*current;
+}			t_cd;
+
 /** INIT **/
 void	ft_silience(char **envp); // hide ^C when hiting control+C
 void	ft_init(int argc, char **argv, char **envp, t_env **env_head); // initialize the shell
@@ -144,10 +150,15 @@ void	ft_tool(int *fd_in_old, int *fd_out_old); // contain signal handling and fd
 /** BUILDINS FUNCTION **/ /** ALL OF THESE HAVE TO STAY **/
 void	ft_echo(char **cmd);
 void	ft_cd(t_env **env_head, char  *line);
+void	ft_reset_paths(t_env **env_head, char *current, char *old); // reset current old 
+void	ft_free_current_old(char **current, char **old); // free current old string
+void	ft_init_cd(t_cd *cd, t_env **env_head); // init cd vars
+void	ft_change_env_var(t_env **env_head, char *change, char *new); // changes env vars after cding
 void	ft_pwd(void);
 void	ft_exit(t_parse *parse);
 void	ft_unset_node(t_env **env_head, char **cmd);
 void	ft_export_node(t_env **env_head, char **cmd);
+int		ft_export_edgecase(char *str);
 void	ft_delete_node(t_env **env_head, char *str);
 void	ft_env(t_env *env_head);
 
@@ -249,19 +260,3 @@ void	ft_free_list(t_env **head_a);
 char	**ft_get_paths(char **paths); // static function to get paths variable
 
 #endif
-
-/** TO DO **/
-/* implement ft_tool in minishel.c */
-/* in ft_exit all shit has to be freed and cleared */
-
-/** -------------------------------- will -------------------------------- **/
-/* double free echo $? */
-
-
-
-/** -------------------------------- alex -------------------------------- **/
-/* when minishell starts, OLDPWD shouldnt exist */
-/* add heredoc (<<) */
-/* currently we exit often when errors occur (maybe not good) */
-/* init struct vars */
-/* execute builtins in child when theres morethen 1 cmd */
