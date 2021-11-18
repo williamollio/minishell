@@ -28,16 +28,16 @@ int main(int argc, char **argv, char **envp)
 		s1 = ft_strtrim(line, " ");
 		if (s1 && !ft_parsing(line, &parse, &env_head))
 		{
-			printf("MAIN: --------------------------------------------------------\n");
-			//ft_print_list_parse(&parse);
-			printf("--------------------------------------------------------------\n");
+			// printf("MAIN: --------------------------------------------------------\n");
+			// //ft_print_list_parse(&parse);
+			// printf("--------------------------------------------------------------\n");
 			ft_execution(parse, envp, &env_head);
 		}
 		add_history(line);
 		if (s1)
 			ft_free1(s1);
 		ft_free_list_parse(&parse);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 	return (0);
 }

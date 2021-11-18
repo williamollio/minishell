@@ -2,8 +2,8 @@
 
 void	ft_change_env_var(t_env **env_head, char *change, char *new)
 {
-	t_env *temp;
-	char		*equal_temp;
+	t_env	*temp;
+	char	*equal_temp;
 
 	temp = *env_head;
 	while (ft_strncmp(temp->var, change, ft_strlen(change)) != 0)

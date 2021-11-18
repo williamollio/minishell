@@ -18,7 +18,7 @@ void	ft_add_var(t_env **t, t_env **prev, t_env **env, char *s)
 
 	(*t) = (*prev);
 	temp_2 = (*t)->next;
-	newNode = malloc(sizeof(t_env_list));
+	newNode = malloc(sizeof(t_env));
 	newNode->full = ft_strdup(s);
 	newNode->var = ft_get_var(s);
 	newNode->content = ft_get_content(s);

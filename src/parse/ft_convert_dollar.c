@@ -5,6 +5,7 @@ void	ft_init_rep(t_replace *rep)
 	rep->i = 0;
 	rep->start = 0;
 	rep->quote_flag = 1;
+	rep->double_flag = 1;
 	rep->var = "";
 	rep->content = "";
 	rep->tofree = "";
@@ -63,7 +64,9 @@ void	ft_replace(char *str, t_parse *temp, t_env *env_head)
 	ft_init_rep(&rep);
 	while (str[rep.i])
 	{
-		if (ft_strncmp(&str[rep.i], "'", 1) == 0)
+		if (str[rep.i] == '"')
+			rep.double_flag *= -1;
+		if (str[rep.i] == '\'' && rep.double_flag > 0)
 			rep.quote_flag *= (-1);
 		if (str[rep.i] == '$' && rep.quote_flag > 0)
 		{
@@ -71,12 +74,15 @@ void	ft_replace(char *str, t_parse *temp, t_env *env_head)
 			rep.start = rep.i;
 			while (str[rep.i] && str[rep.i] != ' '
 				&& !ft_operator_tool2(str, &rep.i) && str[rep.i] != '"'
-				&& str[rep.i] != '/' && str[rep.i] != '$')
+				&& str[rep.i] != '/' && str[rep.i] != '$' && str[rep.i] != '\''
+				&& str[rep.i] != '=')
 				rep.i++;
 			ft_replacer(str, &rep, temp, env_head);
+			rep.double_flag = 1;
 			str = temp->str;
 		}
-		rep.i++;
+		if (str[rep.i] != '\0')
+			rep.i++;
 	}
 }
 

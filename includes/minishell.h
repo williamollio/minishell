@@ -91,6 +91,7 @@ typedef struct s_replace
 	char	*content;
 	char	*tofree;
 	int		quote_flag;
+	int		double_flag;
 }			t_replace;
 
 typedef struct s_quotes
