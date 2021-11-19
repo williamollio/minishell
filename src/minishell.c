@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akurz <akurz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/18 19:08:31 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/19 10:20:37 by akurz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		dup2(main.fd_out_old, 1);
 		signal(SIGINT, &ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		main.line = readline(ft_strjoin(getenv("USER"),
-					"\x1b[35m @minishell \x1b[0m>> "));
+		main.line = readline(ft_strjoin(getenv("USER"), "@minishell "));
 		if (main.line == NULL)
 			exit(EXIT_SUCCESS);
 		main.s1 = ft_strtrim(main.line, " ");
