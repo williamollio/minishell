@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/18 18:51:09 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/22 10:29:16 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,17 @@ int	ft_variable_pid(int pid)
 
 void	sigfunc_child(int signal)
 {
-	if (signal == SIGINT || signal == SIGQUIT)
+	if (signal == SIGINT)
 	{
 		kill(ft_variable_pid(-1), signal);
-		write(1, "\n", 1);
+		write(1, "^C\n", 3);
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return ;
+	}
+	else if (signal == SIGQUIT)
+	{
+		kill(ft_variable_pid(-1), signal);
 		rl_replace_line("", 0);
 		rl_redisplay();
 		return ;
