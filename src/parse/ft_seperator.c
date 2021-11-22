@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/18 18:57:30 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/22 14:40:40 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ char	**ft_create_cmd(char **split, int count)
 
 void	ft_flip_nodes(t_parse **parse, t_parse *temp)
 {
-	if (*parse == temp->prev)
+	if (temp->next == NULL)
+	{
+		temp->prev->next = temp->next;
+		temp->next = temp->prev;
+		*parse = temp;
+		temp->prev = NULL;
+	}
+	else if (*parse == temp->prev)
 	{
 		temp->prev->next = temp->next;
 		temp->next = temp->prev;
@@ -52,17 +59,6 @@ void	ft_flip_nodes(t_parse **parse, t_parse *temp)
 		temp->next->next->prev = temp->next;
 	}
 }
-
-// int	ft_check(t_parse **parse, t_parse *temp, char **split)
-// {
-// 	if (split[1] != NULL && *parse != temp
-// 		&& (temp->prev->op == CMD)
-// 		&& temp->pipe_flag == 0
-// 		&& (temp->op >= 2 || temp->op <= 5)
-// 		&& (temp->op >= 2 || temp->op <= 5))
-// 		return (1);
-// 	return (0);
-// }
 
 int	ft_special(t_parse **parse, char **split, t_parse *temp)
 {
