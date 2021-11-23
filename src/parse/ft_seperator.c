@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/22 14:40:40 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/23 16:53:53 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ int	ft_special(t_parse **parse, char **split, t_parse *temp)
 	return (1);
 }
 
+int	ft_special_2(char **split, t_parse **parse, t_parse *temp)
+{
+	if (split[1] == NULL && *parse != temp
+		&& (temp->prev->op == CMD || temp->prev->op == PIPE)
+		&& (temp->op == IN || temp->op == LEFT))
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
+}
+
 void	ft_seperator(t_parse **parse)
 {
 	t_parse	*temp;
@@ -107,6 +117,8 @@ void	ft_seperator(t_parse **parse)
 				cmd = ft_create_cmd(split, count);
 				ft_add_next(parse, temp, cmd, CMD);
 			}
+			else if (!ft_special_2(split, parse, temp))
+				ft_flip_nodes(parse, temp);
 			ft_free2(split);
 		}
 		temp = temp->next;
