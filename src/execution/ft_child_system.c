@@ -6,7 +6,7 @@
 /*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/18 18:50:25 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/23 17:40:08 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ char	*ft_check_commandpath(int rows, char **paths, char *cmd)
 
 void	ft_execute_child(t_sys *sys, t_parse *parse, char **envp)
 {
+	if (sys->pathname == NULL)
+	{
+		if (execve(parse->cmd[0], parse->cmd, envp) == -1)
+		{
+			perror(parse->cmd[0]);
+			exit(126);
+		}
+	}
 	sys->paths = ft_split(sys->pathname, ':');
 	ft_free1(sys->pathname);
 	sys->rows = ft_countrows(sys->paths);
@@ -58,8 +66,6 @@ void	ft_execute_child(t_sys *sys, t_parse *parse, char **envp)
 	{
 		sys->split2 = ft_split(parse->cmd[0], '/');
 		sys->rows = ft_countrows(sys->split2);
-		free(parse->cmd[0]);
-		parse->cmd[0] = ft_strdup(sys->split2[sys->rows - 1]);
 		ft_free2(sys->split2);
 	}
 	if (execve(sys->cmdpath, parse->cmd, envp) == -1)
@@ -76,7 +82,7 @@ void	ft_child_for_sys(t_parse *parse, char **envp, t_env **env_head)
 
 	sys.rows = 0;
 	sys.pathname = ft_extract_content(*env_head, "PATH");
-	if (sys.pathname != NULL)
+	if (sys.pathname != NULL || (parse->cmd[0][0] == '/' || parse->cmd[0][0] == '.'))
 		ft_execute_child(&sys, parse, envp);
 	else
 	{
