@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wollio <williamollio@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/23 18:18:34 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/25 18:18:13 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include "stdbool.h"
 # include <signal.h>
 # include <errno.h>
+
+ /** Clear the terminal **/
+#define clear() printf("\033[H\033[J");
 
 /** OP VARIABLE **/
 # define CMD 0

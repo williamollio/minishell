@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wollio <wollio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wollio <williamollio@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:42:01 by wollio            #+#    #+#             */
-/*   Updated: 2021/11/18 18:51:19 by wollio           ###   ########.fr       */
+/*   Updated: 2021/11/25 18:14:12 by wollio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	ft_silience(char **envp)
 
 void	ft_init(int argc, char **argv, char **envp, t_env **env_head)
 {
-	(void)argv;
+	clear();
+	(void) argv;
 	if (argc != 1)
 	{
 		ft_putstr_fd("minishell : no arguments accepted\n", 2);
