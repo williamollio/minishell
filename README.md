@@ -9,9 +9,6 @@ With Minishell, you’ll be able to travel through time and come back to problem
 
 Subject PDF : https://github.com/williamollio/minishell/tree/master/subject
 
-# Grade
-[![wollio's 42Project Score](https://badge42.herokuapp.com/api/project/wollio/minishell)](https://github.com/williamollio/badge42)
-
 # Clone
 Open a terminal and run following command:
 ```
