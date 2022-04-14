@@ -1,5 +1,7 @@
 # 42 Minishell
 
+[![akurz's 42 minishell Score](https://badge42.vercel.app/api/v2/cl1z3zeq4001109mkr4my4esw/project/2384749)](https://github.com/JaeSeoKim/badge42)
+
 <strong>Introduction</strong>
 
 
